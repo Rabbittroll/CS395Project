@@ -1,5 +1,6 @@
 package edu.cs371m.reddit.ui.subreddits
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
@@ -20,7 +21,13 @@ class SubredditListAdapter(private val viewModel: MainViewModel,
 
     // ViewHolder pattern
     inner class VH(val rowSubredditBinding: RowSubredditBinding)
-        : RecyclerView.ViewHolder(rowSubredditBinding.root)
+        : RecyclerView.ViewHolder(rowSubredditBinding.root){
+            init {
+                rowSubredditBinding.root.setOnClickListener {
+                    Log.d(null, "here")
+                }
+            }
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         TODO("Not yet implemented")

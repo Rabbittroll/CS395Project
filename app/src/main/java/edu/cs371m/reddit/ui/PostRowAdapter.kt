@@ -1,5 +1,6 @@
 package edu.cs371m.reddit.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.cs371m.reddit.R
 import edu.cs371m.reddit.api.RedditPost
 import edu.cs371m.reddit.databinding.RowPostBinding
+import edu.cs371m.reddit.databinding.RowSubredditBinding
 import edu.cs371m.reddit.glide.Glide
 import edu.cs371m.reddit.ui.subreddits.SubredditListAdapter
 
@@ -25,6 +27,15 @@ import edu.cs371m.reddit.ui.subreddits.SubredditListAdapter
 // You can call adapterPosition to get the index of the selected item
 class PostRowAdapter(private val viewModel: MainViewModel)
     : ListAdapter<RedditPost, PostRowAdapter.VH>(RedditDiff()) {
+    inner class VH(val rowSubredditBinding: RowSubredditBinding)
+        : RecyclerView.ViewHolder(rowSubredditBinding.root){
+        init {
+            rowSubredditBinding.root.setOnClickListener {
+                Log.d(null, "here")
+            }
+        }
+    }
+
     class RedditDiff : DiffUtil.ItemCallback<RedditPost>() {
         override fun areItemsTheSame(oldItem: RedditPost, newItem: RedditPost): Boolean {
             return oldItem.key == newItem.key
@@ -37,11 +48,11 @@ class PostRowAdapter(private val viewModel: MainViewModel)
 
         }
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubredditListAdapter.VH {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostRowAdapter.VH {
         TODO("Not yet implemented")
     }
 
-    override fun onBindViewHolder(holder: SubredditListAdapter.VH, position: Int) {
+    override fun onBindViewHolder(holder: VH, position: Int) {
         TODO("Not yet implemented")
     }
 }
