@@ -28,4 +28,6 @@ class SubredditListAdapter(private val viewModel: MainViewModel,
     }
 
     //EEE // XXX Write me
+
+
 }

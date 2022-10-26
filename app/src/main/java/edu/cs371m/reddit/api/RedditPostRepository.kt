@@ -12,6 +12,11 @@ class RedditPostRepository(private val redditApi: RedditApi) {
 
     private fun unpackPosts(response: RedditApi.ListingResponse): List<RedditPost> {
         // XXX Write me.
+        var ret : List<RedditPost> = emptyList()
+        for(i in response.data.children){
+            ret += i.data
+        }
+        return ret
     }
 
     suspend fun getPosts(subreddit: String): List<RedditPost> {
@@ -22,6 +27,10 @@ class RedditPostRepository(private val redditApi: RedditApi) {
             return unpackPosts(response)
         } else {
             // XXX Write me.
+            val response = gson.fromJson(
+                MainActivity.jsonAww100,
+                RedditApi.ListingResponse::class.java)
+            return unpackPosts(response)
         }
     }
 
@@ -33,6 +42,10 @@ class RedditPostRepository(private val redditApi: RedditApi) {
             return unpackPosts(response)
         } else {
             // XXX Write me.
+            val response = gson.fromJson(
+                MainActivity.subreddit1,
+                RedditApi.ListingResponse::class.java)
+            return unpackPosts(response)
         }
     }
 }

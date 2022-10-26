@@ -82,6 +82,7 @@ data class RedditPost (
     // highlight it and return true, otherwise return false.
     fun searchFor(searchTerm: String): Boolean {
         // XXX Write me, search both regular posts and subreddit listings
+        return selfText!!.contains(searchTerm)
     }
 
     // NB: This changes the behavior of lists of RedditPosts.  I want posts fetched

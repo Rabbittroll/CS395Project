@@ -26,6 +26,9 @@ interface RedditApi {
     // suspend fun getPosts(@Path("subreddit") subreddit: String) : xxxxxx
     // The reddit api docs are here: https://www.reddit.com/dev/api/#GET_hot
 
+    @GET("/r/aww/hot")
+    suspend fun getPosts(@Path("subreddit") subreddit: String) : ListingResponse
+
 
     // NB: Everything below here is fine, no need to change it
 
