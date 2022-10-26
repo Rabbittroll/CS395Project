@@ -9,6 +9,7 @@ import edu.cs371m.reddit.R
 import edu.cs371m.reddit.api.RedditPost
 import edu.cs371m.reddit.databinding.RowPostBinding
 import edu.cs371m.reddit.glide.Glide
+import edu.cs371m.reddit.ui.subreddits.SubredditListAdapter
 
 /**
  * Created by witchel on 8/25/2019
@@ -35,6 +36,13 @@ class PostRowAdapter(private val viewModel: MainViewModel)
                     RedditPost.spannableStringsEqual(oldItem.displayName, newItem.displayName)
 
         }
+    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubredditListAdapter.VH {
+        TODO("Not yet implemented")
+    }
+
+    override fun onBindViewHolder(holder: SubredditListAdapter.VH, position: Int) {
+        TODO("Not yet implemented")
     }
 }
 

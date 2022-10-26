@@ -27,6 +27,7 @@ class HomeFragment: Fragment() {
 
     // Set up the adapter
     private fun initAdapter(binding: FragmentRvBinding) : PostRowAdapter {
+        TODO("Not yet implemented")
     }
 
     private fun notifyWhenFragmentForegrounded(postRowAdapter: PostRowAdapter) {

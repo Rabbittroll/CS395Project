@@ -22,12 +22,18 @@ class SubredditListAdapter(private val viewModel: MainViewModel,
     inner class VH(val rowSubredditBinding: RowSubredditBinding)
         : RecyclerView.ViewHolder(rowSubredditBinding.root)
 
-        // XXX Write me.
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
+        TODO("Not yet implemented")
+    }
+
+    override fun onBindViewHolder(holder: VH, position: Int) {
+        TODO("Not yet implemented")
+    }
+
+    // XXX Write me.
         // NB: This one-liner will exit the current fragment
         // fragmentActivity.supportFragmentManager.popBackStack()
     }
 
     //EEE // XXX Write me
 
-
-}

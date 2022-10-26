@@ -3,6 +3,7 @@ package edu.cs371m.reddit.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.activity.viewModels
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import edu.cs371m.reddit.databinding.FragmentRvBinding
 class Favorites: Fragment() {
     // XXX initialize viewModel
     private var _binding: FragmentRvBinding? = null
+    private val viewModel :MainViewModel by activityViewModels()
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
@@ -56,6 +58,9 @@ class Favorites: Fragment() {
                 // Menu is already inflated by main activity
             }
             // XXX Write me, onMenuItemSelected
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                TODO("Not yet implemented")
+            }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
