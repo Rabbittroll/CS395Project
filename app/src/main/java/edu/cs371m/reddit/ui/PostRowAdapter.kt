@@ -65,6 +65,8 @@ class PostRowAdapter(private val viewModel: MainViewModel)
             val intent = Intent(binding.title.context, OnePost::class.java)
             intent.putExtra("title", getItem(position).title.toString())
             intent.putExtra("selfText", getItem(position).selfText.toString())
+            intent.putExtra("imageURL",getItem(position).imageURL.toString())
+            intent.putExtra("imageURL",getItem(position).thumbnailURL.toString())
             startActivity(binding.title.context, intent, null)
         }
         binding.comments.text = getItem(position).commentCount.toString()

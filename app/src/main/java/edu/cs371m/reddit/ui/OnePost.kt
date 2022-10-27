@@ -16,6 +16,7 @@ import edu.cs371m.reddit.api.RedditPost
 import edu.cs371m.reddit.databinding.FragmentRvBinding
 import kotlin.random.Random
 import edu.cs371m.reddit.databinding.ActivityOnePostBinding
+import edu.cs371m.reddit.glide.Glide
 
 
 // XXX Write most of this file
@@ -23,6 +24,8 @@ class OnePost:  AppCompatActivity() {
 
     private var title : String? = ""
     private var selfText : String? = ""
+    private var imageURL : String? = ""
+    private var thumbnailURL : String? = ""
     private lateinit var binding : ActivityOnePostBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,9 +35,12 @@ class OnePost:  AppCompatActivity() {
 
         title = intent.getStringExtra("title").toString()
         selfText = intent.getStringExtra("selfText").toString()
+        imageURL = intent.getStringExtra("imageURL").toString()
+        thumbnailURL = intent.getStringExtra("thumbnailURL").toString()
 
         binding.title.text = title
         binding.selfText.text = selfText
+        Glide.glideFetch(imageURL!!, thumbnailURL!!, binding.image)
 
         // XXX Write me Set our currentUser variable based on what MainActivity passed us
 
