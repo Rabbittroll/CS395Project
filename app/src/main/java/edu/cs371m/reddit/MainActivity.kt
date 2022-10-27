@@ -19,6 +19,7 @@ import edu.cs371m.reddit.databinding.ActivityMainBinding
 import edu.cs371m.reddit.ui.Favorites
 import edu.cs371m.reddit.ui.HomeFragment
 import edu.cs371m.reddit.ui.MainViewModel
+import edu.cs371m.reddit.ui.PostRowAdapter
 import edu.cs371m.reddit.ui.subreddits.Subreddits
 
 class MainActivity : AppCompatActivity() {
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
     private var actionBarBinding: ActionBarBinding? = null
     private val viewModel: MainViewModel by viewModels()
+    private lateinit var adapter: PostRowAdapter
 
     // An Android nightmare
     // https://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
@@ -92,6 +94,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        jsonAww100 = assets.open("aww.hot.1.100.json.transformed.txt").bufferedReader().use {
+            it.readText()
+        }
         setContentView(activityMainBinding.root)
         setSupportActionBar(activityMainBinding.toolbar)
         supportActionBar?.let{
@@ -113,6 +118,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
 
         addHomeFragment()
         initDebug()

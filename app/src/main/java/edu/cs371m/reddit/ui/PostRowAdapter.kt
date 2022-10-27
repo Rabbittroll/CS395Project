@@ -27,10 +27,10 @@ import edu.cs371m.reddit.ui.subreddits.SubredditListAdapter
 // You can call adapterPosition to get the index of the selected item
 class PostRowAdapter(private val viewModel: MainViewModel)
     : ListAdapter<RedditPost, PostRowAdapter.VH>(RedditDiff()) {
-    inner class VH(val rowSubredditBinding: RowSubredditBinding)
-        : RecyclerView.ViewHolder(rowSubredditBinding.root){
+    inner class VH(val rowPostBinding: RowPostBinding)
+        : RecyclerView.ViewHolder(rowPostBinding.root){
         init {
-            rowSubredditBinding.root.setOnClickListener {
+            rowPostBinding.root.setOnClickListener {
                 Log.d(null, "here")
             }
         }
@@ -49,11 +49,18 @@ class PostRowAdapter(private val viewModel: MainViewModel)
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostRowAdapter.VH {
-        TODO("Not yet implemented")
+        val rowBinding = RowPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return VH(rowBinding)
+        Log.d(null, "in Post Row OCVH")
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        TODO("Not yet implemented")
+        val binding = holder.rowPostBinding
+        binding.selfText.text = getItem(position).selfText
+        binding.title.text = getItem(position).title
+        binding.comments.text = getItem(position).commentCount.toString()
+        binding.score.text = getItem(position).score.toString()
+        Glide.glideFetch(getItem(position).imageURL, getItem(position).thumbnailURL, binding.image)
     }
 }
 

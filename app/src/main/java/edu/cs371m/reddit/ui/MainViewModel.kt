@@ -18,7 +18,30 @@ class MainViewModel : ViewModel() {
     private var subreddit = MutableLiveData<String>().apply {
         value = "aww"
     }
+    private val redditApi = RedditApi.create()
+    private val repository = RedditPostRepository(redditApi)
+    private val posts = MutableLiveData<List<RedditPost>>()
+    init {
+        Log.d(null, "in viewModel")
+        netPosts()
+    }
+
     // XXX Write netPosts/searchPosts
+
+    fun netPosts() {
+        viewModelScope.launch(
+            context = viewModelScope.coroutineContext
+                    + Dispatchers.IO
+        ) {
+            // Update LiveData from IO dispatcher, use postValue
+            val temp = repository.getPosts("aww")
+            posts.postValue(temp)
+        }
+    }
+
+    fun observePosts() : MutableLiveData<List<RedditPost>> {
+        return posts
+    }
 
     // Looks pointless, but if LiveData is set up properly, it will fetch posts
     // from the network
@@ -42,8 +65,8 @@ class MainViewModel : ViewModel() {
 
 
     // Convenient place to put it as it is shared
-    companion object {
+    /*companion object {
         fun doOnePost(context: Context, redditPost: RedditPost) {
         }
-    }
+    }*/
 }
