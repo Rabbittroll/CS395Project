@@ -1,11 +1,14 @@
 package edu.cs371m.reddit.ui
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import edu.cs371m.reddit.OnePost
 import edu.cs371m.reddit.R
 import edu.cs371m.reddit.api.RedditPost
 import edu.cs371m.reddit.databinding.RowPostBinding
@@ -58,6 +61,12 @@ class PostRowAdapter(private val viewModel: MainViewModel)
         val binding = holder.rowPostBinding
         binding.selfText.text = getItem(position).selfText
         binding.title.text = getItem(position).title
+        binding.title.setOnClickListener {
+            val intent = Intent(binding.title.context, OnePost::class.java)
+            intent.putExtra("title", getItem(position).title.toString())
+            intent.putExtra("selfText", getItem(position).selfText.toString())
+            startActivity(binding.title.context, intent, null)
+        }
         binding.comments.text = getItem(position).commentCount.toString()
         binding.score.text = getItem(position).score.toString()
         Glide.glideFetch(getItem(position).imageURL, getItem(position).thumbnailURL, binding.image)

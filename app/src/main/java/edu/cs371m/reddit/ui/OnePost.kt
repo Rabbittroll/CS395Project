@@ -30,6 +30,12 @@ class OnePost:  AppCompatActivity() {
         binding = ActivityOnePostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        title = intent.getStringExtra("title").toString()
+        selfText = intent.getStringExtra("selfText").toString()
+
+        binding.title.text = title
+        binding.selfText.text = selfText
+
         // XXX Write me Set our currentUser variable based on what MainActivity passed us
 
     }
