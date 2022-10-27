@@ -1,6 +1,7 @@
 package edu.cs371m.reddit.api
 
 import android.text.SpannableString
+import android.util.Log
 import com.google.gson.GsonBuilder
 import edu.cs371m.reddit.MainActivity
 
@@ -27,9 +28,8 @@ class RedditPostRepository(private val redditApi: RedditApi) {
             return unpackPosts(response)
         } else {
             // XXX Write me.
-            val response = gson.fromJson(
-                MainActivity.jsonAww100,
-                RedditApi.ListingResponse::class.java)
+            val response = redditApi.getPosts("aww")
+            Log.d(null, "in get posts else")
             return unpackPosts(response)
         }
     }
