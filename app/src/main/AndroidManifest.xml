@@ -22,6 +22,10 @@
             </intent-filter>
 
         </activity>
+        <activity
+            android:name=".OnePost"
+            android:label="Guessing Game"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
