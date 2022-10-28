@@ -31,10 +31,10 @@ class MainViewModel : ViewModel() {
         Log.d(null, "in viewModel")
         searchList.addSource(searchTerm){
             Log.d(null,"in source")
-            searchList.value = searchPosts(it, posts.value!!)
+            searchList.value = searchPosts()
         }
         searchList.addSource(posts){
-            searchList.value = searchPosts(searchTerm.value!!, it)
+            searchList.value = searchPosts()
         }
         netPosts()
     }
@@ -53,17 +53,19 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun searchPosts(searchText: String, postList: List<RedditPost>): List<RedditPost> {
+    fun searchPosts(): List<RedditPost> {
         Log.d(null, "in search Posts")
         var retList : MutableList<RedditPost> = mutableListOf()
-        if (!searchText.isNullOrBlank()){
-            for (post in postList){
-                if (post.title.contains(searchText)) {
-                    retList.add(post)
+        if (!searchTerm.value.isNullOrBlank()){
+            for (post in posts.value!!){
+                if(!post.title.isNullOrEmpty()) {
+                    if (post.searchFor(searchTerm.value!!)) {
+                        retList.add(post)
+                    }
                 }
             }
         } else {
-            retList = postList.toMutableList()
+            retList = posts.value!!.toMutableList()
         }
         return retList.toList()
     }
@@ -71,7 +73,7 @@ class MainViewModel : ViewModel() {
     fun setTerm(string: String) {
         searchTerm.value = string
         Log.d(null, "setting term")
-        Log.d(null, string)
+        Log.d(null, searchTerm.value!!)
     }
 
     fun netSubreddits(){
@@ -91,7 +93,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun observePosts() : MutableLiveData<List<RedditPost>> {
-        return posts
+        return searchList
     }
 
     fun observeSubs() : MutableLiveData<List<RedditPost>> {
