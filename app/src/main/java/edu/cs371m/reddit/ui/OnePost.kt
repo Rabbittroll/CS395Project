@@ -32,12 +32,16 @@ class OnePost:  AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityOnePostBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         title = intent.getStringExtra("title").toString()
         selfText = intent.getStringExtra("selfText").toString()
         imageURL = intent.getStringExtra("imageURL").toString()
         thumbnailURL = intent.getStringExtra("thumbnailURL").toString()
 
+        supportActionBar?.title = title
         binding.title.text = title
         binding.selfText.text = selfText
         Glide.glideFetch(imageURL!!, thumbnailURL!!, binding.image)

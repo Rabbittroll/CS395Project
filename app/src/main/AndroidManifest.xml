@@ -25,7 +25,8 @@
         </activity>
         <activity
             android:name=".OnePost"
-            android:label="Guessing Game"
+            android:label="OnePost"
+            android:parentActivityName=".MainActivity"
             android:windowSoftInputMode="adjustResize" />
     </application>
 
