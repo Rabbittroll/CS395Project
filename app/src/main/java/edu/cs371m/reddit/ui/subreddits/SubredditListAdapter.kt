@@ -26,6 +26,7 @@ class SubredditListAdapter(private val viewModel: MainViewModel,
             init {
                 rowSubredditBinding.root.setOnClickListener {
                     Log.d(null, "here")
+                    viewModel.netPosts()
                 }
             }
         }
@@ -39,6 +40,11 @@ class SubredditListAdapter(private val viewModel: MainViewModel,
         val binding = holder.rowSubredditBinding
         binding.subRowDetails.text = getItem(position).publicDescription
         binding.subRowHeading.text = getItem(position).displayName
+        binding.subRowHeading.setOnClickListener {
+            viewModel.setSubreddits(getItem(position).displayName.toString())
+            viewModel.netPosts()
+            fragmentActivity.supportFragmentManager.popBackStack()
+        }
         //Log.d(null,"image " + getItem(position).imageURL.isNullOrEmpty().toString())
         //Log.d(null,"thumb " + getItem(position).thumbnailURL.isNullOrEmpty().toString())
         Glide.glideFetch(getItem(position).iconURL, getItem(position).iconURL, binding.subRowPic)

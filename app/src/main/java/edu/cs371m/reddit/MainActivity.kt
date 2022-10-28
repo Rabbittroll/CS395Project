@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         actionBar.customView = actionBarBinding?.root
         findViewById<TextView>(R.id.actionTitle).setOnClickListener {
             supportFragmentManager.commit {
+                addToBackStack(null)
                 add(R.id.main_frame, Subreddits.newInstance(), subredditsFragTag)
                 // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)

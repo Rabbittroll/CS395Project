@@ -35,7 +35,8 @@ class MainViewModel : ViewModel() {
                     + Dispatchers.IO
         ) {
             // Update LiveData from IO dispatcher, use postValue
-            val temp = repository.getPosts("aww")
+            Log.d(null,subreddit.value.toString())
+            val temp = repository.getPosts(subreddit.value.toString())
             posts.postValue(temp)
         }
     }
@@ -49,6 +50,11 @@ class MainViewModel : ViewModel() {
             val temp = repository.getSubreddits()
             subs.postValue(temp)
         }
+    }
+
+    fun setSubreddits(sub: String){
+        subreddit.value = sub
+
     }
 
     fun observePosts() : MutableLiveData<List<RedditPost>> {

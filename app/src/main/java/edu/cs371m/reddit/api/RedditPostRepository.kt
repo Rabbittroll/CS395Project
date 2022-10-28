@@ -28,7 +28,7 @@ class RedditPostRepository(private val redditApi: RedditApi) {
             return unpackPosts(response)
         } else {
             // XXX Write me.
-            val response = redditApi.getPosts("aww")
+            val response = redditApi.getPosts(subreddit)
             Log.d(null, "in get posts else")
             return unpackPosts(response)
         }
