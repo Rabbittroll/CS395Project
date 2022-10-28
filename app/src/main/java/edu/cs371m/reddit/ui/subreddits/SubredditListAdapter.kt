@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.cs371m.reddit.api.RedditPost
+import edu.cs371m.reddit.databinding.RowPostBinding
 import edu.cs371m.reddit.databinding.RowSubredditBinding
 import edu.cs371m.reddit.glide.Glide
 import edu.cs371m.reddit.ui.MainViewModel
@@ -30,11 +31,15 @@ class SubredditListAdapter(private val viewModel: MainViewModel,
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        TODO("Not yet implemented")
+        val rowBinding = RowSubredditBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return VH(rowBinding)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        TODO("Not yet implemented")
+        val binding = holder.rowSubredditBinding
+        binding.subRowDetails.text = getItem(position).title
+        binding.subRowHeading.text = getItem(position).title
+       // Glide.glideFetch(getItem(position).imageURL, getItem(position).thumbnailURL, binding.subRowPic)
     }
 
     // XXX Write me.

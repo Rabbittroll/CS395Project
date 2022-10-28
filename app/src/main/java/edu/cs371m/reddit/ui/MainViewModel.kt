@@ -21,6 +21,7 @@ class MainViewModel : ViewModel() {
     private val redditApi = RedditApi.create()
     private val repository = RedditPostRepository(redditApi)
     private val posts = MutableLiveData<List<RedditPost>>()
+    private val subs = MutableLiveData<List<RedditPost>>()
     init {
         Log.d(null, "in viewModel")
         netPosts()
@@ -39,8 +40,23 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    fun netSubreddits(){
+        viewModelScope.launch(
+            context = viewModelScope.coroutineContext
+                    + Dispatchers.IO
+        ) {
+            // Update LiveData from IO dispatcher, use postValue
+            val temp = repository.getSubreddits()
+            subs.postValue(temp)
+        }
+    }
+
     fun observePosts() : MutableLiveData<List<RedditPost>> {
         return posts
+    }
+
+    fun observeSubs() : MutableLiveData<List<RedditPost>> {
+        return subs
     }
 
     // Looks pointless, but if LiveData is set up properly, it will fetch posts
