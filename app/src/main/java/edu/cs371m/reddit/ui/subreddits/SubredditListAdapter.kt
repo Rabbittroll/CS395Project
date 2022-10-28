@@ -37,9 +37,11 @@ class SubredditListAdapter(private val viewModel: MainViewModel,
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val binding = holder.rowSubredditBinding
-        binding.subRowDetails.text = getItem(position).title
-        binding.subRowHeading.text = getItem(position).title
-       // Glide.glideFetch(getItem(position).imageURL, getItem(position).thumbnailURL, binding.subRowPic)
+        binding.subRowDetails.text = getItem(position).publicDescription
+        binding.subRowHeading.text = getItem(position).displayName
+        //Log.d(null,"image " + getItem(position).imageURL.isNullOrEmpty().toString())
+        //Log.d(null,"thumb " + getItem(position).thumbnailURL.isNullOrEmpty().toString())
+        Glide.glideFetch(getItem(position).iconURL, getItem(position).iconURL, binding.subRowPic)
     }
 
     // XXX Write me.
