@@ -3,6 +3,7 @@ package edu.cs371m.reddit.ui
 
 import android.content.Context
 import android.content.Intent
+import android.icu.text.StringSearch
 import android.util.Log
 import androidx.lifecycle.*
 import edu.cs371m.reddit.api.RedditApi
@@ -24,8 +25,17 @@ class MainViewModel : ViewModel() {
     private val favs = MutableLiveData<List<RedditPost>>()
     private var favList: MutableList<RedditPost> = mutableListOf()
     private val subs = MutableLiveData<List<RedditPost>>()
+    private val searchList = MediatorLiveData<List<RedditPost>>()
+    //private val searchText = MutableLiveData<String>()
     init {
         Log.d(null, "in viewModel")
+        searchList.addSource(searchTerm){
+            Log.d(null,"in source")
+            searchList.value = searchPosts(it, posts.value!!)
+        }
+        searchList.addSource(posts){
+            searchList.value = searchPosts(searchTerm.value!!, it)
+        }
         netPosts()
     }
 
@@ -41,6 +51,27 @@ class MainViewModel : ViewModel() {
             val temp = repository.getPosts(subreddit.value.toString())
             posts.postValue(temp)
         }
+    }
+
+    fun searchPosts(searchText: String, postList: List<RedditPost>): List<RedditPost> {
+        Log.d(null, "in search Posts")
+        var retList : MutableList<RedditPost> = mutableListOf()
+        if (!searchText.isNullOrBlank()){
+            for (post in postList){
+                if (post.title.contains(searchText)) {
+                    retList.add(post)
+                }
+            }
+        } else {
+            retList = postList.toMutableList()
+        }
+        return retList.toList()
+    }
+
+    fun setTerm(string: String) {
+        searchTerm.value = string
+        Log.d(null, "setting term")
+        Log.d(null, string)
     }
 
     fun netSubreddits(){
@@ -64,7 +95,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun observeSubs() : MutableLiveData<List<RedditPost>> {
-        return subs
+        return searchList
     }
 
     // Looks pointless, but if LiveData is set up properly, it will fetch posts

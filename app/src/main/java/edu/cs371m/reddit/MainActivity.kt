@@ -13,6 +13,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import edu.cs371m.reddit.databinding.ActionBarBinding
@@ -82,6 +83,10 @@ class MainActivity : AppCompatActivity() {
     // XXX check out addTextChangedListener
     private fun actionBarSearch() {
         // XXX Write me
+        actionBarBinding?.actionSearch?.addTextChangedListener {
+            viewModel.setTerm(it.toString())
+
+        }
     }
 
     private fun addHomeFragment() {
