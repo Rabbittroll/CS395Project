@@ -42,6 +42,7 @@ class SubredditListAdapter(private val viewModel: MainViewModel,
         binding.subRowHeading.text = getItem(position).displayName
         binding.subRowHeading.setOnClickListener {
             viewModel.setSubreddits(getItem(position).displayName.toString())
+            viewModel.setTitle(getItem(position).displayName.toString())
             viewModel.netPosts()
             fragmentActivity.supportFragmentManager.popBackStack()
         }

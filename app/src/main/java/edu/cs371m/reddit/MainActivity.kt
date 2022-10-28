@@ -107,9 +107,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
-        jsonAww100 = assets.open("aww.hot.1.100.json.transformed.txt").bufferedReader().use {
-            it.readText()
-        }
         setContentView(activityMainBinding.root)
         setSupportActionBar(activityMainBinding.toolbar)
         supportActionBar?.let{
