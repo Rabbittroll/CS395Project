@@ -53,22 +53,30 @@ class MainActivity : AppCompatActivity() {
         actionBarBinding = ActionBarBinding.inflate(layoutInflater)
         // Apply the custom view
         actionBar.customView = actionBarBinding?.root
+
+    }
+
+    private fun actionBarTitleLaunchSubreddit()  {
+        // XXX Write me actionBarBinding
         findViewById<TextView>(R.id.actionTitle).setOnClickListener {
             supportFragmentManager.commit {
                 addToBackStack(null)
-                add(R.id.main_frame, Subreddits.newInstance(), subredditsFragTag)
+                add(R.id.main_frame, Subreddits.newInstance(), MainActivity.subredditsFragTag)
                 // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             }
         }
     }
-
-    private fun actionBarTitleLaunchSubreddit()  {
-        // XXX Write me actionBarBinding
-
-    }
     fun actionBarLaunchFavorites() {
         // XXX Write me actionBarBinding
+        actionBarBinding?.actionFavorite?.setOnClickListener {
+            supportFragmentManager.commit {
+                addToBackStack(null)
+                add(R.id.main_frame, Favorites.newInstance(), favoritesFragTag)
+                // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            }
+        }
     }
 
     // XXX check out addTextChangedListener

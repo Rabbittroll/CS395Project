@@ -21,6 +21,8 @@ class MainViewModel : ViewModel() {
     private val redditApi = RedditApi.create()
     private val repository = RedditPostRepository(redditApi)
     private val posts = MutableLiveData<List<RedditPost>>()
+    private val favs = MutableLiveData<List<RedditPost>>()
+    private var favList: MutableList<RedditPost> = mutableListOf()
     private val subs = MutableLiveData<List<RedditPost>>()
     init {
         Log.d(null, "in viewModel")
@@ -84,6 +86,26 @@ class MainViewModel : ViewModel() {
     }
 
     // XXX Write me, set, observe, deal with favorites
+
+    fun setFavs(post: RedditPost) {
+        if(favs.value.isNullOrEmpty()){
+            favList = mutableListOf()
+        } else {
+            favList = favs.value!!.toMutableList()
+        }
+        favList.add(post)
+        favs.value = favList.toList()
+    }
+
+    fun observeFavs() : MutableLiveData<List<RedditPost>> {
+        return favs
+    }
+
+    fun startFavs() {
+        favList = favs.value!!.toMutableList()
+        favs.value = favList.toList()
+    }
+
 
 
     // Convenient place to put it as it is shared

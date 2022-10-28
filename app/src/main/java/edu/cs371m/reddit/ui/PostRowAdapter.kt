@@ -71,6 +71,11 @@ class PostRowAdapter(private val viewModel: MainViewModel)
         }
         binding.comments.text = getItem(position).commentCount.toString()
         binding.score.text = getItem(position).score.toString()
+        binding.rowFav.setOnClickListener {
+            viewModel.setFavs(getItem(position))
+            Log.d(null, "favorite clicked")
+            binding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
+        }
         Glide.glideFetch(getItem(position).imageURL, getItem(position).thumbnailURL, binding.image)
     }
 }

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import edu.cs371m.reddit.MainActivity
 import edu.cs371m.reddit.databinding.FragmentRvBinding
 
@@ -19,6 +20,7 @@ class Favorites: Fragment() {
     private val viewModel :MainViewModel by activityViewModels()
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
+    lateinit var adapter : PostRowAdapter
 
     companion object {
         fun newInstance(): Favorites {
@@ -36,6 +38,11 @@ class Favorites: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRvBinding.inflate(inflater)
+        adapter = PostRowAdapter(viewModel)
+        val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+        binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.adapter = adapter
+        setDisplayHomeAsUpEnabled(true)
         return binding.root
     }
 
@@ -45,7 +52,11 @@ class Favorites: Fragment() {
         // XXX Write me
         // Setting itemAnimator = null on your recycler view might get rid of an annoying
         // flicker
+        viewModel.observeFavs().observe(viewLifecycleOwner){
+            adapter.submitList(it)
+        }
 
+        viewModel.startFavs()
         // Add to menu
         val menuHost: MenuHost = requireActivity()
 
@@ -59,7 +70,13 @@ class Favorites: Fragment() {
             }
             // XXX Write me, onMenuItemSelected
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                TODO("Not yet implemented")
+                Log.d(null, "in menu item sel")
+                Log.d(null,menuItem.itemId.toString())
+                Log.d(null, android.R.id.home.toString())
+                if(menuItem.itemId == android.R.id.home){
+                    activity!!.supportFragmentManager.popBackStack()
+                }
+                return true
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
