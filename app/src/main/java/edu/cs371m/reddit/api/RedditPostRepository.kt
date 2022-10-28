@@ -42,9 +42,7 @@ class RedditPostRepository(private val redditApi: RedditApi) {
             return unpackPosts(response)
         } else {
             // XXX Write me.
-            val response = gson.fromJson(
-                MainActivity.subreddit1,
-                RedditApi.ListingResponse::class.java)
+            val response = redditApi.getSubreddits()
             return unpackPosts(response)
         }
     }

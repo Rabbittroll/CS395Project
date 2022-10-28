@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -52,10 +53,18 @@ class MainActivity : AppCompatActivity() {
         actionBarBinding = ActionBarBinding.inflate(layoutInflater)
         // Apply the custom view
         actionBar.customView = actionBarBinding?.root
+        findViewById<TextView>(R.id.actionTitle).setOnClickListener {
+            supportFragmentManager.commit {
+                add(R.id.main_frame, Subreddits.newInstance(), subredditsFragTag)
+                // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            }
+        }
     }
 
     private fun actionBarTitleLaunchSubreddit()  {
         // XXX Write me actionBarBinding
+
     }
     fun actionBarLaunchFavorites() {
         // XXX Write me actionBarBinding
@@ -90,6 +99,9 @@ class MainActivity : AppCompatActivity() {
     }
     private fun initTitleObservers() {
         // Observe title changes
+        viewModel.observeTitle().observe(this){
+            actionBarBinding?.actionTitle?.text = it
+        }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,12 +114,14 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.let{
             initActionBar(it)
         }
+
         // Add menu items without overriding methods in the Activity
         // https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
         addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 // Inflate the menu; this adds items to the action bar if it is present.
                 menuInflater.inflate(R.menu.menu_main, menu)
+
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -116,6 +130,8 @@ class MainActivity : AppCompatActivity() {
                     android.R.id.home -> false // Handle in fragment
                     else -> true
                 }
+
+
             }
         })
 
