@@ -96,6 +96,9 @@ class MainActivity : AppCompatActivity() {
             // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         }
+        supportFragmentManager.addOnBackStackChangedListener {
+
+        }
     }
 
     private fun initDebug() {

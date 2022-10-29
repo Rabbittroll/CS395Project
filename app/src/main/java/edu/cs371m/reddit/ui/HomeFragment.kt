@@ -31,12 +31,15 @@ class HomeFragment: Fragment() {
     private fun initAdapter(binding: FragmentRvBinding): PostRowAdapter {
         val adapter = PostRowAdapter(viewModel)
         binding.recyclerView.adapter = adapter
+        parentFragmentManager
         return adapter
     }
 
     private fun notifyWhenFragmentForegrounded(postRowAdapter: PostRowAdapter) {
         // When we return to our fragment, notifyDataSetChanged
         // to pick up modifications to the favorites list.  Maybe do more.
+        Log.d(null, "backstack changed")
+        adapter?.notifyDataSetChanged()
     }
 
     private fun initSwipeLayout(swipe : SwipeRefreshLayout) {
@@ -60,6 +63,7 @@ class HomeFragment: Fragment() {
         viewModel.fetchDone.observe(viewLifecycleOwner) {
             binding.swipeRefreshLayout.isRefreshing = false
         }
+
         return binding.root
 
     }
@@ -68,12 +72,16 @@ class HomeFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d(javaClass.simpleName, "onViewCreated")
         // XXX Write me
-        val adapter = initAdapter(binding)
+        //val adapter = initAdapter(binding)
 
         //Log.d(null, "in home fragment")
         //adapter.submitList(viewModel.ge)
         viewModel.observePosts().observe(viewLifecycleOwner){
             adapter.submitList(it)
         }
+        parentFragmentManager.addOnBackStackChangedListener {
+            notifyWhenFragmentForegrounded(adapter)
+        }
+
     }
 }
