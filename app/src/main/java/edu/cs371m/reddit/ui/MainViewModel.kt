@@ -26,15 +26,31 @@ class MainViewModel : ViewModel() {
     private var favList: MutableList<RedditPost> = mutableListOf()
     private val subs = MutableLiveData<List<RedditPost>>()
     private val searchList = MediatorLiveData<List<RedditPost>>()
+    private val searchFavs = MediatorLiveData<List<RedditPost>>()
+    private val searchSubs = MediatorLiveData<List<RedditPost>>()
     //private val searchText = MutableLiveData<String>()
     init {
-        Log.d(null, "in viewModel")
+        //Log.d(null, "in viewModel")
         searchList.addSource(searchTerm){
             Log.d(null,"in source")
             searchList.value = searchPosts()
         }
         searchList.addSource(posts){
             searchList.value = searchPosts()
+        }
+        searchFavs.addSource(searchTerm){
+            //Log.d(null,"in source")
+            searchFavs.value = searchFavorites()
+        }
+        searchFavs.addSource(favs){
+            searchFavs.value = searchFavorites()
+        }
+        searchSubs.addSource(searchTerm){
+            //Log.d(null,"in source")
+            searchSubs.value = searchSubreddits()
+        }
+        searchSubs.addSource(subs){
+            searchSubs.value = searchSubreddits()
         }
         netPosts()
     }
@@ -54,7 +70,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun searchPosts(): List<RedditPost> {
-        Log.d(null, "in search Posts")
+        //Log.d(null, "in search Posts")
         var retList : MutableList<RedditPost> = mutableListOf()
         if (!searchTerm.value.isNullOrBlank()){
             for (post in posts.value!!){
@@ -66,6 +82,40 @@ class MainViewModel : ViewModel() {
             }
         } else {
             retList = posts.value!!.toMutableList()
+        }
+        return retList.toList()
+    }
+
+    fun searchFavorites(): List<RedditPost> {
+        Log.d(null, "in search Posts")
+        var retList : MutableList<RedditPost> = mutableListOf()
+        if (!searchTerm.value.isNullOrBlank()){
+            for (post in favs.value!!){
+                if(!post.title.isNullOrEmpty()) {
+                    if (post.searchFor(searchTerm.value!!)) {
+                        retList.add(post)
+                    }
+                }
+            }
+        } else {
+            retList = favs.value!!.toMutableList()
+        }
+        return retList.toList()
+    }
+
+    fun searchSubreddits(): List<RedditPost> {
+        Log.d(null, "in search Posts")
+        var retList : MutableList<RedditPost> = mutableListOf()
+        if (!searchTerm.value.isNullOrBlank()){
+            for (post in subs.value!!){
+                if(!post.title.isNullOrEmpty()) {
+                    if (post.searchFor(searchTerm.value!!)) {
+                        retList.add(post)
+                    }
+                }
+            }
+        } else {
+            retList = subs.value!!.toMutableList()
         }
         return retList.toList()
     }
@@ -97,7 +147,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun observeSubs() : MutableLiveData<List<RedditPost>> {
-        return searchList
+        return searchSubs
     }
 
     // Looks pointless, but if LiveData is set up properly, it will fetch posts
@@ -131,7 +181,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun observeFavs() : MutableLiveData<List<RedditPost>> {
-        return favs
+        return searchFavs
     }
 
     fun startFavs() {

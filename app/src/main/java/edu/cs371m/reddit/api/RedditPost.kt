@@ -82,6 +82,7 @@ data class RedditPost (
     // highlight it and return true, otherwise return false.
     fun searchFor(searchTerm: String): Boolean {
         // XXX Write me, search both regular posts and subreddit listings
+        removeAllCurrentSpans()
         var inTitle = false
         var inSelfText = false
         var inDispName = false
