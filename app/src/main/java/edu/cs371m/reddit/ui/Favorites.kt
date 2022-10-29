@@ -37,6 +37,7 @@ class Favorites: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel.setTitleFavs()
         _binding = FragmentRvBinding.inflate(inflater)
         adapter = PostRowAdapter(viewModel)
         val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
@@ -84,6 +85,7 @@ class Favorites: Fragment() {
     override fun onDestroyView() {
         // XXX Write me
         // Don't let back to home button stay when we exit favorites
+        setDisplayHomeAsUpEnabled(false)
         super.onDestroyView()
     }
 }

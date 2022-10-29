@@ -3,12 +3,13 @@ package edu.cs371m.reddit
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
@@ -45,6 +46,27 @@ class OnePost:  AppCompatActivity() {
         binding.title.text = title
         binding.selfText.text = selfText
         Glide.glideFetch(imageURL!!, thumbnailURL!!, binding.image)
+
+
+        // Add menu items without using the Fragment Menu APIs
+        // Note how we can tie the MenuProvider to the viewLifecycleOwner
+        // and an optional Lifecycle.State (here, RESUMED) to indicate when
+        // the menu should be visible
+        addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                // Menu is already inflated by main activity
+            }
+            // XXX Write me, onMenuItemSelected
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                Log.d(null, "in menu item sel")
+                Log.d(null,menuItem.itemId.toString())
+                Log.d(null, android.R.id.home.toString())
+                if(menuItem.itemId == android.R.id.home){
+                    finishAct()
+                }
+                return true
+            }
+        })
 
         // XXX Write me Set our currentUser variable based on what MainActivity passed us
 

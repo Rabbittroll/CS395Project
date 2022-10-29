@@ -31,7 +31,6 @@ class HomeFragment: Fragment() {
     private fun initAdapter(binding: FragmentRvBinding): PostRowAdapter {
         val adapter = PostRowAdapter(viewModel)
         binding.recyclerView.adapter = adapter
-        parentFragmentManager
         return adapter
     }
 
@@ -39,6 +38,7 @@ class HomeFragment: Fragment() {
         // When we return to our fragment, notifyDataSetChanged
         // to pick up modifications to the favorites list.  Maybe do more.
         Log.d(null, "backstack changed")
+        //viewModel.setTitle()
         adapter?.notifyDataSetChanged()
     }
 
@@ -54,7 +54,7 @@ class HomeFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRvBinding.inflate(inflater, container, false)
-        Log.d(null, "on create view")
+        //Log.d(null, "on create view")
         adapter = initAdapter(binding)
         val layoutManager = StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = layoutManager
