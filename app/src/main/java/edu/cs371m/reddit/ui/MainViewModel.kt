@@ -30,6 +30,8 @@ class MainViewModel : ViewModel() {
     private val searchSubs = MediatorLiveData<List<RedditPost>>()
     var fetchDone : MutableLiveData<Boolean> = MutableLiveData(false)
     var isHome : MutableLiveData<Boolean> = MutableLiveData(false)
+    var searchStarted : MutableLiveData<Boolean> = MutableLiveData(false)
+    var searchEmpty : MutableLiveData<Boolean> = MutableLiveData(false)
     //private val searchText = MutableLiveData<String>()
     init {
         //Log.d(null, "in viewModel")
@@ -77,52 +79,64 @@ class MainViewModel : ViewModel() {
     fun searchPosts(): List<RedditPost> {
         //Log.d(null, "in search Posts")
         var retList : MutableList<RedditPost> = mutableListOf()
-        if (searchTerm.value != null){
-            for (post in posts.value!!){
-                if(!post.title.isNullOrEmpty()) {
-                    if (post.searchFor(searchTerm.value!!)) {
-                        retList.add(post)
+        if (posts.value == null) {
+            return emptyList()
+        } else {
+            if (searchTerm.value != null) {
+                for (post in posts.value!!) {
+                    if (!post.title.isNullOrEmpty()) {
+                        if (post.searchFor(searchTerm.value!!)) {
+                            retList.add(post)
+                        }
                     }
                 }
+            } else {
+                retList = posts.value!!.toMutableList()
             }
-        } else {
-            retList = posts.value!!.toMutableList()
+            return retList.toList()
         }
-        return retList.toList()
     }
 
     fun searchFavorites(): List<RedditPost> {
         Log.d(null, "in search Posts")
         var retList : MutableList<RedditPost> = mutableListOf()
-        if (searchTerm.value != null){
-            for (post in favs.value!!){
-                if(!post.title.isNullOrEmpty()) {
-                    if (post.searchFor(searchTerm.value!!)) {
-                        retList.add(post)
+        if (favs.value == null) {
+            return emptyList()
+        } else {
+            if (searchTerm.value != null) {
+                for (post in favs.value!!) {
+                    if (!post.title.isNullOrEmpty()) {
+                        if (post.searchFor(searchTerm.value!!)) {
+                            retList.add(post)
+                        }
                     }
                 }
+            } else {
+                retList = favs.value!!.toMutableList()
             }
-        } else {
-            retList = favs.value!!.toMutableList()
+            return retList.toList()
         }
-        return retList.toList()
     }
 
     fun searchSubreddits(): List<RedditPost> {
         Log.d(null, "in search Posts")
         var retList : MutableList<RedditPost> = mutableListOf()
-        if (searchTerm.value != null){
-            for (post in subs.value!!){
-                if(!post.title.isNullOrEmpty()) {
-                    if (post.searchFor(searchTerm.value!!)) {
-                        retList.add(post)
+        if (subs.value == null) {
+            return emptyList()
+        } else {
+            if (searchTerm.value != null) {
+                for (post in subs.value!!) {
+                    if (!post.title.isNullOrEmpty()) {
+                        if (post.searchFor(searchTerm.value!!)) {
+                            retList.add(post)
+                        }
                     }
                 }
+            } else {
+                retList = subs.value!!.toMutableList()
             }
-        } else {
-            retList = subs.value!!.toMutableList()
+            return retList.toList()
         }
-        return retList.toList()
     }
 
     fun setTerm(string: String) {
@@ -135,10 +149,6 @@ class MainViewModel : ViewModel() {
         isHome.value = bool
     }
 
-    fun getHomeFrag() : Boolean {
-        return isHome.value!!
-    }
-
     fun netSubreddits(){
         viewModelScope.launch(
             context = viewModelScope.coroutineContext
@@ -149,6 +159,14 @@ class MainViewModel : ViewModel() {
             val temp = repository.getSubreddits()
             subs.postValue(temp)
             fetchDone.postValue(true)
+        }
+    }
+
+    fun getSearchSize() : Int {
+        if(searchTerm.value.isNullOrEmpty()){
+            return 0
+        } else {
+            return searchTerm.value!!.length
         }
     }
 
