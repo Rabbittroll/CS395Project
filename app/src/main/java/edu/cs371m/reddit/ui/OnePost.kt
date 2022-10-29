@@ -24,6 +24,7 @@ import edu.cs371m.reddit.glide.Glide
 class OnePost:  AppCompatActivity() {
 
     private var title : String? = ""
+    private var truncTitle: String = ""
     private var selfText : String? = ""
     private var imageURL : String? = ""
     private var thumbnailURL : String? = ""
@@ -42,8 +43,18 @@ class OnePost:  AppCompatActivity() {
         imageURL = intent.getStringExtra("imageURL").toString()
         thumbnailURL = intent.getStringExtra("thumbnailURL").toString()
 
+        if (title != null) {
+            if (title!!.length > 30) {
+                truncTitle = title!!.take(30) + "..."
+            } else {
+                truncTitle = title!!
+            }
+            binding.title.text = truncTitle
+        } else {
+            binding.title.text = title
+        }
+
         supportActionBar?.title = title
-        binding.title.text = title
         binding.selfText.text = selfText
         Glide.glideFetch(imageURL!!, thumbnailURL!!, binding.image)
 
