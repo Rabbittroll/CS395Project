@@ -82,7 +82,9 @@ class HomeFragment: Fragment() {
             adapter.submitList(it)
         }
         parentFragmentManager.addOnBackStackChangedListener {
-            notifyWhenFragmentForegrounded(adapter)
+            if (parentFragmentManager.backStackEntryCount == 0) {
+                notifyWhenFragmentForegrounded(adapter)
+            }
         }
 
     }

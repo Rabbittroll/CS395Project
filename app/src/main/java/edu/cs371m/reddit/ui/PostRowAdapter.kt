@@ -51,6 +51,7 @@ class PostRowAdapter(private val viewModel: MainViewModel)
 
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostRowAdapter.VH {
         val rowBinding = RowPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return VH(rowBinding)

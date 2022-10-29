@@ -29,6 +29,7 @@ class MainViewModel : ViewModel() {
     private val searchFavs = MediatorLiveData<List<RedditPost>>()
     private val searchSubs = MediatorLiveData<List<RedditPost>>()
     var fetchDone : MutableLiveData<Boolean> = MutableLiveData(false)
+    var isHome : MutableLiveData<Boolean> = MutableLiveData(true)
     //private val searchText = MutableLiveData<String>()
     init {
         //Log.d(null, "in viewModel")
@@ -130,6 +131,14 @@ class MainViewModel : ViewModel() {
         Log.d(null, searchTerm.value!!)
     }
 
+    fun setHomeFrag(bool: Boolean){
+        isHome.value = bool
+    }
+
+    fun getHomeFrag() : Boolean {
+        return isHome.value!!
+    }
+
     fun netSubreddits(){
         viewModelScope.launch(
             context = viewModelScope.coroutineContext
@@ -182,11 +191,13 @@ class MainViewModel : ViewModel() {
     }
 
     fun setTitleFavs() {
+        Log.d(null, "in set title to fav")
         title.value = "Favorites"
     }
 
     // The parsimonious among you will find that you can call this in exactly two places
     fun setTitleToSubreddit() {
+        Log.d(null, "in set title to sub")
         title.value = "r/${subreddit.value}"
     }
 
