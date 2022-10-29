@@ -28,6 +28,7 @@ class MainViewModel : ViewModel() {
     private val searchList = MediatorLiveData<List<RedditPost>>()
     private val searchFavs = MediatorLiveData<List<RedditPost>>()
     private val searchSubs = MediatorLiveData<List<RedditPost>>()
+    var fetchDone : MutableLiveData<Boolean> = MutableLiveData(false)
     //private val searchText = MutableLiveData<String>()
     init {
         //Log.d(null, "in viewModel")
@@ -63,9 +64,11 @@ class MainViewModel : ViewModel() {
                     + Dispatchers.IO
         ) {
             // Update LiveData from IO dispatcher, use postValue
-            Log.d(null,subreddit.value.toString())
+            //Log.d(null,subreddit.value.toString())
+            fetchDone.postValue(false)
             val temp = repository.getPosts(subreddit.value.toString())
             posts.postValue(temp)
+            fetchDone.postValue(true)
         }
     }
 
@@ -132,8 +135,10 @@ class MainViewModel : ViewModel() {
                     + Dispatchers.IO
         ) {
             // Update LiveData from IO dispatcher, use postValue
+            fetchDone.postValue(false)
             val temp = repository.getSubreddits()
             subs.postValue(temp)
+            fetchDone.postValue(true)
         }
     }
 

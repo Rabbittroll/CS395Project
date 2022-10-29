@@ -40,6 +40,9 @@ class HomeFragment: Fragment() {
     }
 
     private fun initSwipeLayout(swipe : SwipeRefreshLayout) {
+        swipe.setOnRefreshListener {
+            viewModel.netPosts()
+        }
     }
 
     override fun onCreateView(
@@ -53,6 +56,10 @@ class HomeFragment: Fragment() {
         val layoutManager = StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
+        initSwipeLayout(binding.swipeRefreshLayout)
+        viewModel.fetchDone.observe(viewLifecycleOwner) {
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
         return binding.root
 
     }
