@@ -82,26 +82,31 @@ data class RedditPost (
     // highlight it and return true, otherwise return false.
     fun searchFor(searchTerm: String): Boolean {
         // XXX Write me, search both regular posts and subreddit listings
-        removeAllCurrentSpans()
-        var inTitle = false
-        var inSelfText = false
-        var inDispName = false
-        var inPubDesc = false
-        if (!title.isNullOrEmpty()) {
-            inTitle = findAndSetSpan(title, searchTerm)
-        }
-        if (!selfText.isNullOrEmpty()) {
-            inSelfText = findAndSetSpan(selfText, searchTerm)
-        }
-        if (!displayName.isNullOrEmpty()) {
-            inDispName = findAndSetSpan(displayName, searchTerm)
-        }
-        if (!publicDescription.isNullOrEmpty()) {
-            inPubDesc = findAndSetSpan(publicDescription, searchTerm)
-        }
+        if (searchTerm.isNullOrBlank()){
+            removeAllCurrentSpans()
+            return true
+        } else {
+            removeAllCurrentSpans()
+            var inTitle = false
+            var inSelfText = false
+            var inDispName = false
+            var inPubDesc = false
+            if (!title.isNullOrEmpty()) {
+                inTitle = findAndSetSpan(title, searchTerm)
+            }
+            if (!selfText.isNullOrEmpty()) {
+                inSelfText = findAndSetSpan(selfText, searchTerm)
+            }
+            if (!displayName.isNullOrEmpty()) {
+                inDispName = findAndSetSpan(displayName, searchTerm)
+            }
+            if (!publicDescription.isNullOrEmpty()) {
+                inPubDesc = findAndSetSpan(publicDescription, searchTerm)
+            }
 
 
-        return (inTitle || inSelfText || inDispName || inPubDesc)
+            return (inTitle || inSelfText || inDispName || inPubDesc)
+        }
     }
 
     // NB: This changes the behavior of lists of RedditPosts.  I want posts fetched

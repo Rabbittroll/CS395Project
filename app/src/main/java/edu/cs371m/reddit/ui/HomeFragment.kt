@@ -70,7 +70,7 @@ class HomeFragment: Fragment() {
         // XXX Write me
         val adapter = initAdapter(binding)
 
-        Log.d(null, "in home fragment")
+        //Log.d(null, "in home fragment")
         //adapter.submitList(viewModel.ge)
         viewModel.observePosts().observe(viewLifecycleOwner){
             adapter.submitList(it)

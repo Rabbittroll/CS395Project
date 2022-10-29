@@ -75,7 +75,7 @@ class MainViewModel : ViewModel() {
     fun searchPosts(): List<RedditPost> {
         //Log.d(null, "in search Posts")
         var retList : MutableList<RedditPost> = mutableListOf()
-        if (!searchTerm.value.isNullOrBlank()){
+        if (searchTerm.value != null){
             for (post in posts.value!!){
                 if(!post.title.isNullOrEmpty()) {
                     if (post.searchFor(searchTerm.value!!)) {
@@ -166,8 +166,12 @@ class MainViewModel : ViewModel() {
         return title
     }
     fun setTitle(newTitle: String) {
-        title.value = newTitle
+        title.value = "r/${newTitle}"
     }
+    fun setTitlePick() {
+        title.value = "Pick"
+    }
+
     // The parsimonious among you will find that you can call this in exactly two places
     fun setTitleToSubreddit() {
         title.value = "r/${subreddit.value}"
@@ -190,7 +194,11 @@ class MainViewModel : ViewModel() {
     }
 
     fun startFavs() {
-        favList = favs.value!!.toMutableList()
+        if(favs.value.isNullOrEmpty()){
+            favList = mutableListOf()
+        } else {
+            favList = favs.value!!.toMutableList()
+        }
         favs.value = favList.toList()
     }
 
