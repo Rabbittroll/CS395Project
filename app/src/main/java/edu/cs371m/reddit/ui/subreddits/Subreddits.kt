@@ -35,6 +35,7 @@ class Subreddits : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         viewModel.setTitlePick()
+        viewModel.setHomeFrag(false)
         Log.d(null,"in subreddit")
         viewModel.netSubreddits()
         _binding = FragmentRvBinding.inflate(inflater, container, false)

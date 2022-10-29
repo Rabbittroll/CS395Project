@@ -46,6 +46,11 @@ class MainActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(window.decorView.rootView.windowToken, 0)
     }
 
+    fun turnOffFav() {
+        actionBarBinding?.actionFavorite?.setOnClickListener {
+        }
+    }
+
     // https://stackoverflow.com/questions/24838155/set-onclick-listener-on-action-bar-title-in-android/29823008#29823008
     private fun initActionBar(actionBar: ActionBar) {
         // Disable the default and enable the custom
@@ -59,6 +64,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun actionBarTitleLaunchSubreddit()  {
         // XXX Write me actionBarBinding
+
         findViewById<TextView>(R.id.actionTitle).setOnClickListener {
             supportFragmentManager.commit {
                 addToBackStack(null)
@@ -71,11 +77,13 @@ class MainActivity : AppCompatActivity() {
     fun actionBarLaunchFavorites() {
         // XXX Write me actionBarBinding
         actionBarBinding?.actionFavorite?.setOnClickListener {
-            supportFragmentManager.commit {
-                addToBackStack(null)
-                add(R.id.main_frame, Favorites.newInstance(), favoritesFragTag)
-                // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            if (viewModel.isHome.value!!) {
+                supportFragmentManager.commit {
+                    addToBackStack(null)
+                    add(R.id.main_frame, Favorites.newInstance(), favoritesFragTag)
+                    // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                }
             }
         }
     }

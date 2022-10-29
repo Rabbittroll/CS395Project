@@ -29,7 +29,7 @@ class MainViewModel : ViewModel() {
     private val searchFavs = MediatorLiveData<List<RedditPost>>()
     private val searchSubs = MediatorLiveData<List<RedditPost>>()
     var fetchDone : MutableLiveData<Boolean> = MutableLiveData(false)
-    var isHome : MutableLiveData<Boolean> = MutableLiveData(true)
+    var isHome : MutableLiveData<Boolean> = MutableLiveData(false)
     //private val searchText = MutableLiveData<String>()
     init {
         //Log.d(null, "in viewModel")

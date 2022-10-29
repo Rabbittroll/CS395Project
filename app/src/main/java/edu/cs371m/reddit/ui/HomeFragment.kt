@@ -38,6 +38,7 @@ class HomeFragment: Fragment() {
         // When we return to our fragment, notifyDataSetChanged
         // to pick up modifications to the favorites list.  Maybe do more.
         Log.d(null, "backstack changed")
+        viewModel.setHomeFrag(true)
         //viewModel.setTitle()
         //postRowAdapter.submitList(viewModel.searchPosts())
         viewModel.setTitleToSubreddit()
@@ -57,6 +58,7 @@ class HomeFragment: Fragment() {
     ): View {
         _binding = FragmentRvBinding.inflate(inflater, container, false)
         //Log.d(null, "on create view")
+        viewModel.setHomeFrag(true)
         adapter = initAdapter(binding)
         val layoutManager = StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = layoutManager

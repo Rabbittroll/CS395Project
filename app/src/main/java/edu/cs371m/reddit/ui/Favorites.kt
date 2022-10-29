@@ -38,6 +38,7 @@ class Favorites: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         viewModel.setTitleFavs()
+        viewModel.setHomeFrag(false)
         _binding = FragmentRvBinding.inflate(inflater)
         adapter = PostRowAdapter(viewModel)
         val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
