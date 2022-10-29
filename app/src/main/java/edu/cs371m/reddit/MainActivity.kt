@@ -146,7 +146,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-
+        viewModel.clearFavs()
         addHomeFragment()
         initDebug()
         initTitleObservers()

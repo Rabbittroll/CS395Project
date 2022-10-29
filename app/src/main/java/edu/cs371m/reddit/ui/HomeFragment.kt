@@ -39,7 +39,9 @@ class HomeFragment: Fragment() {
         // to pick up modifications to the favorites list.  Maybe do more.
         Log.d(null, "backstack changed")
         //viewModel.setTitle()
-        adapter?.notifyDataSetChanged()
+        //postRowAdapter.submitList(viewModel.searchPosts())
+        viewModel.setTitleToSubreddit()
+        postRowAdapter.notifyDataSetChanged()
     }
 
     private fun initSwipeLayout(swipe : SwipeRefreshLayout) {

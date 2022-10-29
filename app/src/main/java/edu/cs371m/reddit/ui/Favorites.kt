@@ -44,6 +44,9 @@ class Favorites: Fragment() {
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
         setDisplayHomeAsUpEnabled(true)
+        viewModel.fetchDone.observe(viewLifecycleOwner) {
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
         return binding.root
     }
 
@@ -57,7 +60,7 @@ class Favorites: Fragment() {
             adapter.submitList(it)
         }
 
-        viewModel.startFavs()
+        //viewModel.startFavs()
         // Add to menu
         val menuHost: MenuHost = requireActivity()
 

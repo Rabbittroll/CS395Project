@@ -71,18 +71,33 @@ class PostRowAdapter(private val viewModel: MainViewModel)
         }
         binding.comments.text = getItem(position).commentCount.toString()
         binding.score.text = getItem(position).score.toString()
+        if(!viewModel.getFavs().isNullOrEmpty()){
+            if (viewModel.getFavs()!!.contains(getItem(position))){
+                binding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
+                Log.d(null, "set to fav")
+                viewModel.clearFavs()
+            } else {
+                binding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
+            }
+        } else {
+            binding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
+        }
         binding.rowFav.setOnClickListener {
             if(!viewModel.getFavs().isNullOrEmpty()){
                 if (viewModel.getFavs()!!.contains(getItem(position))){
                     viewModel.removeFavs(getItem(position))
                     binding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
+                    Log.d(null, "set off fav click")
+                    viewModel.clearFavs()
                 } else {
                     viewModel.setFavs(getItem(position))
                     binding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
+                    Log.d(null, "set to fav click")
                 }
             } else {
                 viewModel.setFavs(getItem(position))
                 binding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
+                Log.d(null, "set to fav click")
             }
         }
         Glide.glideFetch(getItem(position).imageURL, getItem(position).thumbnailURL, binding.image)
