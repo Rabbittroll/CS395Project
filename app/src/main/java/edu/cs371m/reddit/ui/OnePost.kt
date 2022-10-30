@@ -50,11 +50,13 @@ class OnePost:  AppCompatActivity() {
                 truncTitle = title!!
             }
             binding.title.text = truncTitle
+            supportActionBar?.title = truncTitle
         } else {
             binding.title.text = title
+            supportActionBar?.title = title
         }
 
-        supportActionBar?.title = title
+        //supportActionBar?.title = title
         binding.selfText.text = selfText
         Glide.glideFetch(imageURL!!, thumbnailURL!!, binding.image)
 
