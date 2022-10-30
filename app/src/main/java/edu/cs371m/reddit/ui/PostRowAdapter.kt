@@ -82,7 +82,7 @@ class PostRowAdapter(private val viewModel: MainViewModel)
         }
         binding.rowFav.setOnClickListener {
             if(!viewModel.getFavs().isNullOrEmpty()){
-                if (viewModel.getFavs()!!.contains(getItem(position))){
+                if (viewModel.getFavs()!!.contains(curPost)){
                     viewModel.removeFavs(curPost)
                     binding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
                 } else {

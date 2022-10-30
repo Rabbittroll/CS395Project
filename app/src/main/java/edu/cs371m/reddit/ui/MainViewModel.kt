@@ -217,6 +217,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun removeFavs(post: RedditPost) {
+        Log.d(null, "remove is called")
         favList = favs.value!!.toMutableList()
         if (favList.size <= 1){
             favs.value = emptyList()
@@ -224,7 +225,7 @@ class MainViewModel : ViewModel() {
             favList.remove(post)
             favs.value = favList.toList()
         }
-        Log.d(null, "here")
+
     }
 
     fun removeFavAt(int: Int) {
