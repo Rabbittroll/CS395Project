@@ -56,7 +56,6 @@ class OnePost:  AppCompatActivity() {
             supportActionBar?.title = title
         }
 
-        //supportActionBar?.title = title
         binding.selfText.text = selfText
         Glide.glideFetch(imageURL!!, thumbnailURL!!, binding.image)
 
@@ -71,9 +70,6 @@ class OnePost:  AppCompatActivity() {
             }
             // XXX Write me, onMenuItemSelected
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                Log.d(null, "in menu item sel")
-                Log.d(null,menuItem.itemId.toString())
-                Log.d(null, android.R.id.home.toString())
                 if(menuItem.itemId == android.R.id.home){
                     finishAct()
                 }
@@ -86,16 +82,12 @@ class OnePost:  AppCompatActivity() {
     }
 
     private fun finishAct() {
-        //println(currentUser.toString())
+
 
         val returnIntent = Intent().apply {
         }
 
-        //println(returnIntent)
         setResult(RESULT_OK, returnIntent)
-        //var retScore = MainActivity.Score(currentUser.toString(), gameScore)
-        //intent.putExtra("gameScore", gameScore)
-        //setResult(RESULT_OK, intent)
         finish()
         // XXX Write me
     }

@@ -9,3 +9,4 @@
   On startup when testing with older android emulators, i get an error retrieving the package edu.cs371m.reddit on startup but not on newer ones.
   There was conflicting information for decoding html in text on piazza, I left it as is from reddit since it was not specified.
   I populate both the text and picture in posts that have both, project spec said this could be handled however we wanted.
+  Keyboard only disappears when search term is deleted as shown in demo and specified in project spec, clicking outside does not close it.

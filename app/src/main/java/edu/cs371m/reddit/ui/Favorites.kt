@@ -78,7 +78,6 @@ class Favorites: Fragment() {
             }
             // XXX Write me, onMenuItemSelected
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                Log.d(null, "in menu item sel")
                 Log.d(null,menuItem.itemId.toString())
                 Log.d(null, android.R.id.home.toString())
                 if(menuItem.itemId == android.R.id.home){

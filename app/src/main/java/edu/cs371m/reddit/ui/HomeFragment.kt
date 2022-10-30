@@ -37,11 +37,8 @@ class HomeFragment: Fragment() {
     private fun notifyWhenFragmentForegrounded(postRowAdapter: PostRowAdapter) {
         // When we return to our fragment, notifyDataSetChanged
         // to pick up modifications to the favorites list.  Maybe do more.
-        Log.d(null, "backstack changed")
         viewModel.setHomeFrag(true)
         initSwipeLayout(binding.swipeRefreshLayout)
-        //viewModel.setTitle()
-        //postRowAdapter.submitList(viewModel.searchPosts())
         viewModel.setTitleToSubreddit()
         postRowAdapter.notifyDataSetChanged()
     }
@@ -67,7 +64,6 @@ class HomeFragment: Fragment() {
         initSwipeLayout(binding.swipeRefreshLayout)
         viewModel.fetchDone.observe(viewLifecycleOwner) {
             binding.swipeRefreshLayout.isRefreshing = false
-            Log.d(null, "in swipe refresh")
         }
 
         return binding.root

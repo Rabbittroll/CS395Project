@@ -46,10 +46,6 @@ class MainActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(window.decorView.rootView.windowToken, 0)
     }
 
-    fun turnOffFav() {
-        actionBarBinding?.actionFavorite?.setOnClickListener {
-        }
-    }
 
     // https://stackoverflow.com/questions/24838155/set-onclick-listener-on-action-bar-title-in-android/29823008#29823008
     private fun initActionBar(actionBar: ActionBar) {
@@ -158,7 +154,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.clearFavs()
         addHomeFragment()
         initDebug()
         initTitleObservers()

@@ -43,11 +43,9 @@ class MainViewModel : ViewModel() {
             searchList.value = searchPosts()
         }
         searchFavs.addSource(searchTerm){
-            Log.d(null, "in searchFavs")
             searchFavs.value = searchFavorites()
         }
         searchFavs.addSource(favs){
-            Log.d(null, "in searchFavs")
             searchFavs.value = searchFavorites()
         }
         searchSubs.addSource(searchTerm){
@@ -98,7 +96,6 @@ class MainViewModel : ViewModel() {
     }
 
     fun searchFavorites(): List<RedditPost> {
-        Log.d(null, "in search Posts")
         var retList : MutableList<RedditPost> = mutableListOf()
         if (favs.value == null) {
             return emptyList()
@@ -119,7 +116,6 @@ class MainViewModel : ViewModel() {
     }
 
     fun searchSubreddits(): List<RedditPost> {
-        Log.d(null, "in search Posts")
         var retList : MutableList<RedditPost> = mutableListOf()
         if (subs.value == null) {
             return emptyList()
@@ -141,8 +137,6 @@ class MainViewModel : ViewModel() {
 
     fun setTerm(string: String) {
         searchTerm.value = string
-        Log.d(null, "setting term")
-        Log.d(null, searchTerm.value!!)
     }
 
     fun setHomeFrag(bool: Boolean){
@@ -156,7 +150,6 @@ class MainViewModel : ViewModel() {
         ) {
             // Update LiveData from IO dispatcher, use postValue
             fetchDone.postValue(false)
-            Log.d(null, "in sub refresh")
             val temp = repository.getSubreddits()
             subs.postValue(temp)
             fetchDone.postValue(true)
@@ -171,13 +164,6 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun clearFavs() {
-        if (favs.value.isNullOrEmpty()) {
-            Log.d(null, "favs empty")
-        } else{
-            Log.d(null, "Fav size is: " + favs.value!!.size.toString())
-         }
-    }
     fun setSubreddits(sub: String){
         subreddit.value = sub
 
@@ -210,20 +196,17 @@ class MainViewModel : ViewModel() {
     }
 
     fun setTitleFavs() {
-        Log.d(null, "in set title to fav")
         title.value = "Favorites"
     }
 
     // The parsimonious among you will find that you can call this in exactly two places
     fun setTitleToSubreddit() {
-        Log.d(null, "in set title to sub")
         title.value = "r/${subreddit.value}"
     }
 
     // XXX Write me, set, observe, deal with favorites
 
     fun setFavs(post: RedditPost) {
-        Log.d(null, "in setFavs")
         if(favs.value.isNullOrEmpty()){
             favList = mutableListOf()
         } else {
@@ -238,19 +221,16 @@ class MainViewModel : ViewModel() {
     }
 
     fun removeFavs(post: RedditPost) {
-        Log.d(null, "in removeFavs")
         favList = favs.value!!.toMutableList()
         favList.remove(post)
         favs.value = favList.toList()
     }
 
     fun observeFavs() : MutableLiveData<List<RedditPost>> {
-        Log.d(null, "in observeFavs")
         return searchFavs
     }
 
     fun startFavs() {
-        Log.d(null, "in startFavs")
         if(favs.value.isNullOrEmpty()){
             favList = mutableListOf()
         } else {

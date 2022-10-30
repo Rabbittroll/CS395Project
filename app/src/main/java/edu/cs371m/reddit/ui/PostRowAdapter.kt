@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import edu.cs371m.reddit.MainActivity
 import edu.cs371m.reddit.OnePost
 import edu.cs371m.reddit.R
 import edu.cs371m.reddit.api.RedditPost
@@ -34,7 +35,6 @@ class PostRowAdapter(private val viewModel: MainViewModel)
         : RecyclerView.ViewHolder(rowPostBinding.root){
         init {
             rowPostBinding.root.setOnClickListener {
-                Log.d(null, "here")
             }
         }
     }
@@ -55,7 +55,6 @@ class PostRowAdapter(private val viewModel: MainViewModel)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostRowAdapter.VH {
         val rowBinding = RowPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return VH(rowBinding)
-        Log.d(null, "in Post Row OCVH")
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
@@ -75,8 +74,6 @@ class PostRowAdapter(private val viewModel: MainViewModel)
         if(!viewModel.getFavs().isNullOrEmpty()){
             if (viewModel.getFavs()!!.contains(getItem(position))){
                 binding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
-                Log.d(null, "set to fav")
-                viewModel.clearFavs()
             } else {
                 binding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
             }
@@ -88,17 +85,13 @@ class PostRowAdapter(private val viewModel: MainViewModel)
                 if (viewModel.getFavs()!!.contains(getItem(position))){
                     viewModel.removeFavs(getItem(position))
                     binding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
-                    Log.d(null, "set off fav click")
-                    viewModel.clearFavs()
                 } else {
                     viewModel.setFavs(getItem(position))
                     binding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
-                    Log.d(null, "set to fav click")
                 }
             } else {
                 viewModel.setFavs(getItem(position))
                 binding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
-                Log.d(null, "set to fav click")
             }
         }
         binding.selfText.text = getItem(position).selfText
