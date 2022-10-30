@@ -60,7 +60,7 @@ class PostRowAdapter(private val viewModel: MainViewModel)
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val binding = holder.rowPostBinding
-        binding.selfText.text = getItem(position).selfText
+
         binding.title.text = getItem(position).title
         binding.title.setOnClickListener {
             val intent = Intent(binding.title.context, OnePost::class.java)
@@ -101,6 +101,7 @@ class PostRowAdapter(private val viewModel: MainViewModel)
                 Log.d(null, "set to fav click")
             }
         }
+        binding.selfText.text = getItem(position).selfText
         Glide.glideFetch(getItem(position).imageURL, getItem(position).thumbnailURL, binding.image)
     }
 }
