@@ -97,10 +97,13 @@ class MainViewModel : ViewModel() {
     }
 
     fun searchFavorites(): List<RedditPost> {
+        Log.d(null,"in serfav")
         var retList : MutableList<RedditPost> = mutableListOf()
-        if (favs.value == null) {
+        if (favs.value.isNullOrEmpty()) {
             return emptyList()
+            Log.d(null,"in serfav1")
         } else {
+            Log.d(null,"in serfav2")
             if (searchTerm.value != null) {
                 for (post in favs.value!!) {
                     if (!post.title.isNullOrEmpty()) {
@@ -221,6 +224,7 @@ class MainViewModel : ViewModel() {
             favList.remove(post)
             favs.value = favList.toList()
         }
+        Log.d(null, "here")
     }
 
     fun removeFavAt(int: Int) {
