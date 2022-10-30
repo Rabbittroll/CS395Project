@@ -61,10 +61,11 @@ class Favorites: Fragment() {
         // Setting itemAnimator = null on your recycler view might get rid of an annoying
         // flicker
         viewModel.observeFavs().observe(viewLifecycleOwner){
+
             adapter.submitList(it)
         }
 
-        //viewModel.startFavs()
+        viewModel.startFavs()
         // Add to menu
         val menuHost: MenuHost = requireActivity()
 

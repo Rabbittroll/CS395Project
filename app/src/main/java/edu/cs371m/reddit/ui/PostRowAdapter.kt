@@ -59,7 +59,7 @@ class PostRowAdapter(private val viewModel: MainViewModel)
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val binding = holder.rowPostBinding
-
+        val curPost = getItem(position)
         binding.title.text = getItem(position).title
         binding.title.setOnClickListener {
             val intent = Intent(binding.title.context, OnePost::class.java)
@@ -83,7 +83,7 @@ class PostRowAdapter(private val viewModel: MainViewModel)
         binding.rowFav.setOnClickListener {
             if(!viewModel.getFavs().isNullOrEmpty()){
                 if (viewModel.getFavs()!!.contains(getItem(position))){
-                    viewModel.removeFavs(getItem(position))
+                    viewModel.removeFavs(curPost)
                     binding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
                 } else {
                     viewModel.setFavs(getItem(position))

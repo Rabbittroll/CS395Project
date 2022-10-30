@@ -46,6 +46,7 @@ class MainViewModel : ViewModel() {
             searchFavs.value = searchFavorites()
         }
         searchFavs.addSource(favs){
+            Log.d(null,"favs updating")
             searchFavs.value = searchFavorites()
         }
         searchSubs.addSource(searchTerm){
@@ -156,14 +157,6 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun getSearchSize() : Int {
-        if(searchTerm.value.isNullOrEmpty()){
-            return 0
-        } else {
-            return searchTerm.value!!.length
-        }
-    }
-
     fun setSubreddits(sub: String){
         subreddit.value = sub
 
@@ -222,8 +215,22 @@ class MainViewModel : ViewModel() {
 
     fun removeFavs(post: RedditPost) {
         favList = favs.value!!.toMutableList()
-        favList.remove(post)
+        if (favList.size <= 1){
+            favs.value = emptyList()
+        } else {
+            favList.remove(post)
+            favs.value = favList.toList()
+        }
+    }
+
+    fun removeFavAt(int: Int) {
+        favList = favs.value!!.toMutableList()
+        favList.removeAt(int)
         favs.value = favList.toList()
+    }
+
+    fun getIndexOf(post: RedditPost) : Int {
+        return favs.value!!.toMutableList().indexOf(post)
     }
 
     fun observeFavs() : MutableLiveData<List<RedditPost>> {
