@@ -156,6 +156,7 @@ class MainViewModel : ViewModel() {
         ) {
             // Update LiveData from IO dispatcher, use postValue
             fetchDone.postValue(false)
+            Log.d(null, "in sub refresh")
             val temp = repository.getSubreddits()
             subs.postValue(temp)
             fetchDone.postValue(true)

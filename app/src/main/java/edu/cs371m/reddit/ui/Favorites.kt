@@ -44,10 +44,13 @@ class Favorites: Fragment() {
         val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
-        setDisplayHomeAsUpEnabled(true)
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.netPosts()
+        }
         viewModel.fetchDone.observe(viewLifecycleOwner) {
             binding.swipeRefreshLayout.isRefreshing = false
         }
+        setDisplayHomeAsUpEnabled(true)
         return binding.root
     }
 

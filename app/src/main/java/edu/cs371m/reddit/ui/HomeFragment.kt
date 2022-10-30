@@ -39,6 +39,7 @@ class HomeFragment: Fragment() {
         // to pick up modifications to the favorites list.  Maybe do more.
         Log.d(null, "backstack changed")
         viewModel.setHomeFrag(true)
+        initSwipeLayout(binding.swipeRefreshLayout)
         //viewModel.setTitle()
         //postRowAdapter.submitList(viewModel.searchPosts())
         viewModel.setTitleToSubreddit()
@@ -66,6 +67,7 @@ class HomeFragment: Fragment() {
         initSwipeLayout(binding.swipeRefreshLayout)
         viewModel.fetchDone.observe(viewLifecycleOwner) {
             binding.swipeRefreshLayout.isRefreshing = false
+            Log.d(null, "in swipe refresh")
         }
 
         return binding.root

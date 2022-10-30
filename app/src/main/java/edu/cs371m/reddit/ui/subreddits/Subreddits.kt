@@ -43,6 +43,12 @@ class Subreddits : Fragment() {
         val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.netSubreddits()
+        }
+        viewModel.fetchDone.observe(viewLifecycleOwner) {
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
         return binding.root
     }
 
