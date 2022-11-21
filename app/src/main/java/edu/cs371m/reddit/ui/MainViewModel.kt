@@ -6,11 +6,13 @@ import android.content.Intent
 import android.icu.text.StringSearch
 import android.util.Log
 import androidx.lifecycle.*
+import edu.cs371m.reddit.FirestoreAuthLiveData
 import edu.cs371m.reddit.api.RedditApi
 import edu.cs371m.reddit.api.RedditPost
 import edu.cs371m.reddit.api.RedditPostRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 
 // XXX Much to write
 class MainViewModel : ViewModel() {
@@ -19,6 +21,7 @@ class MainViewModel : ViewModel() {
     private var subreddit = MutableLiveData<String>().apply {
         value = "aww"
     }
+    private var firebaseAuthLiveData = FirestoreAuthLiveData()
     private val redditApi = RedditApi.create()
     private val repository = RedditPostRepository(redditApi)
     private val posts = MutableLiveData<List<RedditPost>>()
@@ -249,6 +252,10 @@ class MainViewModel : ViewModel() {
             favList = favs.value!!.toMutableList()
         }
         favs.value = favList.toList()
+    }
+
+    fun updateUser() {
+        firebaseAuthLiveData.updateUser()
     }
 
 
