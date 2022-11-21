@@ -8,11 +8,10 @@ import edu.cs371m.reddit.model.Calendar
 
 class ViewModelDBHelper() {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private val rootCollection = "allPhotos"
+    private val rootCollection = "allCalendars"
 
-    fun fetchPhotoMeta(sortInfo: SortInfo,
-                       notesList: MutableLiveData<List<Calendar>>) {
-        dbFetchPhotoMeta(sortInfo, notesList)
+    fun fetchCalendar(notesList: MutableLiveData<List<Calendar>>) {
+        dbFetchCalendar(notesList)
     }
     // If we want to listen for real time updates use this
     // .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
@@ -37,26 +36,19 @@ class ViewModelDBHelper() {
     /////////////////////////////////////////////////////////////
     // Interact with Firestore db
     // https://firebase.google.com/docs/firestore/query-data/order-limit-data
-    private fun dbFetchPhotoMeta(sortInfo: SortInfo,
-                                 notesList: MutableLiveData<List<Calendar>>) {
+    private fun dbFetchCalendar(notesList: MutableLiveData<List<Calendar>>) {
         // XXX Write me and use limitAndGet
-        val queryDir = when(sortInfo.ascending) {
-            true -> Query.Direction.ASCENDING
-            else -> Query.Direction.DESCENDING
-        }
 
-        val query = when(sortInfo.sortColumn){
-            SortColumn.TITLE -> db.collection(rootCollection).orderBy("pictureTitle", queryDir)
-            else -> db.collection(rootCollection).orderBy("byteSize", queryDir)
-        }
-        Log.d(null,"in fetch photo meta")
+        val query = db.collection(rootCollection).orderBy("orderField")
+
+        Log.d(null,"in fetch calendar")
         //Log.d(null,query.toString())
         limitAndGet(query, notesList)
     }
 
     // https://firebase.google.com/docs/firestore/manage-data/add-data#add_a_document
-    fun createPhotoMeta(
-        sortInfo: SortInfo,
+    fun createCalendar(
+        //orderField: OrderField,
         calendar: Calendar,
         notesList: MutableLiveData<List<Calendar>>
     ) {
@@ -65,12 +57,12 @@ class ViewModelDBHelper() {
         // XXX Write me: add photoMeta
         Log.d(null,"In create photoMeta")
         db.collection(rootCollection).add(calendar)
-        dbFetchPhotoMeta(sortInfo, notesList)
+        dbFetchCalendar(notesList)
     }
 
     // https://firebase.google.com/docs/firestore/manage-data/delete-data#delete_documents
-    fun removePhotoMeta(
-        sortInfo: SortInfo,
+    fun removeCalendar(
+        //sortInfo: SortInfo,
         calendar: Calendar,
         calendarList: MutableLiveData<List<Calendar>>
     ) {
