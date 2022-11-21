@@ -13,7 +13,7 @@ import edu.cs371m.reddit.databinding.FragmentRvBinding
 
 
 // XXX Write most of this file
-class HomeFragment: Fragment() {
+class ListFragment: Fragment() {
     // XXX initialize viewModel
     private val viewModel: MainViewModel by activityViewModels()
     private var _binding: FragmentRvBinding? = null
@@ -22,8 +22,8 @@ class HomeFragment: Fragment() {
     lateinit var adapter : PostRowAdapter
 
     companion object {
-        fun newInstance(): HomeFragment {
-            return HomeFragment()
+        fun newInstance(): ListFragment {
+            return ListFragment()
         }
     }
 
@@ -78,7 +78,7 @@ class HomeFragment: Fragment() {
 
         //Log.d(null, "in home fragment")
         //adapter.submitList(viewModel.ge)
-        viewModel.observeCals().observe(viewLifecycleOwner){
+        viewModel.observePosts().observe(viewLifecycleOwner){
             adapter.submitList(it)
         }
         parentFragmentManager.addOnBackStackChangedListener {

@@ -165,7 +165,7 @@ class MainViewModel : ViewModel() {
 
     }
 
-    fun observePosts() : MutableLiveData<List<RedditPost>> {
+    fun observeCals() : MutableLiveData<List<RedditPost>> {
         return searchList
     }
 
