@@ -1,12 +1,12 @@
-package edu.utap.photolist.view
+package edu.cs371m.reddit.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import edu.utap.photolist.MainViewModel
-import edu.utap.photolist.databinding.RowBinding
+import edu.cs371m.reddit.ui.MainViewModel
+import edu.cs371m.reddit.databinding.RowBinding
 import edu.cs371m.reddit.model.Calendar
 
 
@@ -33,10 +33,10 @@ class CalendarAdapter(private val viewModel: MainViewModel)
         RecyclerView.ViewHolder(rowBinding.root) {
 
         fun bind(holder: VH, position: Int) {
-            val photoMeta = viewModel.getPhotoMeta(position)
-            viewModel.glideFetch(photoMeta.uuid, rowBinding.rowImageView)
-            holder.rowBinding.rowPictureTitle.text = photoMeta.pictureTitle
-            holder.rowBinding.rowSize.text = photoMeta.byteSize.toString()
+            //val photoMeta = viewModel.getCalendar(position)
+            //viewModel.glideFetch(photoMeta.uuid, rowBinding.rowImageView)
+            //holder.rowBinding.rowPictureTitle.text = photoMeta.pictureTitle
+            //holder.rowBinding.rowSize.text = photoMeta.byteSize.toString()
             // Note to future me: It might be fun to display the date
         }
     }

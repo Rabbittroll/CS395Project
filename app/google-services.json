@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "497817659493",
+    "project_id": "cs395proj",
+    "storage_bucket": "cs395proj.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497817659493:android:fd5851517037b83364fe8c",
+        "android_client_info": {
+          "package_name": "edu.cs371m.reddit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "497817659493-inr1pbjvpt23a32qi9nsgp6ksgjg2ald.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.cs371m.reddit",
+            "certificate_hash": "c5a3d5207a7b37e96a7c0354b867120af7b761d4"
+          }
+        },
+        {
+          "client_id": "497817659493-9393sple687jblm122fetnh20qrg9ptl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHk7aMzOKzRBshbIWmxg3rpCLRfVMKmOU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "497817659493-9393sple687jblm122fetnh20qrg9ptl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

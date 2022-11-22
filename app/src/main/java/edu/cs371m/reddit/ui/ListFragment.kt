@@ -78,7 +78,7 @@ class ListFragment: Fragment() {
 
         //Log.d(null, "in home fragment")
         //adapter.submitList(viewModel.ge)
-        viewModel.observePosts().observe(viewLifecycleOwner){
+        viewModel.observeCals().observe(viewLifecycleOwner){
             adapter.submitList(it)
         }
         parentFragmentManager.addOnBackStackChangedListener {
