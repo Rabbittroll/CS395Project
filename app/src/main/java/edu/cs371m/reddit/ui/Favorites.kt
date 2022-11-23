@@ -37,16 +37,16 @@ class Favorites: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel.setTitleFavs()
-        viewModel.setHomeFrag(false)
+        //viewModel.setTitleFavs()
+        //viewModel.setHomeFrag(false)
         _binding = FragmentRvBinding.inflate(inflater)
         adapter = PostRowAdapter(viewModel)
         val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
-        binding.swipeRefreshLayout.setOnRefreshListener {
+        /*binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.netPosts()
-        }
+        }*/
         viewModel.fetchDone.observe(viewLifecycleOwner) {
             binding.swipeRefreshLayout.isRefreshing = false
         }
@@ -60,12 +60,12 @@ class Favorites: Fragment() {
         // XXX Write me
         // Setting itemAnimator = null on your recycler view might get rid of an annoying
         // flicker
-        viewModel.observeFavs().observe(viewLifecycleOwner){
+        /*viewModel.observeFavs().observe(viewLifecycleOwner){
 
             adapter.submitList(it)
-        }
+        }*/
 
-        viewModel.startFavs()
+        //viewModel.startFavs()
         // Add to menu
         val menuHost: MenuHost = requireActivity()
 

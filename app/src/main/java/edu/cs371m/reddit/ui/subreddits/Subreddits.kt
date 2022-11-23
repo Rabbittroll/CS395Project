@@ -34,17 +34,17 @@ class Subreddits : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel.setTitlePick()
-        viewModel.setHomeFrag(false)
+        //viewModel.setTitlePick()
+        //viewModel.setHomeFrag(false)
         Log.d(null,"in subreddit")
-        viewModel.netSubreddits()
+        //viewModel.netSubreddits()
         _binding = FragmentRvBinding.inflate(inflater, container, false)
         adapter = SubredditListAdapter(viewModel, this.requireActivity())
         val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.netSubreddits()
+            //viewModel.netSubreddits()
         }
         viewModel.fetchDone.observe(viewLifecycleOwner) {
             binding.swipeRefreshLayout.isRefreshing = false
@@ -60,9 +60,9 @@ class Subreddits : Fragment() {
 
         Log.d(null, "in home fragment")
         //adapter.submitList(viewModel.ge)
-        viewModel.observeSubs().observe(viewLifecycleOwner){
+        /*viewModel.observeSubs().observe(viewLifecycleOwner){
             adapter.submitList(it)
-        }
+        }*/
     }
 
     override fun onDestroyView() {

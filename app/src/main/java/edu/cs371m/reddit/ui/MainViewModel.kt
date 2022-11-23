@@ -10,6 +10,7 @@ import edu.cs371m.reddit.FirestoreAuthLiveData
 import edu.cs371m.reddit.api.RedditApi
 import edu.cs371m.reddit.api.RedditPost
 import edu.cs371m.reddit.api.RedditPostRepository
+import edu.cs371m.reddit.model.Calendar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -22,15 +23,15 @@ class MainViewModel : ViewModel() {
         value = "aww"
     }
     private var firebaseAuthLiveData = FirestoreAuthLiveData()
-    private val redditApi = RedditApi.create()
-    private val repository = RedditPostRepository(redditApi)
-    private val posts = MutableLiveData<List<RedditPost>>()
-    private val favs = MutableLiveData<List<RedditPost>>()
+    //private val redditApi = RedditApi.create()
+    ///private val repository = RedditPostRepository(redditApi)
+    private val calendars = MutableLiveData<List<Calendar>>()
+    /*private val favs = MutableLiveData<List<RedditPost>>()
     private var favList: MutableList<RedditPost> = mutableListOf()
     private val subs = MutableLiveData<List<RedditPost>>()
     private val searchList = MediatorLiveData<List<RedditPost>>()
     private val searchFavs = MediatorLiveData<List<RedditPost>>()
-    private val searchSubs = MediatorLiveData<List<RedditPost>>()
+    private val searchSubs = MediatorLiveData<List<RedditPost>>()*/
     var fetchDone : MutableLiveData<Boolean> = MutableLiveData(false)
     var isHome : MutableLiveData<Boolean> = MutableLiveData(false)
     var searchStarted : MutableLiveData<Boolean> = MutableLiveData(false)
@@ -38,7 +39,7 @@ class MainViewModel : ViewModel() {
     //private val searchText = MutableLiveData<String>()
     init {
         //Log.d(null, "in viewModel")
-        searchList.addSource(searchTerm){
+        /*searchList.addSource(searchTerm){
             Log.d(null,"in source")
             searchList.value = searchPosts()
         }
@@ -58,13 +59,13 @@ class MainViewModel : ViewModel() {
         }
         searchSubs.addSource(subs){
             searchSubs.value = searchSubreddits()
-        }
-        netPosts()
+        }*/
+        //netPosts()
     }
 
     // XXX Write netPosts/searchPosts
 
-    fun netPosts() {
+    /*fun netPosts() {
         viewModelScope.launch(
             context = viewModelScope.coroutineContext
                     + Dispatchers.IO
@@ -76,9 +77,9 @@ class MainViewModel : ViewModel() {
             posts.postValue(temp)
             fetchDone.postValue(true)
         }
-    }
+    }*/
 
-    fun searchPosts(): List<RedditPost> {
+    /*fun searchPosts(): List<RedditPost> {
         //Log.d(null, "in search Posts")
         var retList : MutableList<RedditPost> = mutableListOf()
         if (posts.value == null) {
@@ -97,9 +98,9 @@ class MainViewModel : ViewModel() {
             }
             return retList.toList()
         }
-    }
+    }*/
 
-    fun searchFavorites(): List<RedditPost> {
+    /*fun searchFavorites(): List<RedditPost> {
         Log.d(null,"in serfav")
         var retList : MutableList<RedditPost> = mutableListOf()
         if (favs.value.isNullOrEmpty()) {
@@ -166,13 +167,13 @@ class MainViewModel : ViewModel() {
     fun setSubreddits(sub: String){
         subreddit.value = sub
 
+    }*/
+
+    fun observeCals() : MutableLiveData<List<Calendar>> {
+        return calendars
     }
 
-    fun observeCals() : MutableLiveData<List<RedditPost>> {
-        return searchList
-    }
-
-    fun observeSubs() : MutableLiveData<List<RedditPost>> {
+    /*fun observeSubs() : MutableLiveData<List<RedditPost>> {
         return searchSubs
     }
 
@@ -252,7 +253,7 @@ class MainViewModel : ViewModel() {
             favList = favs.value!!.toMutableList()
         }
         favs.value = favList.toList()
-    }
+    }*/
 
     fun updateUser() {
         firebaseAuthLiveData.updateUser()

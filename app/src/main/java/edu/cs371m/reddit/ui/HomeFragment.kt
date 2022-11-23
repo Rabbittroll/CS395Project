@@ -10,13 +10,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import edu.cs371m.reddit.databinding.FragmentRvBinding
+import edu.cs371m.reddit.databinding.FragmentHomeBinding
 
 
 // XXX Write most of this file
 class HomeFragment: Fragment() {
     // XXX initialize viewModel
     private val viewModel: MainViewModel by activityViewModels()
-    private var _binding: FragmentRvBinding? = null
+    private var _binding: FragmentHomeBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
     lateinit var adapter : PostRowAdapter
@@ -28,13 +29,13 @@ class HomeFragment: Fragment() {
     }
 
     // Set up the adapter
-    private fun initAdapter(binding: FragmentRvBinding): PostRowAdapter {
+    private fun initAdapter(binding: FragmentHomeBinding): PostRowAdapter {
         val adapter = PostRowAdapter(viewModel)
-        binding.recyclerView.adapter = adapter
+        binding.calendarsRV.adapter = adapter
         return adapter
     }
 
-    private fun notifyWhenFragmentForegrounded(postRowAdapter: PostRowAdapter) {
+    /*private fun notifyWhenFragmentForegrounded(postRowAdapter: PostRowAdapter) {
         // When we return to our fragment, notifyDataSetChanged
         // to pick up modifications to the favorites list.  Maybe do more.
         viewModel.setHomeFrag(true)
@@ -47,23 +48,23 @@ class HomeFragment: Fragment() {
         swipe.setOnRefreshListener {
             viewModel.netPosts()
         }
-    }
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentRvBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         //Log.d(null, "on create view")
-        viewModel.setHomeFrag(true)
+        //viewModel.setHomeFrag(true)
         adapter = initAdapter(binding)
         val layoutManager = StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
-        binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = adapter
-        initSwipeLayout(binding.swipeRefreshLayout)
+        binding.calendarsRV.layoutManager = layoutManager
+        binding.calendarsRV.adapter = adapter
+        //initSwipeLayout(binding.swipeRefreshLayout)
         viewModel.fetchDone.observe(viewLifecycleOwner) {
-            binding.swipeRefreshLayout.isRefreshing = false
+            //binding.swipeRefreshLayout.isRefreshing = false
         }
 
         return binding.root
@@ -83,7 +84,7 @@ class HomeFragment: Fragment() {
         }
         parentFragmentManager.addOnBackStackChangedListener {
             if (parentFragmentManager.backStackEntryCount == 0) {
-                notifyWhenFragmentForegrounded(adapter)
+                //notifyWhenFragmentForegrounded(adapter)
             }
         }
 

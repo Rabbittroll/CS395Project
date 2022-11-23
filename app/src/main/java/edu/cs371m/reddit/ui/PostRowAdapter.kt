@@ -15,7 +15,9 @@ import edu.cs371m.reddit.api.RedditPost
 import edu.cs371m.reddit.databinding.RowPostBinding
 import edu.cs371m.reddit.databinding.RowSubredditBinding
 import edu.cs371m.reddit.glide.Glide
+import edu.cs371m.reddit.model.Calendar
 import edu.cs371m.reddit.ui.subreddits.SubredditListAdapter
+import edu.cs371m.reddit.view.CalendarAdapter
 
 /**
  * Created by witchel on 8/25/2019
@@ -30,7 +32,7 @@ import edu.cs371m.reddit.ui.subreddits.SubredditListAdapter
 //
 // You can call adapterPosition to get the index of the selected item
 class PostRowAdapter(private val viewModel: MainViewModel)
-    : ListAdapter<RedditPost, PostRowAdapter.VH>(RedditDiff()) {
+    : ListAdapter<Calendar, PostRowAdapter.VH>(CalendarAdapter.Diff()) {
     inner class VH(val rowPostBinding: RowPostBinding)
         : RecyclerView.ViewHolder(rowPostBinding.root){
         init {
@@ -59,7 +61,7 @@ class PostRowAdapter(private val viewModel: MainViewModel)
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val binding = holder.rowPostBinding
-        val curPost = getItem(position)
+        /*val curPost = getItem(position)
         binding.title.text = getItem(position).title
         binding.title.setOnClickListener {
             val intent = Intent(binding.title.context, OnePost::class.java)
@@ -95,7 +97,7 @@ class PostRowAdapter(private val viewModel: MainViewModel)
             }
         }
         binding.selfText.text = getItem(position).selfText
-        Glide.glideFetch(getItem(position).imageURL, getItem(position).thumbnailURL, binding.image)
+        Glide.glideFetch(getItem(position).imageURL, getItem(position).thumbnailURL, binding.image)*/
     }
 }
 

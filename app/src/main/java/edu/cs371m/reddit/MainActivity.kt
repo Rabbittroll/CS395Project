@@ -59,46 +59,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun actionBarTitleLaunchSubreddit()  {
-        // XXX Write me actionBarBinding
 
-        findViewById<TextView>(R.id.actionTitle).setOnClickListener {
-            if (viewModel.isHome.value!!) {
-                supportFragmentManager.commit {
-                    addToBackStack(null)
-                    add(R.id.main_frame, Subreddits.newInstance(), subredditsFragTag)
-                    // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                }
-            }
-        }
-    }
-    fun actionBarLaunchFavorites() {
-        // XXX Write me actionBarBinding
-        actionBarBinding?.actionFavorite?.setOnClickListener {
-            if (viewModel.isHome.value!!) {
-                supportFragmentManager.commit {
-                    addToBackStack(null)
-                    add(R.id.main_frame, Favorites.newInstance(), favoritesFragTag)
-                    // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
-                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                }
-            }
-        }
-    }
-
-    // XXX check out addTextChangedListener
-    private fun actionBarSearch() {
-        // XXX Write me
-        actionBarBinding?.actionSearch?.addTextChangedListener {
-            viewModel.setTerm(it.toString())
-            if (it!!.length == 0){
-                hideKeyboard()
-            }
-        }
-    }
-
-    private fun addHomeFragment() {
+    private fun addCalList() {
         // No back stack for home
         supportFragmentManager.commit {
             add(R.id.main_frame, HomeFragment.newInstance(), mainFragTag)
@@ -107,25 +69,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initDebug() {
-        if(globalDebug) {
-            assets.list("")?.forEach {
-                Log.d(javaClass.simpleName, "Asset file: $it" )
-            }
-            jsonAww100 = assets.open("aww.hot.1.100.json.transformed.txt").bufferedReader().use {
-                it.readText()
-            }
-            subreddit1 = assets.open("subreddits.1.json.txt").bufferedReader().use {
-                it.readText()
-            }
-        }
-    }
-    private fun initTitleObservers() {
-        // Observe title changes
-        viewModel.observeTitle().observe(this){
-            actionBarBinding?.actionTitle?.text = it
-        }
-    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -156,12 +100,13 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        addHomeFragment()
-        initDebug()
-        initTitleObservers()
-        actionBarTitleLaunchSubreddit()
-        actionBarLaunchFavorites()
-        actionBarSearch()
-        viewModel.setTitleToSubreddit()
+        addCalList()
+        //addHomeFragment()
+        //initDebug()
+        //initTitleObservers()
+        //actionBarTitleLaunchSubreddit()
+        //actionBarLaunchFavorites()
+        //actionBarSearch()
+        //viewModel.setTitleToSubreddit()
     }
 }
