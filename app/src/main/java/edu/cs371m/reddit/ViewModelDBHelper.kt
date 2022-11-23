@@ -8,24 +8,24 @@ import edu.cs371m.reddit.model.Calendar
 
 class ViewModelDBHelper() {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private val rootCollection = "allCalendars"
+    private val rootCollection = "allUsers"
 
-    fun fetchCalendar(notesList: MutableLiveData<List<Calendar>>) {
-        dbFetchCalendar(notesList)
+    fun fetchCalendar(usersList: MutableLiveData<List<Calendar>>) {
+        dbFetchCalendar(usersList)
     }
     // If we want to listen for real time updates use this
     // .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
     // But be careful about how listener updates live data
     // and noteListener?.remove() in onCleared
     private fun limitAndGet(query: Query,
-                            notesList: MutableLiveData<List<Calendar>>) {
+                            usersList: MutableLiveData<List<Calendar>>) {
         query
             .limit(100)
             .get()
             .addOnSuccessListener { result ->
                 Log.d(javaClass.simpleName, "allNotes fetch ${result!!.documents.size}")
                 // NB: This is done on a background thread
-                notesList.postValue(result.documents.mapNotNull {
+                usersList.postValue(result.documents.mapNotNull {
                     it.toObject(Calendar::class.java)
                 })
             }

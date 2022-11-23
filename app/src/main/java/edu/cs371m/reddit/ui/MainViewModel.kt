@@ -7,6 +7,7 @@ import android.icu.text.StringSearch
 import android.util.Log
 import androidx.lifecycle.*
 import edu.cs371m.reddit.FirestoreAuthLiveData
+import edu.cs371m.reddit.ViewModelDBHelper
 import edu.cs371m.reddit.api.RedditApi
 import edu.cs371m.reddit.api.RedditPost
 import edu.cs371m.reddit.api.RedditPostRepository
@@ -26,6 +27,7 @@ class MainViewModel : ViewModel() {
     //private val redditApi = RedditApi.create()
     ///private val repository = RedditPostRepository(redditApi)
     private val calendars = MutableLiveData<List<Calendar>>()
+    private val dbHelp = ViewModelDBHelper()
     /*private val favs = MutableLiveData<List<RedditPost>>()
     private var favList: MutableList<RedditPost> = mutableListOf()
     private val subs = MutableLiveData<List<RedditPost>>()
@@ -257,6 +259,10 @@ class MainViewModel : ViewModel() {
 
     fun updateUser() {
         firebaseAuthLiveData.updateUser()
+    }
+
+    fun fetchCalendar() {
+        dbHelp.fetchCalendar(calendars)
     }
 
 
