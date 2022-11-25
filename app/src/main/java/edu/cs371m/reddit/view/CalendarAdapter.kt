@@ -21,11 +21,9 @@ class CalendarAdapter(private val viewModel: MainViewModel)
 
         override fun areContentsTheSame(oldItem: Calendar, newItem: Calendar): Boolean {
             return oldItem.firestoreID == newItem.firestoreID
-                    && oldItem.pictureTitle == newItem.pictureTitle
-                    && oldItem.ownerUid == newItem.ownerUid
-                    && oldItem.ownerName == newItem.ownerName
-                    && oldItem.uuid == newItem.uuid
-                    && oldItem.name == newItem.name
+                    && oldItem.Name == newItem.Name
+                    && oldItem.Role == newItem.Role
+                    && oldItem.Trainer == newItem.Trainer
                     && oldItem.timeStamp == newItem.timeStamp
         }
     }
@@ -36,9 +34,9 @@ class CalendarAdapter(private val viewModel: MainViewModel)
         fun bind(holder: VH, position: Int) {
             val cal = viewModel.getCalendar(position)
             //viewModel.glideFetch(photoMeta.uuid, rowBinding.rowImageView)
-            holder.rowBinding.userName.text = cal.name
-            Log.d(null,"in bind")
-            Log.d(null, cal.name)
+            holder.rowBinding.userName.text = cal.Name
+            holder.rowBinding.userRole.text = cal.Role
+            holder.rowBinding.userTrainer.text = cal.Trainer
             //holder.rowBinding.rowSize.text = photoMeta.byteSize.toString()
             // Note to future me: It might be fun to display the date
         }
