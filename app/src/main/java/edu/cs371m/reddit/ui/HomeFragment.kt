@@ -11,8 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import edu.cs371m.reddit.databinding.FragmentHomeBinding
-import edu.cs371m.reddit.ui.calendars.CalendarListAdapter
-import edu.cs371m.reddit.view.CalendarAdapter
+import edu.cs371m.reddit.CalendarListAdapter
 
 
 // XXX Write most of this file
@@ -77,7 +76,7 @@ class HomeFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d(javaClass.simpleName, "onViewCreated")
         _binding = FragmentHomeBinding.bind(view)
-        val adapter = CalendarAdapter(viewModel)
+        val adapter = CalendarListAdapter(viewModel)
         val rv = binding.calendarsRV
         val itemDecor = DividerItemDecoration(rv.context, LinearLayoutManager.VERTICAL)
         rv.addItemDecoration(itemDecor)

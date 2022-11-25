@@ -1,18 +1,21 @@
-package edu.cs371m.reddit.view
+package edu.cs371m.reddit
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.cs371m.reddit.ui.MainViewModel
 import edu.cs371m.reddit.databinding.RowBinding
 import edu.cs371m.reddit.model.Calendar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
+import edu.cs371m.reddit.ui.calendars.Calendars
 
 
-class CalendarAdapter(private val viewModel: MainViewModel)
-    : ListAdapter<Calendar, CalendarAdapter.VH>(Diff()) {
+class CalendarListAdapter(private val viewModel: MainViewModel)
+    : ListAdapter<Calendar, CalendarListAdapter.VH>(Diff()) {
     // This class allows the adapter to compute what has changed
     class Diff : DiffUtil.ItemCallback<Calendar>() {
         override fun areItemsTheSame(oldItem: Calendar, newItem: Calendar): Boolean {
@@ -37,8 +40,16 @@ class CalendarAdapter(private val viewModel: MainViewModel)
             holder.rowBinding.userName.text = cal.Name
             holder.rowBinding.userRole.text = cal.Role
             holder.rowBinding.userTrainer.text = cal.Trainer
-            //holder.rowBinding.rowSize.text = photoMeta.byteSize.toString()
-            // Note to future me: It might be fun to display the date
+            itemView.setOnClickListener {
+                val activity  = it.context as? AppCompatActivity
+                activity?.supportFragmentManager?.commit {
+                    addToBackStack("homeFrag")
+                    add(R.id.main_frame, Calendars.newInstance(), "calendarViewFrag")
+                    // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                }
+            }
+
         }
     }
 
@@ -46,9 +57,12 @@ class CalendarAdapter(private val viewModel: MainViewModel)
         val rowBinding = RowBinding.inflate(LayoutInflater.from(parent.context),
             parent, false)
         return VH(rowBinding)
+
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.bind(holder, position)
+
     }
+
 }

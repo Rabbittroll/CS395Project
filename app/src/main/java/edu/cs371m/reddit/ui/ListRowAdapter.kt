@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.cs371m.reddit.api.RedditPost
 import edu.cs371m.reddit.databinding.RowPostBinding
 import edu.cs371m.reddit.model.Calendar
-import edu.cs371m.reddit.view.CalendarAdapter
+import edu.cs371m.reddit.CalendarListAdapter
 
 /**
  * Created by witchel on 8/25/2019
@@ -23,7 +23,7 @@ import edu.cs371m.reddit.view.CalendarAdapter
 //
 // You can call adapterPosition to get the index of the selected item
 class ListRowAdapter(private val viewModel: MainViewModel)
-    : ListAdapter<Calendar, ListRowAdapter.VH>(CalendarAdapter.Diff()) {
+    : ListAdapter<Calendar, ListRowAdapter.VH>(CalendarListAdapter.Diff()) {
     inner class VH(val rowPostBinding: RowPostBinding)
         : RecyclerView.ViewHolder(rowPostBinding.root){
         init {
