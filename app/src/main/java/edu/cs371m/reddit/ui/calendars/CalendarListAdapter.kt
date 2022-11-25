@@ -1,4 +1,4 @@
-package edu.cs371m.reddit.ui.subreddits
+package edu.cs371m.reddit.ui.calendars
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,18 +7,17 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.cs371m.reddit.api.RedditPost
-import edu.cs371m.reddit.databinding.RowPostBinding
 import edu.cs371m.reddit.databinding.RowSubredditBinding
 import edu.cs371m.reddit.glide.Glide
 import edu.cs371m.reddit.ui.MainViewModel
-import edu.cs371m.reddit.ui.PostRowAdapter
+import edu.cs371m.reddit.ui.ListRowAdapter
 
 // NB: Could probably unify with PostRowAdapter if we had two
 // different VH and override getItemViewType
 // https://medium.com/@droidbyme/android-recyclerview-with-multiple-view-type-multiple-view-holder-af798458763b
-class SubredditListAdapter(private val viewModel: MainViewModel,
-                           private val fragmentActivity: FragmentActivity )
-    : ListAdapter<RedditPost, SubredditListAdapter.VH>(PostRowAdapter.RedditDiff()) {
+class CalendarListAdapter(private val viewModel: MainViewModel,
+                          private val fragmentActivity: FragmentActivity )
+    : ListAdapter<RedditPost, CalendarListAdapter.VH>(ListRowAdapter.RedditDiff()) {
 
     // ViewHolder pattern
     inner class VH(val rowSubredditBinding: RowSubredditBinding)

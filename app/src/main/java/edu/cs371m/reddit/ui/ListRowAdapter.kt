@@ -1,22 +1,13 @@
 package edu.cs371m.reddit.ui
 
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import edu.cs371m.reddit.MainActivity
-import edu.cs371m.reddit.OnePost
-import edu.cs371m.reddit.R
 import edu.cs371m.reddit.api.RedditPost
 import edu.cs371m.reddit.databinding.RowPostBinding
-import edu.cs371m.reddit.databinding.RowSubredditBinding
-import edu.cs371m.reddit.glide.Glide
 import edu.cs371m.reddit.model.Calendar
-import edu.cs371m.reddit.ui.subreddits.SubredditListAdapter
 import edu.cs371m.reddit.view.CalendarAdapter
 
 /**
@@ -31,8 +22,8 @@ import edu.cs371m.reddit.view.CalendarAdapter
 // So you can copy the old list, change it into a new list, then submit the new list.
 //
 // You can call adapterPosition to get the index of the selected item
-class PostRowAdapter(private val viewModel: MainViewModel)
-    : ListAdapter<Calendar, PostRowAdapter.VH>(CalendarAdapter.Diff()) {
+class ListRowAdapter(private val viewModel: MainViewModel)
+    : ListAdapter<Calendar, ListRowAdapter.VH>(CalendarAdapter.Diff()) {
     inner class VH(val rowPostBinding: RowPostBinding)
         : RecyclerView.ViewHolder(rowPostBinding.root){
         init {
@@ -54,7 +45,7 @@ class PostRowAdapter(private val viewModel: MainViewModel)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostRowAdapter.VH {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListRowAdapter.VH {
         val rowBinding = RowPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return VH(rowBinding)
     }

@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import edu.cs371m.reddit.databinding.FragmentRvBinding
 import edu.cs371m.reddit.databinding.FragmentHomeBinding
+import edu.cs371m.reddit.ui.calendars.CalendarListAdapter
+import edu.cs371m.reddit.view.CalendarAdapter
 
 
 // XXX Write most of this file
@@ -20,7 +22,7 @@ class HomeFragment: Fragment() {
     private var _binding: FragmentHomeBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
-    lateinit var adapter : PostRowAdapter
+    lateinit var adapter : ListRowAdapter
 
     companion object {
         fun newInstance(): HomeFragment {
@@ -29,8 +31,8 @@ class HomeFragment: Fragment() {
     }
 
     // Set up the adapter
-    private fun initAdapter(binding: FragmentHomeBinding): PostRowAdapter {
-        val adapter = PostRowAdapter(viewModel)
+    private fun initAdapter(binding: FragmentHomeBinding): ListRowAdapter {
+        val adapter = ListRowAdapter(viewModel)
         binding.calendarsRV.adapter = adapter
         return adapter
     }
@@ -74,6 +76,13 @@ class HomeFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(javaClass.simpleName, "onViewCreated")
+        _binding = FragmentHomeBinding.bind(view)
+        val adapter = CalendarAdapter(viewModel)
+        val rv = binding.calendarsRV
+        val itemDecor = DividerItemDecoration(rv.context, LinearLayoutManager.VERTICAL)
+        rv.addItemDecoration(itemDecor)
+        rv.adapter = adapter
+        rv.layoutManager = LinearLayoutManager(rv.context)
         // XXX Write me
         //val adapter = initAdapter(binding)
 

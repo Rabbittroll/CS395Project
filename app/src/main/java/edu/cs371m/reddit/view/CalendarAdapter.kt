@@ -1,5 +1,6 @@
 package edu.cs371m.reddit.view
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -24,7 +25,7 @@ class CalendarAdapter(private val viewModel: MainViewModel)
                     && oldItem.ownerUid == newItem.ownerUid
                     && oldItem.ownerName == newItem.ownerName
                     && oldItem.uuid == newItem.uuid
-                    && oldItem.byteSize == newItem.byteSize
+                    && oldItem.name == newItem.name
                     && oldItem.timeStamp == newItem.timeStamp
         }
     }
@@ -33,9 +34,11 @@ class CalendarAdapter(private val viewModel: MainViewModel)
         RecyclerView.ViewHolder(rowBinding.root) {
 
         fun bind(holder: VH, position: Int) {
-            //val photoMeta = viewModel.getCalendar(position)
+            val cal = viewModel.getCalendar(position)
             //viewModel.glideFetch(photoMeta.uuid, rowBinding.rowImageView)
-            //holder.rowBinding.rowPictureTitle.text = photoMeta.pictureTitle
+            holder.rowBinding.userName.text = cal.name
+            Log.d(null,"in bind")
+            Log.d(null, cal.name)
             //holder.rowBinding.rowSize.text = photoMeta.byteSize.toString()
             // Note to future me: It might be fun to display the date
         }

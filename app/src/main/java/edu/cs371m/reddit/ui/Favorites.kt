@@ -3,13 +3,11 @@ package edu.cs371m.reddit.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.activity.viewModels
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import edu.cs371m.reddit.MainActivity
 import edu.cs371m.reddit.databinding.FragmentRvBinding
@@ -20,7 +18,7 @@ class Favorites: Fragment() {
     private val viewModel :MainViewModel by activityViewModels()
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
-    lateinit var adapter : PostRowAdapter
+    lateinit var adapter : ListRowAdapter
 
     companion object {
         fun newInstance(): Favorites {
@@ -40,7 +38,7 @@ class Favorites: Fragment() {
         //viewModel.setTitleFavs()
         //viewModel.setHomeFrag(false)
         _binding = FragmentRvBinding.inflate(inflater)
-        adapter = PostRowAdapter(viewModel)
+        adapter = ListRowAdapter(viewModel)
         val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter

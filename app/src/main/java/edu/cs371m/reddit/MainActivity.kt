@@ -1,29 +1,21 @@
 package edu.cs371m.reddit
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
-import com.google.firebase.FirebaseApp
 import edu.cs371m.reddit.databinding.ActionBarBinding
 import edu.cs371m.reddit.databinding.ActivityMainBinding
-import edu.cs371m.reddit.ui.Favorites
 import edu.cs371m.reddit.ui.HomeFragment
 import edu.cs371m.reddit.ui.MainViewModel
-import edu.cs371m.reddit.ui.PostRowAdapter
-import edu.cs371m.reddit.ui.subreddits.Subreddits
+import edu.cs371m.reddit.ui.ListRowAdapter
 
 class MainActivity : AppCompatActivity() {
     // This allows us to do better testing
@@ -37,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     }
     private var actionBarBinding: ActionBarBinding? = null
     private val viewModel: MainViewModel by viewModels()
-    private lateinit var adapter: PostRowAdapter
+    private lateinit var adapter: ListRowAdapter
 
     // An Android nightmare
     // https://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
@@ -79,6 +71,8 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.let{
             initActionBar(it)
         }
+        addCalList()
+        viewModel.fetchCalendar()
 
         // Add menu items without overriding methods in the Activity
         // https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01
@@ -100,7 +94,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        addCalList()
+        //addCalList()
         //addHomeFragment()
         //initDebug()
         //initTitleObservers()

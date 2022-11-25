@@ -39,7 +39,7 @@ class ViewModelDBHelper() {
     private fun dbFetchCalendar(notesList: MutableLiveData<List<Calendar>>) {
         // XXX Write me and use limitAndGet
 
-        val query = db.collection(rootCollection).orderBy("orderField")
+        val query = db.collection(rootCollection)
 
         Log.d(null,"in fetch calendar")
         //Log.d(null,query.toString())

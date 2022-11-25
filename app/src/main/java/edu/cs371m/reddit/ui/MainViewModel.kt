@@ -24,7 +24,7 @@ class MainViewModel : ViewModel() {
         value = "aww"
     }
     private var firebaseAuthLiveData = FirestoreAuthLiveData()
-    private val calendars = MutableLiveData<List<Calendar>>()
+    private var calendars = MutableLiveData<List<Calendar>>()
     private val dbHelp = ViewModelDBHelper()
     var fetchDone : MutableLiveData<Boolean> = MutableLiveData(false)
     var isHome : MutableLiveData<Boolean> = MutableLiveData(false)
@@ -32,6 +32,7 @@ class MainViewModel : ViewModel() {
     var searchEmpty : MutableLiveData<Boolean> = MutableLiveData(false)
     //private val searchText = MutableLiveData<String>()
     init {
+
     }
 
     // XXX Write netPosts/searchPosts
@@ -49,6 +50,12 @@ class MainViewModel : ViewModel() {
 
     fun fetchCalendar() {
         dbHelp.fetchCalendar(calendars)
+    }
+
+    fun getCalendar(position: Int) : Calendar {
+        val note = calendars.value?.get(position)
+        //Log.d(null, "in get photo meta")
+        return note!!
     }
 
 
