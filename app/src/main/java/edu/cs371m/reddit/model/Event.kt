@@ -1,4 +1,4 @@
-package edu.cs371m.reddit.ui.events
+package edu.cs371m.reddit.model
 
 import java.time.LocalDate
 import java.time.LocalTime

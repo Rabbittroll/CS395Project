@@ -17,7 +17,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers.*
 import edu.cs371m.reddit.RecyclerViewChildActions.Companion.actionOnChild
 import edu.cs371m.reddit.RecyclerViewChildActions.Companion.childOfViewAtPositionWithMatcher
-import edu.cs371m.reddit.ui.ListRowAdapter
+import edu.cs371m.reddit.adapters.EventAdapter
 import junit.framework.Assert.assertTrue
 import org.hamcrest.CoreMatchers.equalTo
 
@@ -133,7 +133,7 @@ class InstrumentedApplicationTest {
         onView(withId(R.id.recyclerView)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0))
         // fav the first item
         onView(withId(R.id.recyclerView)).perform(
-            actionOnItemAtPosition<ListRowAdapter.VH>(
+            actionOnItemAtPosition<EventAdapter.VH>(
                 0,
                 actionOnChild(
                     click(),
@@ -181,7 +181,7 @@ class InstrumentedApplicationTest {
         // unfav the first item
         onView(withId(R.id.recyclerView)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0))
         onView(withId(R.id.recyclerView)).perform(
-            actionOnItemAtPosition<ListRowAdapter.VH>(
+            actionOnItemAtPosition<EventAdapter.VH>(
                 0,
                 actionOnChild(
                     click(),

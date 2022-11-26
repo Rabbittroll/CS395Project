@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import edu.cs371m.reddit.MainActivity
+import edu.cs371m.reddit.adapters.EventAdapter
 import edu.cs371m.reddit.databinding.FragmentRvBinding
 
 class Favorites: Fragment() {
@@ -18,7 +19,7 @@ class Favorites: Fragment() {
     private val viewModel :MainViewModel by activityViewModels()
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
-    lateinit var adapter : ListRowAdapter
+    lateinit var adapter : EventAdapter
 
     companion object {
         fun newInstance(): Favorites {
@@ -38,7 +39,7 @@ class Favorites: Fragment() {
         //viewModel.setTitleFavs()
         //viewModel.setHomeFrag(false)
         _binding = FragmentRvBinding.inflate(inflater)
-        adapter = ListRowAdapter(viewModel)
+        adapter = EventAdapter(viewModel)
         val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter

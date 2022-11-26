@@ -15,7 +15,7 @@ import edu.cs371m.reddit.databinding.ActionBarBinding
 import edu.cs371m.reddit.databinding.ActivityMainBinding
 import edu.cs371m.reddit.ui.HomeFragment
 import edu.cs371m.reddit.ui.MainViewModel
-import edu.cs371m.reddit.ui.ListRowAdapter
+import edu.cs371m.reddit.adapters.EventAdapter
 
 class MainActivity : AppCompatActivity() {
     // This allows us to do better testing
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     }
     private var actionBarBinding: ActionBarBinding? = null
     private val viewModel: MainViewModel by viewModels()
-    private lateinit var adapter: ListRowAdapter
+    private lateinit var adapter: EventAdapter
 
     // An Android nightmare
     // https://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard

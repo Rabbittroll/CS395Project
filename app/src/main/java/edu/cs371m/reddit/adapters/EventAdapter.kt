@@ -1,4 +1,4 @@
-package edu.cs371m.reddit.ui
+package edu.cs371m.reddit.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.cs371m.reddit.api.RedditPost
 import edu.cs371m.reddit.databinding.RowPostBinding
-import edu.cs371m.reddit.model.Calendar
-import edu.cs371m.reddit.CalendarListAdapter
+import edu.cs371m.reddit.model.Event
+import edu.cs371m.reddit.ui.MainViewModel
 
 /**
  * Created by witchel on 8/25/2019
@@ -22,8 +22,22 @@ import edu.cs371m.reddit.CalendarListAdapter
 // So you can copy the old list, change it into a new list, then submit the new list.
 //
 // You can call adapterPosition to get the index of the selected item
-class ListRowAdapter(private val viewModel: MainViewModel)
-    : ListAdapter<Calendar, ListRowAdapter.VH>(CalendarListAdapter.Diff()) {
+class EventAdapter(private val viewModel: MainViewModel)
+    : ListAdapter<Event, EventAdapter.VH>(ListDiff()) {
+
+    class ListDiff : DiffUtil.ItemCallback<Event>() {
+        override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
+            return oldItem.eventsList == newItem.eventsList
+        }
+
+        override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
+            return oldItem.getName() == newItem.getName()
+                    && oldItem.getDate() == newItem.getDate()
+                    && oldItem.getTime() == newItem.getTime()
+
+        }
+    }
+
     inner class VH(val rowPostBinding: RowPostBinding)
         : RecyclerView.ViewHolder(rowPostBinding.root){
         init {
@@ -45,7 +59,7 @@ class ListRowAdapter(private val viewModel: MainViewModel)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListRowAdapter.VH {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val rowBinding = RowPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return VH(rowBinding)
     }

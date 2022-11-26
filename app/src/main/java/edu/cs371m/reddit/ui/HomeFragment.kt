@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import edu.cs371m.reddit.databinding.FragmentHomeBinding
-import edu.cs371m.reddit.CalendarListAdapter
+import edu.cs371m.reddit.adapters.CalendarListAdapter
+import edu.cs371m.reddit.adapters.EventAdapter
 
 
 // XXX Write most of this file
@@ -21,7 +22,7 @@ class HomeFragment: Fragment() {
     private var _binding: FragmentHomeBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
-    lateinit var adapter : ListRowAdapter
+    lateinit var adapter : EventAdapter
 
     companion object {
         fun newInstance(): HomeFragment {
@@ -30,8 +31,8 @@ class HomeFragment: Fragment() {
     }
 
     // Set up the adapter
-    private fun initAdapter(binding: FragmentHomeBinding): ListRowAdapter {
-        val adapter = ListRowAdapter(viewModel)
+    private fun initAdapter(binding: FragmentHomeBinding): EventAdapter {
+        val adapter = EventAdapter(viewModel)
         binding.calendarsRV.adapter = adapter
         return adapter
     }

@@ -1,25 +1,37 @@
-package edu.cs371m.reddit.ui.calendars
+package edu.cs371m.reddit.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import edu.cs371m.reddit.api.RedditPost
 import edu.cs371m.reddit.databinding.RowSubredditBinding
 import edu.cs371m.reddit.glide.Glide
+import edu.cs371m.reddit.model.Calendar
 import edu.cs371m.reddit.ui.MainViewModel
-import edu.cs371m.reddit.ui.ListRowAdapter
-import java.time.LocalDate
+import edu.cs371m.reddit.model.Event
+import edu.cs371m.reddit.ui.WeekViewFragment
 
 // NB: Could probably unify with PostRowAdapter if we had two
 // different VH and override getItemViewType
 // https://medium.com/@droidbyme/android-recyclerview-with-multiple-view-type-multiple-view-holder-af798458763b
-class CalendarViewAdapter(private val viewModel: MainViewModel,
-                          private val fragmentActivity: FragmentActivity,
-                          private val days: ArrayList<LocalDate?>?)
-    : ListAdapter<RedditPost, CalendarViewAdapter.VH>(ListRowAdapter.RedditDiff()) {
+class WeekViewAdapter(private val viewModel: MainViewModel)
+    : ListAdapter<Calendar, WeekViewAdapter.VH>(WeekDiff()) {
+
+    class WeekDiff : DiffUtil.ItemCallback<Calendar>() {
+        override fun areItemsTheSame(oldItem: Calendar, newItem: Calendar): Boolean {
+            return oldItem.firestoreID == newItem.firestoreID
+        }
+
+        override fun areContentsTheSame(oldItem: Calendar, newItem: Calendar): Boolean {
+            return oldItem.firestoreID == newItem.firestoreID
+                    && oldItem.Name == newItem.Name
+                    && oldItem.Role == newItem.Role
+                    && oldItem.Trainer == newItem.Trainer
+                    && oldItem.timeStamp == newItem.timeStamp
+        }
+    }
 
     // ViewHolder pattern
     inner class VH(val rowSubredditBinding: RowSubredditBinding)
@@ -39,17 +51,6 @@ class CalendarViewAdapter(private val viewModel: MainViewModel,
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val binding = holder.rowSubredditBinding
-        binding.subRowDetails.text = getItem(position).publicDescription
-        binding.subRowHeading.text = getItem(position).displayName
-        binding.subRowHeading.setOnClickListener {
-            //viewModel.setSubreddits(getItem(position).displayName.toString())
-            //viewModel.setTitle(getItem(position).displayName.toString())
-            //viewModel.netPosts()
-            fragmentActivity.supportFragmentManager.popBackStack()
-        }
-        //Log.d(null,"image " + getItem(position).imageURL.isNullOrEmpty().toString())
-        //Log.d(null,"thumb " + getItem(position).thumbnailURL.isNullOrEmpty().toString())
-        Glide.glideFetch(getItem(position).iconURL, getItem(position).iconURL, binding.subRowPic)
     }
 
     // XXX Write me.

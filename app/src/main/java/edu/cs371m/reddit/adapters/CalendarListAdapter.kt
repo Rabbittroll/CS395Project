@@ -1,4 +1,4 @@
-package edu.cs371m.reddit
+package edu.cs371m.reddit.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,7 +11,8 @@ import edu.cs371m.reddit.databinding.RowBinding
 import edu.cs371m.reddit.model.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
-import edu.cs371m.reddit.ui.calendars.Calendars
+import edu.cs371m.reddit.R
+import edu.cs371m.reddit.ui.WeekViewFragment
 
 
 class CalendarListAdapter(private val viewModel: MainViewModel)
@@ -44,7 +45,7 @@ class CalendarListAdapter(private val viewModel: MainViewModel)
                 val activity  = it.context as? AppCompatActivity
                 activity?.supportFragmentManager?.commit {
                     addToBackStack("homeFrag")
-                    add(R.id.main_frame, Calendars.newInstance(), "calendarViewFrag")
+                    replace(R.id.main_frame, WeekViewFragment.newInstance(), "calendarViewFrag")
                     // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 }
