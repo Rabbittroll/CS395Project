@@ -11,12 +11,14 @@ import edu.cs371m.reddit.databinding.RowSubredditBinding
 import edu.cs371m.reddit.glide.Glide
 import edu.cs371m.reddit.ui.MainViewModel
 import edu.cs371m.reddit.ui.ListRowAdapter
+import java.time.LocalDate
 
 // NB: Could probably unify with PostRowAdapter if we had two
 // different VH and override getItemViewType
 // https://medium.com/@droidbyme/android-recyclerview-with-multiple-view-type-multiple-view-holder-af798458763b
 class CalendarViewAdapter(private val viewModel: MainViewModel,
-                          private val fragmentActivity: FragmentActivity )
+                          private val fragmentActivity: FragmentActivity,
+                          private val days: ArrayList<LocalDate?>?)
     : ListAdapter<RedditPost, CalendarViewAdapter.VH>(ListRowAdapter.RedditDiff()) {
 
     // ViewHolder pattern

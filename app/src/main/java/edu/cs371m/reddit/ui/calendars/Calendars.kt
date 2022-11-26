@@ -11,9 +11,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.firebase.ui.auth.AuthUI.getApplicationContext
 import edu.cs371m.reddit.databinding.FragmentWeekViewBinding
 import edu.cs371m.reddit.ui.MainViewModel
-import sun.util.calendar.CalendarUtils
+import edu.cs371m.reddit.ui.events.Event
+
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
@@ -92,12 +94,12 @@ class Calendars : Fragment() {
     private fun setWeekView() {
         monthYearText.text = monthYearFromDate(selectedDate)
         val days = daysInWeekArray(selectedDate)
-        val calendarAdapter = CalendarViewAdapter(days, this)
+        val calendarAdapter = CalendarViewAdapter(viewModel, this.requireActivity(), days)
         val layoutManager: RecyclerView.LayoutManager =
-            GridLayoutManager(getApplicationContext(), 7)
+            GridLayoutManager(this.context, 7)
         calendarRecyclerView.setLayoutManager(layoutManager)
         calendarRecyclerView.setAdapter(calendarAdapter)
-        setEventAdpater()
+        setEventAdapater()
     }
 
     fun previousWeekAction(view: View?) {
@@ -106,30 +108,26 @@ class Calendars : Fragment() {
     }
 
     fun nextWeekAction(view: View?) {
-        sun.util.calendar.CalendarUtils.selectedDate =
-            sun.util.calendar.CalendarUtils.selectedDate.plusWeeks(1)
+        selectedDate =
+           selectedDate.plusWeeks(1)
         setWeekView()
     }
 
     fun onItemClick(position: Int, date: LocalDate) {
-        sun.util.calendar.CalendarUtils.selectedDate = date
+        selectedDate = date
         setWeekView()
     }
 
-    protected override fun onResume() {
+   override fun onResume() {
         super.onResume()
-        setEventAdpater()
+        setEventAdapater()
     }
 
-    private fun setEventAdpater() {
+    private fun setEventAdapater() {
         val dailyEvents: ArrayList<Event> =
-            Event.eventsForDate(sun.util.calendar.CalendarUtils.selectedDate)
-        val eventAdapter = EventAdapter(getApplicationContext(), dailyEvents)
+            Event.eventsForDate(selectedDate)
+        val eventAdapter = EventAdapter(this.context, dailyEvents)
         eventListView.setAdapter(eventAdapter)
-    }
-
-    fun newEventAction(view: View?) {
-        startActivity(Intent(this, EventEditActivity::class.java))
     }
 
     override fun onCreateView(
