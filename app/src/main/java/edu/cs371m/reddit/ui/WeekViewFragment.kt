@@ -12,6 +12,7 @@ import androidx.fragment.app.commit
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import edu.cs371m.reddit.MainActivity
 import edu.cs371m.reddit.R
+import edu.cs371m.reddit.adapters.EventAdapter
 import edu.cs371m.reddit.adapters.WeekViewAdapter
 import edu.cs371m.reddit.databinding.FragmentHomeBinding
 import edu.cs371m.reddit.databinding.FragmentWeekViewBinding
@@ -25,7 +26,8 @@ class WeekViewFragment : Fragment() {
     private var _binding: FragmentWeekViewBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
-    lateinit var adapter : WeekViewAdapter
+    lateinit var weekAdapter : WeekViewAdapter
+    lateinit var eventAdapter : EventAdapter
 
     companion object {
         fun newInstance(): WeekViewFragment {
@@ -41,11 +43,14 @@ class WeekViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentWeekViewBinding.inflate(inflater, container, false)
-        adapter = WeekViewAdapter(viewModel)
-
-        val layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-        binding.calendarRecyclerView.layoutManager = layoutManager
-        binding.calendarRecyclerView.adapter = adapter
+        weekAdapter = WeekViewAdapter(viewModel)
+        eventAdapter = EventAdapter(viewModel)
+        val weekLayoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+        val eventLayoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+        binding.calendarRecyclerView.layoutManager = weekLayoutManager
+        binding.calendarRecyclerView.adapter = weekAdapter
+        binding.eventListView.layoutManager = eventLayoutManager
+        binding.eventListView.adapter = eventAdapter
         return binding.root
     }
 

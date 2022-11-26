@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import edu.cs371m.reddit.databinding.RowSubredditBinding
+import edu.cs371m.reddit.databinding.RowEventBinding
 import edu.cs371m.reddit.glide.Glide
 import edu.cs371m.reddit.model.Calendar
 import edu.cs371m.reddit.ui.MainViewModel
@@ -34,7 +34,7 @@ class WeekViewAdapter(private val viewModel: MainViewModel)
     }
 
     // ViewHolder pattern
-    inner class VH(val rowSubredditBinding: RowSubredditBinding)
+    inner class VH(val rowSubredditBinding: RowEventBinding)
         : RecyclerView.ViewHolder(rowSubredditBinding.root){
             init {
                 rowSubredditBinding.root.setOnClickListener {
@@ -45,7 +45,7 @@ class WeekViewAdapter(private val viewModel: MainViewModel)
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val rowBinding = RowSubredditBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val rowBinding = RowEventBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return VH(rowBinding)
     }
 
