@@ -45,12 +45,12 @@ class WeekViewFragment : Fragment() {
         _binding = FragmentWeekViewBinding.inflate(inflater, container, false)
         weekAdapter = WeekViewAdapter(viewModel)
         eventAdapter = EventAdapter(viewModel)
-        val weekLayoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+        val weekLayoutManager = StaggeredGridLayoutManager(7, StaggeredGridLayoutManager.VERTICAL)
         val eventLayoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         binding.calendarRecyclerView.layoutManager = weekLayoutManager
         binding.calendarRecyclerView.adapter = weekAdapter
-        binding.eventListView.layoutManager = eventLayoutManager
-        binding.eventListView.adapter = eventAdapter
+        /*binding.eventListView.layoutManager = eventLayoutManager
+        binding.eventListView.adapter = eventAdapter*/
         return binding.root
     }
 
@@ -61,6 +61,10 @@ class WeekViewFragment : Fragment() {
         viewModel.observeDays().observe(viewLifecycleOwner){
             weekAdapter.submitList(it)
         }
+        /*viewModel.observeEvents().observe(viewLifecycleOwner){
+            eventAdapter.submitList(it)
+        }*/
+
         viewModel.setDaysInWeek(LocalDate.now())
         // XXX Write me
 

@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.cs371m.reddit.api.RedditPost
-import edu.cs371m.reddit.databinding.RowPostBinding
+import edu.cs371m.reddit.databinding.RowDayBinding
+import edu.cs371m.reddit.databinding.RowEventBinding
 import edu.cs371m.reddit.model.Event
 import edu.cs371m.reddit.ui.MainViewModel
 
@@ -38,7 +39,7 @@ class EventAdapter(private val viewModel: MainViewModel)
         }
     }
 
-    inner class VH(val rowPostBinding: RowPostBinding)
+    inner class VH(val rowPostBinding: RowEventBinding)
         : RecyclerView.ViewHolder(rowPostBinding.root){
         init {
             rowPostBinding.root.setOnClickListener {
@@ -60,7 +61,7 @@ class EventAdapter(private val viewModel: MainViewModel)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val rowBinding = RowPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val rowBinding = RowEventBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return VH(rowBinding)
     }
 

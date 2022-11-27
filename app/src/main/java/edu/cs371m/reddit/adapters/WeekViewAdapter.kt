@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import edu.cs371m.reddit.databinding.RowDayBinding
 import edu.cs371m.reddit.databinding.RowEventBinding
 import edu.cs371m.reddit.glide.Glide
 import edu.cs371m.reddit.model.Calendar
@@ -32,23 +33,25 @@ class WeekViewAdapter(private val viewModel: MainViewModel)
     }
 
     // ViewHolder pattern
-    inner class VH(val rowSubredditBinding: RowEventBinding)
-        : RecyclerView.ViewHolder(rowSubredditBinding.root){
+    inner class VH(val rowDayBinding: RowDayBinding)
+        : RecyclerView.ViewHolder(rowDayBinding.root){
             init {
-                rowSubredditBinding.root.setOnClickListener {
+                rowDayBinding.root.setOnClickListener {
                     Log.d(null, "here")
                     //viewModel.netPosts()
                 }
+
             }
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val rowBinding = RowEventBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val rowBinding = RowDayBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return VH(rowBinding)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        val binding = holder.rowSubredditBinding
+        val binding = holder.rowDayBinding
+        binding.dayTitle.text = viewModel.getDay(position).dayOfMonth.toString()
     }
 
     // XXX Write me.

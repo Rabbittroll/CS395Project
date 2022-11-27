@@ -1,10 +1,12 @@
 package edu.cs371m.reddit.ui
 
 
+import android.util.Log
 import androidx.lifecycle.*
 import edu.cs371m.reddit.FirestoreAuthLiveData
 import edu.cs371m.reddit.ViewModelDBHelper
 import edu.cs371m.reddit.model.Calendar
+import edu.cs371m.reddit.model.Event
 import java.time.DayOfWeek
 import java.time.LocalDate
 
@@ -19,6 +21,7 @@ class MainViewModel : ViewModel() {
     private var firebaseAuthLiveData = FirestoreAuthLiveData()
     private var calendars = MutableLiveData<List<Calendar>>()
     private var weekDates = MutableLiveData<List<LocalDate>>()
+    private var events = MutableLiveData<List<Event>>()
     private val dbHelp = ViewModelDBHelper()
     var fetchDone : MutableLiveData<Boolean> = MutableLiveData(false)
     var isHome : MutableLiveData<Boolean> = MutableLiveData(false)
@@ -26,7 +29,8 @@ class MainViewModel : ViewModel() {
     var searchEmpty : MutableLiveData<Boolean> = MutableLiveData(false)
     //private val searchText = MutableLiveData<String>()
     init {
-
+        setDaysInWeek(LocalDate.now())
+        Log.d(null, weekDates.value.toString())
     }
 
     // XXX Write netPosts/searchPosts
@@ -60,6 +64,14 @@ class MainViewModel : ViewModel() {
 
     fun observeDays() : MutableLiveData<List<LocalDate>> {
         return weekDates
+    }
+
+    fun getDay(position: Int): LocalDate {
+        return weekDates.value!![position]
+    }
+
+    fun observeEvents() : MutableLiveData<List<Event>> {
+        return events
     }
 
 
