@@ -58,6 +58,10 @@ class WeekViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(javaClass.simpleName, "onViewCreated")
+        viewModel.observeDays().observe(viewLifecycleOwner){
+            weekAdapter.submitList(it)
+        }
+        viewModel.setDaysInWeek(LocalDate.now())
         // XXX Write me
 
         Log.d(null, "in home fragment")

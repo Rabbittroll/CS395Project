@@ -1,19 +1,12 @@
 package edu.cs371m.reddit.ui
 
 
-import android.content.Context
-import android.content.Intent
-import android.icu.text.StringSearch
-import android.util.Log
 import androidx.lifecycle.*
 import edu.cs371m.reddit.FirestoreAuthLiveData
 import edu.cs371m.reddit.ViewModelDBHelper
-import edu.cs371m.reddit.api.RedditApi
-import edu.cs371m.reddit.api.RedditPost
-import edu.cs371m.reddit.api.RedditPostRepository
 import edu.cs371m.reddit.model.Calendar
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import java.time.DayOfWeek
+import java.time.LocalDate
 
 
 // XXX Much to write
@@ -25,6 +18,7 @@ class MainViewModel : ViewModel() {
     }
     private var firebaseAuthLiveData = FirestoreAuthLiveData()
     private var calendars = MutableLiveData<List<Calendar>>()
+    private var weekDates = MutableLiveData<List<LocalDate>>()
     private val dbHelp = ViewModelDBHelper()
     var fetchDone : MutableLiveData<Boolean> = MutableLiveData(false)
     var isHome : MutableLiveData<Boolean> = MutableLiveData(false)
@@ -41,6 +35,31 @@ class MainViewModel : ViewModel() {
 
     fun observeCals() : MutableLiveData<List<Calendar>> {
         return calendars
+    }
+
+    private fun sundayForDate(current: LocalDate): LocalDate {
+        var current = current
+        val oneWeekAgo = current.minusWeeks(1)
+        while (current.isAfter(oneWeekAgo)) {
+            if (current.dayOfWeek == DayOfWeek.SUNDAY) return current
+            current = current.minusDays(1)
+        }
+        return current
+    }
+
+    fun setDaysInWeek(selectedDate: LocalDate) {
+        val days: MutableList<LocalDate> = emptyList<LocalDate>().toMutableList()
+        var current: LocalDate = sundayForDate(selectedDate)
+        val endDate: LocalDate = current.plusWeeks(1)
+        while (current.isBefore(endDate)) {
+            days.add(current)
+            current = current.plusDays(1)
+        }
+        weekDates.value = days
+    }
+
+    fun observeDays() : MutableLiveData<List<LocalDate>> {
+        return weekDates
     }
 
 

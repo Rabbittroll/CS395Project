@@ -12,24 +12,22 @@ import edu.cs371m.reddit.model.Calendar
 import edu.cs371m.reddit.ui.MainViewModel
 import edu.cs371m.reddit.model.Event
 import edu.cs371m.reddit.ui.WeekViewFragment
+import java.time.LocalDate
 
 // NB: Could probably unify with PostRowAdapter if we had two
 // different VH and override getItemViewType
 // https://medium.com/@droidbyme/android-recyclerview-with-multiple-view-type-multiple-view-holder-af798458763b
 class WeekViewAdapter(private val viewModel: MainViewModel)
-    : ListAdapter<Calendar, WeekViewAdapter.VH>(WeekDiff()) {
+    : ListAdapter<LocalDate, WeekViewAdapter.VH>(WeekDiff()) {
 
-    class WeekDiff : DiffUtil.ItemCallback<Calendar>() {
-        override fun areItemsTheSame(oldItem: Calendar, newItem: Calendar): Boolean {
-            return oldItem.firestoreID == newItem.firestoreID
+    class WeekDiff : DiffUtil.ItemCallback<LocalDate>() {
+        override fun areItemsTheSame(oldItem: LocalDate, newItem: LocalDate): Boolean {
+            return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: Calendar, newItem: Calendar): Boolean {
-            return oldItem.firestoreID == newItem.firestoreID
-                    && oldItem.Name == newItem.Name
-                    && oldItem.Role == newItem.Role
-                    && oldItem.Trainer == newItem.Trainer
-                    && oldItem.timeStamp == newItem.timeStamp
+        override fun areContentsTheSame(oldItem: LocalDate, newItem: LocalDate): Boolean {
+            return oldItem == newItem
+
         }
     }
 
