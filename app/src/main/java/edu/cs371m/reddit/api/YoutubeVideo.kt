@@ -5,10 +5,9 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import androidx.core.text.clearSpans
-import androidx.core.text.toSpannable
 import com.google.gson.annotations.SerializedName
 
-data class RedditPost (
+data class YoutubeVideo (
     @SerializedName("name")
     val key: String,
     @SerializedName("title")
@@ -113,7 +112,7 @@ data class RedditPost (
     // at two different times to compare as equal.  By default, they will be different
     // objects with different hash codes.
     override fun equals(other: Any?) : Boolean =
-        if (other is RedditPost) {
+        if (other is YoutubeVideo) {
             key == other.key
         } else {
             false

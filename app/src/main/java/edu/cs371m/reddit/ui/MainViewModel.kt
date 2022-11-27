@@ -31,6 +31,7 @@ class MainViewModel : ViewModel() {
     init {
         setDaysInWeek(LocalDate.now())
         Log.d(null, weekDates.value.toString())
+        addEvent("lift", LocalDate.now())
     }
 
     // XXX Write netPosts/searchPosts
@@ -70,8 +71,23 @@ class MainViewModel : ViewModel() {
         return weekDates.value!![position]
     }
 
+    fun addEvent(name: String, date: LocalDate) {
+        val newEvent = Event(name, date)
+        var ret = if (events.value != null) {
+            events.value!!.toMutableList()
+        } else {
+            emptyList<Event>().toMutableList()
+        }
+        ret.add(newEvent)
+        events.value = ret
+    }
+
     fun observeEvents() : MutableLiveData<List<Event>> {
         return events
+    }
+
+    fun getEvent(position: Int): Event {
+        return events.value!![position]
     }
 
 

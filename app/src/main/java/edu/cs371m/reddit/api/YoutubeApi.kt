@@ -8,16 +8,14 @@ import com.google.gson.JsonElement
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 import java.lang.reflect.Type
 
 
-interface RedditApi {
+interface YoutubeApi {
     // XXX Write me, two function prototypes with Retrofit annotations
     // @GET contains a string appended to the base URL
     // the string is called a path name
@@ -43,7 +41,7 @@ interface RedditApi {
         val after: String?,
         val before: String?
     )
-    data class RedditChildrenResponse(val data: RedditPost)
+    data class RedditChildrenResponse(val data: YoutubeVideo)
 
     // This class allows Retrofit to parse items in our model of type
     // SpannableString.  Note, given the amount of "work" we do to
@@ -73,8 +71,8 @@ interface RedditApi {
             .scheme("https")
             .host("www.reddit.com")
             .build()
-        fun create(): RedditApi = create(httpurl)
-        private fun create(httpUrl: HttpUrl): RedditApi {
+        fun create(): YoutubeApi = create(httpurl)
+        private fun create(httpUrl: HttpUrl): YoutubeApi {
             val client = OkHttpClient.Builder()
                 .addInterceptor(HttpLoggingInterceptor().apply {
                     // Enable basic HTTP logging to help with debugging.
@@ -86,7 +84,7 @@ interface RedditApi {
                 .client(client)
                 .addConverterFactory(buildGsonConverterFactory())
                 .build()
-                .create(RedditApi::class.java)
+                .create(YoutubeApi::class.java)
         }
     }
 }

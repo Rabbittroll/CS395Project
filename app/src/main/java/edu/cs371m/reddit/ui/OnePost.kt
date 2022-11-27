@@ -2,20 +2,9 @@ package edu.cs371m.reddit
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.snackbar.Snackbar
-import edu.cs371m.reddit.api.RedditPost
-import edu.cs371m.reddit.databinding.FragmentRvBinding
-import kotlin.random.Random
 import edu.cs371m.reddit.databinding.ActivityOnePostBinding
 import edu.cs371m.reddit.glide.Glide
 

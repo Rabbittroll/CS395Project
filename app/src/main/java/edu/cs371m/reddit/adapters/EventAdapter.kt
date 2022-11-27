@@ -5,8 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import edu.cs371m.reddit.api.RedditPost
-import edu.cs371m.reddit.databinding.RowDayBinding
+import edu.cs371m.reddit.api.YoutubeVideo
 import edu.cs371m.reddit.databinding.RowEventBinding
 import edu.cs371m.reddit.model.Event
 import edu.cs371m.reddit.ui.MainViewModel
@@ -34,7 +33,6 @@ class EventAdapter(private val viewModel: MainViewModel)
         override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
             return oldItem.getName() == newItem.getName()
                     && oldItem.getDate() == newItem.getDate()
-                    && oldItem.getTime() == newItem.getTime()
 
         }
     }
@@ -47,19 +45,6 @@ class EventAdapter(private val viewModel: MainViewModel)
         }
     }
 
-    class RedditDiff : DiffUtil.ItemCallback<RedditPost>() {
-        override fun areItemsTheSame(oldItem: RedditPost, newItem: RedditPost): Boolean {
-            return oldItem.key == newItem.key
-        }
-        override fun areContentsTheSame(oldItem: RedditPost, newItem: RedditPost): Boolean {
-            return RedditPost.spannableStringsEqual(oldItem.title, newItem.title) &&
-                    RedditPost.spannableStringsEqual(oldItem.selfText, newItem.selfText) &&
-                    RedditPost.spannableStringsEqual(oldItem.publicDescription, newItem.publicDescription) &&
-                    RedditPost.spannableStringsEqual(oldItem.displayName, newItem.displayName)
-
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val rowBinding = RowEventBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return VH(rowBinding)
@@ -67,43 +52,7 @@ class EventAdapter(private val viewModel: MainViewModel)
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val binding = holder.rowPostBinding
-        /*val curPost = getItem(position)
-        binding.title.text = getItem(position).title
-        binding.title.setOnClickListener {
-            val intent = Intent(binding.title.context, OnePost::class.java)
-            intent.putExtra("title", getItem(position).title.toString())
-            intent.putExtra("selfText", getItem(position).selfText.toString())
-            intent.putExtra("imageURL",getItem(position).imageURL.toString())
-            intent.putExtra("imageURL",getItem(position).thumbnailURL.toString())
-            startActivity(binding.title.context, intent, null)
-        }
-        binding.comments.text = getItem(position).commentCount.toString()
-        binding.score.text = getItem(position).score.toString()
-        if(!viewModel.getFavs().isNullOrEmpty()){
-            if (viewModel.getFavs()!!.contains(getItem(position))){
-                binding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
-            } else {
-                binding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
-            }
-        } else {
-            binding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
-        }
-        binding.rowFav.setOnClickListener {
-            if(!viewModel.getFavs().isNullOrEmpty()){
-                if (viewModel.getFavs()!!.contains(curPost)){
-                    viewModel.removeFavs(curPost)
-                    binding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
-                } else {
-                    viewModel.setFavs(getItem(position))
-                    binding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
-                }
-            } else {
-                viewModel.setFavs(getItem(position))
-                binding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
-            }
-        }
-        binding.selfText.text = getItem(position).selfText
-        Glide.glideFetch(getItem(position).imageURL, getItem(position).thumbnailURL, binding.image)*/
+        binding.eventNameTV.text = viewModel.getEvent(position).getName()
     }
 }
 

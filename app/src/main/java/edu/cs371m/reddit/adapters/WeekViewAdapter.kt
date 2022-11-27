@@ -7,12 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.cs371m.reddit.databinding.RowDayBinding
-import edu.cs371m.reddit.databinding.RowEventBinding
-import edu.cs371m.reddit.glide.Glide
-import edu.cs371m.reddit.model.Calendar
 import edu.cs371m.reddit.ui.MainViewModel
-import edu.cs371m.reddit.model.Event
-import edu.cs371m.reddit.ui.WeekViewFragment
 import java.time.LocalDate
 
 // NB: Could probably unify with PostRowAdapter if we had two

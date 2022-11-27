@@ -16,6 +16,11 @@ import edu.cs371m.reddit.databinding.ActivityMainBinding
 import edu.cs371m.reddit.ui.HomeFragment
 import edu.cs371m.reddit.ui.MainViewModel
 import edu.cs371m.reddit.adapters.EventAdapter
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayer.Provider;
+import com.google.android.youtube.player.YouTubePlayerView;
 
 class MainActivity : AppCompatActivity() {
     // This allows us to do better testing
