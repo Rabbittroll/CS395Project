@@ -1,10 +1,14 @@
 package edu.cs395.finalProj.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import edu.cs395.finalProj.ExcerciseVid
 import edu.cs395.finalProj.databinding.RowEventBinding
 import edu.cs395.finalProj.model.Event
 import edu.cs395.finalProj.ui.MainViewModel
@@ -51,7 +55,13 @@ class EventAdapter(private val viewModel: MainViewModel)
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val binding = holder.rowPostBinding
+        val title = viewModel.getEvent(position).getName()
         binding.eventNameTV.text = viewModel.getEvent(position).getName()
+        binding.root.setOnClickListener {
+            val intent = Intent(binding.root.context, ExcerciseVid::class.java)
+            intent.putExtra("title", title)
+            startActivity(binding.root.context, intent, null)
+        }
     }
 }
 
