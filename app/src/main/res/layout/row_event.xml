@@ -22,11 +22,6 @@
             android:textSize="20sp"
             android:text="Event"/>
 
-        <com.google.android.youtube.player.YouTubePlayerView
-            android:id="@+id/youtube_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

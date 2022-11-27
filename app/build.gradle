@@ -7,7 +7,7 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 32
     defaultConfig {
-        applicationId "edu.cs371m.reddit"
+        applicationId "edu.cs395.finalProj"
         minSdkVersion 30
         targetSdkVersion 32
         versionCode 1
@@ -24,7 +24,7 @@ android {
         viewBinding true
     }
     testOptions.unitTests.includeAndroidResources = true
-    namespace 'edu.cs371m.reddit'
+    namespace 'edu.cs395.finalProj'
 }
 
 dependencies {
