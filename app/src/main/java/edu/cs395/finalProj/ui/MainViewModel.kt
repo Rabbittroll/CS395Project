@@ -7,6 +7,7 @@ import edu.cs395.finalProj.FirestoreAuthLiveData
 import edu.cs395.finalProj.ViewModelDBHelper
 import edu.cs395.finalProj.model.Calendar
 import edu.cs395.finalProj.model.Event
+import edu.cs395.finalProj.model.Exercise
 import java.time.DayOfWeek
 import java.time.LocalDate
 
@@ -15,10 +16,12 @@ import java.time.LocalDate
 class MainViewModel : ViewModel() {
     private var firebaseAuthLiveData = FirestoreAuthLiveData()
     private var calendars = MutableLiveData<List<Calendar>>()
+    private var exercises = MutableLiveData<List<Exercise>>()
     private var weekDates = MutableLiveData<List<LocalDate>>()
     private var selDate = MutableLiveData<LocalDate>()
     private var events = MutableLiveData<List<Event>>()
     private val dbHelp = ViewModelDBHelper()
+    var calName : MutableLiveData<String> = MutableLiveData("")
     var fetchDone : MutableLiveData<Boolean> = MutableLiveData(false)
     var isHome : MutableLiveData<Boolean> = MutableLiveData(false)
     var searchStarted : MutableLiveData<Boolean> = MutableLiveData(false)
@@ -126,8 +129,12 @@ class MainViewModel : ViewModel() {
         return note!!
     }
 
-    fun fetchExcercises() {
+    fun setCalName(name: String) {
+        calName.value = name
+    }
 
+    fun fetchExercises() {
+        dbHelp.fetchExercises(exercises, calName.value!!)
     }
 
 

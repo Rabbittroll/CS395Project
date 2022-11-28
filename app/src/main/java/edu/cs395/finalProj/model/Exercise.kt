@@ -5,7 +5,7 @@ import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ServerTimestamp
 
 // Firebase insists we have a no argument constructor
-data class Excercise(
+data class Exercise(
     // Auth information
     var name: String = "",
     var day: String = "",

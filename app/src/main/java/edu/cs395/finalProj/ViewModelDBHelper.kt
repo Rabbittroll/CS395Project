@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import edu.cs395.finalProj.model.Calendar
+import edu.cs395.finalProj.model.Exercise
+import java.util.*
 
 class ViewModelDBHelper() {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -13,8 +15,9 @@ class ViewModelDBHelper() {
     fun fetchCalendar(usersList: MutableLiveData<List<Calendar>>) {
         dbFetchCalendar(usersList)
     }
-    fun fetchExcercises(usersList: MutableLiveData<List<Calendar>>) {
-        dbFetchCalendar(usersList)
+    fun fetchExercises(usersList: MutableLiveData<List<Exercise>>,
+                        calName: String) {
+        dbFetchExercise(usersList,calName)
     }
     // If we want to listen for real time updates use this
     // .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
@@ -36,6 +39,23 @@ class ViewModelDBHelper() {
                 Log.d(javaClass.simpleName, "allNotes fetch FAILED ", it)
             }
     }
+
+    private fun limitAndGetX(query: Query,
+                            usersList: MutableLiveData<List<Exercise>>) {
+        query
+            .limit(100)
+            .get()
+            .addOnSuccessListener { result ->
+                Log.d(javaClass.simpleName, "allNotes fetch ${result!!.documents.size}")
+                // NB: This is done on a background thread
+                usersList.postValue(result.documents.mapNotNull {
+                    it.toObject(Exercise::class.java)
+                })
+            }
+            .addOnFailureListener {
+                Log.d(javaClass.simpleName, "allNotes fetch FAILED ", it)
+            }
+    }
     /////////////////////////////////////////////////////////////
     // Interact with Firestore db
     // https://firebase.google.com/docs/firestore/query-data/order-limit-data
@@ -47,6 +67,18 @@ class ViewModelDBHelper() {
         Log.d(null,"in fetch calendar")
         //Log.d(null,query.toString())
         limitAndGet(query, notesList)
+    }
+
+    private fun dbFetchExercise(notesList: MutableLiveData<List<Exercise>>,
+                                calName: String) {
+        // XXX Write me and use limitAndGet
+        val collName = calName.lowercase() + "X"
+        Log.d(null, collName)
+        val query = db.collection(collName)
+
+        Log.d(null,"in fetch Exercise")
+        //Log.d(null,query.toString())
+        limitAndGetX(query, notesList)
     }
 
     // https://firebase.google.com/docs/firestore/manage-data/add-data#add_a_document

@@ -42,6 +42,7 @@ class CalendarListAdapter(private val viewModel: MainViewModel)
             holder.rowBinding.userRole.text = cal.Role
             holder.rowBinding.userTrainer.text = cal.Trainer
             itemView.setOnClickListener {
+                viewModel.setCalName(cal.Name.lowercase())
                 val activity  = it.context as? AppCompatActivity
                 activity?.supportFragmentManager?.commit {
                     addToBackStack("homeFrag")
