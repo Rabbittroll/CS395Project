@@ -2,12 +2,14 @@ package edu.cs395.finalProj.ui
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import edu.cs395.finalProj.MainActivity
 import edu.cs395.finalProj.adapters.EventAdapter
 import edu.cs395.finalProj.adapters.WeekViewAdapter
 import edu.cs395.finalProj.databinding.FragmentWeekViewBinding
@@ -30,6 +32,11 @@ class WeekViewFragment : Fragment() {
         }
     }
 
+    private fun setDisplayHomeAsUpEnabled(value : Boolean) {
+        val mainActivity = requireActivity() as MainActivity
+        mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(value)
+    }
+
 
 
     override fun onCreateView(
@@ -46,6 +53,7 @@ class WeekViewFragment : Fragment() {
         binding.calendarRecyclerView.adapter = weekAdapter
         binding.eventListView.layoutManager = eventLayoutManager
         binding.eventListView.adapter = eventAdapter
+        setDisplayHomeAsUpEnabled(true)
         return binding.root
     }
 
@@ -74,13 +82,23 @@ class WeekViewFragment : Fragment() {
         }
 
         viewModel.setDaysInWeek(LocalDate.now())
-        // XXX Write me
 
-        Log.d(null, "in home fragment")
-        //adapter.submitList(viewModel.ge)
-        /*viewModel.observeSubs().observe(viewLifecycleOwner){
-            adapter.submitList(it)
-        }*/
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                // Menu is already inflated by main activity
+            }
+            // XXX Write me, onMenuItemSelected
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                Log.d(null,menuItem.itemId.toString())
+                Log.d(null, android.R.id.home.toString())
+                if(menuItem.itemId == android.R.id.home){
+                    activity!!.supportFragmentManager.popBackStack()
+                }
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     override fun onDestroyView() {
