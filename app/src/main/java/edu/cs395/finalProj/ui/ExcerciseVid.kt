@@ -10,15 +10,14 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import edu.cs395.finalProj.databinding.ActivityExcercixeBinding
-import com.google.android.youtube.player.YouTubeBaseActivity
-import com.google.android.youtube.player.YouTubeInitializationResult
-import com.google.android.youtube.player.YouTubePlayer
+
 
 
 // XXX Write most of this file
-class ExcerciseVid: YouTubeBaseActivity() {
+class ExcerciseVid: AppCompatActivity() {
 
     private var title : String? = ""
     private var url: String? = ""

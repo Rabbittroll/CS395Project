@@ -13,14 +13,10 @@ import java.time.LocalDate
 
 // XXX Much to write
 class MainViewModel : ViewModel() {
-    private var title = MutableLiveData<String>()
-    private var searchTerm = MutableLiveData<String>()
-    private var subreddit = MutableLiveData<String>().apply {
-        value = "aww"
-    }
     private var firebaseAuthLiveData = FirestoreAuthLiveData()
     private var calendars = MutableLiveData<List<Calendar>>()
     private var weekDates = MutableLiveData<List<LocalDate>>()
+    private var selDate = MutableLiveData<LocalDate>()
     private var events = MutableLiveData<List<Event>>()
     private val dbHelp = ViewModelDBHelper()
     var fetchDone : MutableLiveData<Boolean> = MutableLiveData(false)
@@ -30,8 +26,9 @@ class MainViewModel : ViewModel() {
     //private val searchText = MutableLiveData<String>()
     init {
         setDaysInWeek(LocalDate.now())
-        Log.d(null, weekDates.value.toString())
+        //Log.d(null, weekDates.value.toString())
         addEvent("lift", LocalDate.now())
+        setSelDate(LocalDate.now())
     }
 
     // XXX Write netPosts/searchPosts
@@ -41,6 +38,22 @@ class MainViewModel : ViewModel() {
     fun observeCals() : MutableLiveData<List<Calendar>> {
         return calendars
     }
+
+    fun setSelDate(selectedDate: LocalDate){
+        Log.d(null, "in setSel")
+        Log.d(null, selectedDate.toString())
+        selDate.value = selectedDate
+    }
+
+    fun getSelDate(): LocalDate {
+        return selDate.value!!
+    }
+
+    fun observeSelDate() : MutableLiveData<LocalDate> {
+        Log.d(null, "in obs Sel")
+        return selDate
+    }
+
 
     private fun sundayForDate(current: LocalDate): LocalDate {
         var current = current
@@ -65,6 +78,10 @@ class MainViewModel : ViewModel() {
 
     fun observeDays() : MutableLiveData<List<LocalDate>> {
         return weekDates
+    }
+
+    fun pullDays(): List<LocalDate> {
+        return weekDates.value!!
     }
 
     fun getDay(position: Int): LocalDate {

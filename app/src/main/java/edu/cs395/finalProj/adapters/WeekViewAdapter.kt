@@ -1,5 +1,6 @@
 package edu.cs395.finalProj.adapters
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,11 +19,11 @@ class WeekViewAdapter(private val viewModel: MainViewModel)
 
     class WeekDiff : DiffUtil.ItemCallback<LocalDate>() {
         override fun areItemsTheSame(oldItem: LocalDate, newItem: LocalDate): Boolean {
-            return oldItem == newItem
+            return false
         }
 
         override fun areContentsTheSame(oldItem: LocalDate, newItem: LocalDate): Boolean {
-            return oldItem == newItem
+            return false
 
         }
     }
@@ -46,7 +47,18 @@ class WeekViewAdapter(private val viewModel: MainViewModel)
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val binding = holder.rowDayBinding
-        binding.dayTitle.text = viewModel.getDay(position).dayOfMonth.toString()
+        val day = viewModel.getDay(position)
+        val selDate = viewModel.getSelDate()
+        binding.dayTitle.text = day.dayOfMonth.toString()
+        if (day == selDate){
+            binding.root.setBackgroundColor(Color.LTGRAY)
+        } else {
+            binding.root.setBackgroundColor(Color.TRANSPARENT)
+        }
+        binding.root.setOnClickListener {
+            viewModel.setSelDate(day)
+        }
+
     }
 
     // XXX Write me.

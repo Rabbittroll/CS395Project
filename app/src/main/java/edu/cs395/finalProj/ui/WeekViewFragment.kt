@@ -63,6 +63,10 @@ class WeekViewFragment : Fragment() {
             weekAdapter.submitList(it)
             binding.monthYearTV.text = it[0].month.toString().take(3) + " " + it[0].year.toString()
         }
+        viewModel.observeSelDate().observe(viewLifecycleOwner){
+            viewModel.changeWeek(1)
+            viewModel.changeWeek(-1)
+        }
         viewModel.observeEvents().observe(viewLifecycleOwner){
             eventAdapter.submitList(it)
         }
