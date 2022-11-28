@@ -10,6 +10,13 @@ import edu.cs395.finalProj.model.Event
 import edu.cs395.finalProj.model.Exercise
 import java.time.DayOfWeek
 import java.time.LocalDate
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
+import java.time.format.DateTimeFormatter
 
 
 // XXX Much to write
@@ -26,12 +33,14 @@ class MainViewModel : ViewModel() {
     var isHome : MutableLiveData<Boolean> = MutableLiveData(false)
     var searchStarted : MutableLiveData<Boolean> = MutableLiveData(false)
     var searchEmpty : MutableLiveData<Boolean> = MutableLiveData(false)
+    private lateinit var database: DatabaseReference
     //private val searchText = MutableLiveData<String>()
     init {
         setDaysInWeek(LocalDate.now())
         //Log.d(null, weekDates.value.toString())
         addEvent("lift", LocalDate.now())
         setSelDate(LocalDate.now())
+        database = Firebase.database.reference
     }
 
     // XXX Write netPosts/searchPosts
@@ -133,8 +142,27 @@ class MainViewModel : ViewModel() {
         calName.value = name
     }
 
+    fun getCalName(): String {
+        return calName.value!!
+    }
+
     fun fetchExercises() {
         dbHelp.fetchExercises(exercises, calName.value!!)
+    }
+
+    fun setDailyEx() {
+        database.child("name")
+            .child(calName.value!!.lowercase().capitalize())
+            .child(selDate.value!!.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+            .get()
+            .addOnSuccessListener {
+                Log.i("firebase", "Got value ${it.value}")
+                for (i in it.children) {
+                    addEvent(i.key!!, selDate.value!!)
+                }
+        }.addOnFailureListener{
+            Log.e("firebase", "Error getting data", it)
+        }
     }
 
 

@@ -53,6 +53,8 @@ class WeekViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(javaClass.simpleName, "onViewCreated")
+        binding.calNameTV.text = viewModel.getCalName().capitalize()
+        viewModel.setDailyEx()
         binding.backButton.setOnClickListener {
             viewModel.changeWeek(-1)
         }
