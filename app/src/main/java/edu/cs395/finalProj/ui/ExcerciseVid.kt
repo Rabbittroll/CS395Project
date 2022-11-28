@@ -32,6 +32,7 @@ class ExcerciseVid: YouTubeBaseActivity() {
 
 
         title = intent.getStringExtra("title").toString()
+        binding.exTitle.text = title
 
         ytPlayer = binding.webviewPlayerView
         ytPlayer.webViewClient = WebViewClient()
@@ -41,6 +42,9 @@ class ExcerciseVid: YouTubeBaseActivity() {
         webSettings.allowFileAccess = true
         if (savedInstanceState == null) {
             ytPlayer.loadUrl("https://www.youtube.com/embed/YE7VzlLtp-4")
+        }
+        binding.backButton.setOnClickListener {
+            finishAct()
         }
 
     }

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/dayTitle"
             android:text="1"
-            android:textSize="20sp"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"

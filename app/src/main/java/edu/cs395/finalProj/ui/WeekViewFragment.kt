@@ -55,6 +55,7 @@ class WeekViewFragment : Fragment() {
         Log.d(javaClass.simpleName, "onViewCreated")
         viewModel.observeDays().observe(viewLifecycleOwner){
             weekAdapter.submitList(it)
+            binding.monthYearTV.text = it[0].month.toString() + " " + it[0].year.toString()
         }
         viewModel.observeEvents().observe(viewLifecycleOwner){
             eventAdapter.submitList(it)
