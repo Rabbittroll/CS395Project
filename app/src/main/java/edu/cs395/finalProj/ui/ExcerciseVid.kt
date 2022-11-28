@@ -21,7 +21,7 @@ import com.google.android.youtube.player.YouTubePlayer
 class ExcerciseVid: YouTubeBaseActivity() {
 
     private var title : String? = ""
-    private var api_key =  "AIzaSyDmsthuNYj8U9sIOjVABHiq1Em6tLg19xw"
+    private var url: String? = ""
     private lateinit var binding : ActivityExcercixeBinding
     private lateinit var ytPlayer: WebView
 

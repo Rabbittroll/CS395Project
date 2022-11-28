@@ -71,6 +71,10 @@ class MainViewModel : ViewModel() {
         return weekDates.value!![position]
     }
 
+    fun changeWeek(incrmnt: Long) {
+        setDaysInWeek(weekDates.value!![0].plusWeeks(incrmnt))
+    }
+
     fun addEvent(name: String, date: LocalDate) {
         val newEvent = Event(name, date)
         var ret = if (events.value != null) {

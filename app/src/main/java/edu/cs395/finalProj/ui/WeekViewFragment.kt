@@ -53,9 +53,15 @@ class WeekViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(javaClass.simpleName, "onViewCreated")
+        binding.backButton.setOnClickListener {
+            viewModel.changeWeek(-1)
+        }
+        binding.forwardButton.setOnClickListener {
+            viewModel.changeWeek(1)
+        }
         viewModel.observeDays().observe(viewLifecycleOwner){
             weekAdapter.submitList(it)
-            binding.monthYearTV.text = it[0].month.toString() + " " + it[0].year.toString()
+            binding.monthYearTV.text = it[0].month.toString().take(3) + " " + it[0].year.toString()
         }
         viewModel.observeEvents().observe(viewLifecycleOwner){
             eventAdapter.submitList(it)
