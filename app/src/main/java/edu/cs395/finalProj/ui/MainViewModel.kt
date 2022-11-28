@@ -126,6 +126,10 @@ class MainViewModel : ViewModel() {
         return note!!
     }
 
+    fun fetchExcercises() {
+
+    }
+
 
 
     // Convenient place to put it as it is shared

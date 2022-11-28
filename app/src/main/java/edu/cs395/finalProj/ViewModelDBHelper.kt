@@ -13,6 +13,9 @@ class ViewModelDBHelper() {
     fun fetchCalendar(usersList: MutableLiveData<List<Calendar>>) {
         dbFetchCalendar(usersList)
     }
+    fun fetchExcercises(usersList: MutableLiveData<List<Calendar>>) {
+        dbFetchCalendar(usersList)
+    }
     // If we want to listen for real time updates use this
     // .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
     // But be careful about how listener updates live data
