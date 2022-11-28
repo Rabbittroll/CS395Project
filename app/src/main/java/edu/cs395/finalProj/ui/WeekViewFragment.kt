@@ -54,7 +54,6 @@ class WeekViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d(javaClass.simpleName, "onViewCreated")
         binding.calNameTV.text = viewModel.getCalName().capitalize()
-        viewModel.setDailyEx()
         binding.backButton.setOnClickListener {
             viewModel.changeWeek(-1)
         }
@@ -66,15 +65,15 @@ class WeekViewFragment : Fragment() {
             binding.monthYearTV.text = it[0].month.toString().take(3) + " " + it[0].year.toString()
         }
         viewModel.observeSelDate().observe(viewLifecycleOwner){
-            viewModel.changeWeek(1)
-            viewModel.changeWeek(-1)
+            weekAdapter.notifyDataSetChanged()
+            viewModel.clearEx()
+            viewModel.setDailyEx()
         }
         viewModel.observeEvents().observe(viewLifecycleOwner){
             eventAdapter.submitList(it)
         }
 
         viewModel.setDaysInWeek(LocalDate.now())
-        viewModel.addEvent("finish", LocalDate.now())
         // XXX Write me
 
         Log.d(null, "in home fragment")

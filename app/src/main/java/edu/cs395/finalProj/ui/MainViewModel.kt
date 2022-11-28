@@ -38,7 +38,6 @@ class MainViewModel : ViewModel() {
     init {
         setDaysInWeek(LocalDate.now())
         //Log.d(null, weekDates.value.toString())
-        addEvent("lift", LocalDate.now())
         setSelDate(LocalDate.now())
         database = Firebase.database.reference
     }
@@ -163,6 +162,10 @@ class MainViewModel : ViewModel() {
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)
         }
+    }
+
+    fun clearEx() {
+        events.value = emptyList()
     }
 
 
