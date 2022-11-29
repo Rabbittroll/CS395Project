@@ -107,8 +107,8 @@ class MainViewModel : ViewModel() {
         setDaysInWeek(weekDates.value!![0].plusWeeks(incrmnt))
     }
 
-    fun addEvent(name: String, date: LocalDate, url: String) {
-        val newEvent = Event(name, date, url)
+    fun addEvent(name: String, date: LocalDate, url: String, setRep: String) {
+        val newEvent = Event(name, date, url, setRep)
         var ret = if (events.value != null) {
             events.value!!.toMutableList()
         } else {
@@ -162,7 +162,7 @@ class MainViewModel : ViewModel() {
                 Log.i("firebase", "Got value ${it.value}")
                 for (i in it.children) {
                     val url: String = matchUrl(i.key!!)
-                    addEvent(i.key!!, selDate.value!!, url)
+                    addEvent(i.key!!, selDate.value!!, url, i.value!! as String)
                 }
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)

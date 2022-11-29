@@ -57,7 +57,8 @@ class EventAdapter(private val viewModel: MainViewModel)
         val binding = holder.rowPostBinding
         val title = viewModel.getEvent(position).getName()
         val url = viewModel.getEvent(position).getUrl()
-        binding.eventNameTV.text = viewModel.getEvent(position).getName()
+        binding.eventNameTV.text = viewModel.getEvent(position).getName() + " :"
+        binding.eventSetRepTV.text = viewModel.getEvent(position).getSetRep()
         binding.root.setOnClickListener {
             val intent = Intent(binding.root.context, ExcerciseVid::class.java)
             intent.putExtra("title", title)

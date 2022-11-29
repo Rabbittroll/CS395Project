@@ -2,7 +2,7 @@ package edu.cs395.finalProj.model
 
 import java.time.LocalDate
 
-class Event(name: String, date: LocalDate, url: String) {
+class Event(name: String, date: LocalDate, url: String, setRep: String) {
     var eventsList: ArrayList<Event> = ArrayList()
 
     /*fun eventsForDate(date: LocalDate?): ArrayList<Event>? {
@@ -17,6 +17,7 @@ class Event(name: String, date: LocalDate, url: String) {
     private var name: String = name
     private var date: LocalDate = date
     private var url: String = url
+    private var setRep: String = setRep
 
     fun getName(): String {
         return name
@@ -40,5 +41,13 @@ class Event(name: String, date: LocalDate, url: String) {
 
     fun setDate(url: String) {
         this.url = url
+    }
+
+    fun getSetRep(): String {
+        return setRep
+    }
+
+    fun setSetRep(setRep: String) {
+        this.setRep = setRep
     }
 }
