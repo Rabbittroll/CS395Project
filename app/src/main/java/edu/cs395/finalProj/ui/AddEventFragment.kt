@@ -3,35 +3,35 @@ package edu.cs395.finalProj.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import edu.cs395.finalProj.MainActivity
 import edu.cs395.finalProj.R
 import edu.cs395.finalProj.adapters.EventAdapter
 import edu.cs395.finalProj.adapters.WeekViewAdapter
-import edu.cs395.finalProj.databinding.FragmentWeekViewBinding
+import edu.cs395.finalProj.databinding.FragmentAddEventBinding
 
 import java.time.LocalDate
 
 
-class WeekViewFragment : Fragment() {
+class AddEventFragment : Fragment() {
     // XXX initialize viewModel
     private val viewModel: MainViewModel by activityViewModels()
-    private var _binding: FragmentWeekViewBinding? = null
+    private var _binding: FragmentAddEventBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
-    lateinit var weekAdapter : WeekViewAdapter
-    lateinit var eventAdapter : EventAdapter
+    lateinit var adapter : ArrayAdapter<String>
+    //lateinit var eventAdapter : EventAdapter
 
     companion object {
-        fun newInstance(): WeekViewFragment {
-            return WeekViewFragment()
+        fun newInstance(): AddEventFragment {
+            return AddEventFragment()
         }
     }
 
@@ -47,15 +47,31 @@ class WeekViewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentWeekViewBinding.inflate(inflater, container, false)
-        weekAdapter = WeekViewAdapter(viewModel)
-        eventAdapter = EventAdapter(viewModel)
-        val weekLayoutManager = StaggeredGridLayoutManager(7, StaggeredGridLayoutManager.VERTICAL)
-        val eventLayoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-        binding.calendarRecyclerView.layoutManager = weekLayoutManager
-        binding.calendarRecyclerView.adapter = weekAdapter
-        binding.eventListView.layoutManager = eventLayoutManager
-        binding.eventListView.adapter = eventAdapter
+        _binding = FragmentAddEventBinding.inflate(inflater, container, false)
+        Log.d(null, viewModel.getAllEx().toString())
+        val exList = viewModel.getAllEx()
+        val aa = ArrayAdapter(this.requireContext(), android.R.layout.simple_spinner_item, exList)
+        // Set layout to use when the list of choices appear
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.difficultySP.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>,
+                                        view: View, position: Int, id: Long) {
+                Log.d(null, "pos $position")
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                Log.d(null, "onNothingSelected")
+            }
+        }
+        // Set Adapter to Spinner
+        binding.difficultySP.adapter = aa
+        // Set initial value of spinner to medium
+        val initialSpinner = 1
+        binding.difficultySP.setSelection(initialSpinner)
+        binding.calNameTV.text = viewModel.getCalName().capitalize()
+        binding.dateTV.text = viewModel.getSelDate().toString()
         setDisplayHomeAsUpEnabled(true)
         return binding.root
     }
@@ -64,35 +80,6 @@ class WeekViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(javaClass.simpleName, "onViewCreated")
-        binding.calNameTV.text = viewModel.getCalName().capitalize()
-        binding.addButton.setOnClickListener {
-            activity?.supportFragmentManager?.commit {
-                addToBackStack("weekViewFrag")
-                replace(R.id.main_frame, AddEventFragment.newInstance(), "addEventFrag")
-                // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            }
-        }
-        binding.backButton.setOnClickListener {
-            viewModel.changeWeek(-1)
-        }
-        binding.forwardButton.setOnClickListener {
-            viewModel.changeWeek(1)
-        }
-        viewModel.observeDays().observe(viewLifecycleOwner){
-            weekAdapter.submitList(it)
-            binding.monthYearTV.text = it[0].month.toString().take(3) + " " + it[0].year.toString()
-        }
-        viewModel.observeSelDate().observe(viewLifecycleOwner){
-            weekAdapter.notifyDataSetChanged()
-            viewModel.clearEx()
-            viewModel.setDailyEx()
-        }
-        viewModel.observeEvents().observe(viewLifecycleOwner){
-            eventAdapter.submitList(it)
-        }
-
-        viewModel.setDaysInWeek(LocalDate.now())
 
         val menuHost: MenuHost = requireActivity()
 

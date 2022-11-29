@@ -20,7 +20,7 @@ import edu.cs395.finalProj.databinding.ActivityExcercixeBinding
 class ExcerciseVid: AppCompatActivity() {
 
     private var title : String? = ""
-    private var url: String? = ""
+    private var urlString: String? = ""
     private lateinit var binding : ActivityExcercixeBinding
     private lateinit var ytPlayer: WebView
 
@@ -31,6 +31,7 @@ class ExcerciseVid: AppCompatActivity() {
 
 
         title = intent.getStringExtra("title").toString()
+        urlString = "https://www.youtube.com/embed/" + intent.getStringExtra("url").toString()
         binding.exTitle.text = title
 
         ytPlayer = binding.webviewPlayerView
@@ -40,7 +41,7 @@ class ExcerciseVid: AppCompatActivity() {
         webSettings.javaScriptEnabled = true
         webSettings.allowFileAccess = true
         if (savedInstanceState == null) {
-            ytPlayer.loadUrl("https://www.youtube.com/embed/YE7VzlLtp-4")
+            ytPlayer.loadUrl(urlString!!)
         }
         binding.backButton.setOnClickListener {
             finishAct()

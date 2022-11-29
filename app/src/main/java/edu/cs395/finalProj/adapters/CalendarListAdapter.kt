@@ -46,7 +46,7 @@ class CalendarListAdapter(private val viewModel: MainViewModel)
                 val activity  = it.context as? AppCompatActivity
                 activity?.supportFragmentManager?.commit {
                     addToBackStack("homeFrag")
-                    replace(R.id.main_frame, WeekViewFragment.newInstance(), "calendarViewFrag")
+                    replace(R.id.main_frame, WeekViewFragment.newInstance(), "weekViewFrag")
                     // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 }

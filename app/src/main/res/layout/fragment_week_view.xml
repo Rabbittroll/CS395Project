@@ -21,19 +21,6 @@
             android:layout_height="wrap_content"
             tools:context=".MainActivity">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/retButton"
-                android:layout_weight="1"
-                android:text="Back"
-                android:textStyle="bold"
-                android:onClick="previousWeekAction"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                />
 
             <TextView
                 android:id="@+id/calNameTV"
@@ -45,23 +32,8 @@
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/fakeButton"
-                app:layout_constraintStart_toEndOf="@id/retButton"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/fakeButton"
-                android:layout_weight="1"
-                android:text=""
-                android:background="@null"
-                android:textStyle="bold"
-                android:onClick="previousWeekAction"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                />
+                app:layout_constraintStart_toStartOf="parent"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -200,12 +172,11 @@
         android:layout_weight="1"/>
 
     <Button
+        android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Event"
-        android:background="@null"
+        android:text="Add"
         android:textStyle="bold"
-        android:onClick="newEventAction"
         android:layout_gravity="center"
         android:textSize="20sp"/>
 

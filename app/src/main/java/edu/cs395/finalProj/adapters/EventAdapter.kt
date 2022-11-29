@@ -56,10 +56,12 @@ class EventAdapter(private val viewModel: MainViewModel)
     override fun onBindViewHolder(holder: VH, position: Int) {
         val binding = holder.rowPostBinding
         val title = viewModel.getEvent(position).getName()
+        val url = viewModel.getEvent(position).getUrl()
         binding.eventNameTV.text = viewModel.getEvent(position).getName()
         binding.root.setOnClickListener {
             val intent = Intent(binding.root.context, ExcerciseVid::class.java)
             intent.putExtra("title", title)
+            intent.putExtra("url", url)
             startActivity(binding.root.context, intent, null)
         }
     }

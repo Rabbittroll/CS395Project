@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import edu.cs395.finalProj.model.ExerciseUrl
 import java.time.format.DateTimeFormatter
 
 
@@ -27,6 +28,8 @@ class MainViewModel : ViewModel() {
     private var weekDates = MutableLiveData<List<LocalDate>>()
     private var selDate = MutableLiveData<LocalDate>()
     private var events = MutableLiveData<List<Event>>()
+    private var allEx = MutableLiveData<List<String>>()
+    private var allUrl = MutableLiveData<List<ExerciseUrl>>()
     private val dbHelp = ViewModelDBHelper()
     var calName : MutableLiveData<String> = MutableLiveData("")
     var fetchDone : MutableLiveData<Boolean> = MutableLiveData(false)
@@ -40,6 +43,7 @@ class MainViewModel : ViewModel() {
         //Log.d(null, weekDates.value.toString())
         setSelDate(LocalDate.now())
         database = Firebase.database.reference
+        fetchExUrl()
     }
 
     // XXX Write netPosts/searchPosts
@@ -103,8 +107,8 @@ class MainViewModel : ViewModel() {
         setDaysInWeek(weekDates.value!![0].plusWeeks(incrmnt))
     }
 
-    fun addEvent(name: String, date: LocalDate) {
-        val newEvent = Event(name, date)
+    fun addEvent(name: String, date: LocalDate, url: String) {
+        val newEvent = Event(name, date, url)
         var ret = if (events.value != null) {
             events.value!!.toMutableList()
         } else {
@@ -157,7 +161,8 @@ class MainViewModel : ViewModel() {
             .addOnSuccessListener {
                 Log.i("firebase", "Got value ${it.value}")
                 for (i in it.children) {
-                    addEvent(i.key!!, selDate.value!!)
+                    val url: String = matchUrl(i.key!!)
+                    addEvent(i.key!!, selDate.value!!, url)
                 }
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)
@@ -166,6 +171,45 @@ class MainViewModel : ViewModel() {
 
     fun clearEx() {
         events.value = emptyList()
+    }
+
+    fun addExUrl(name: String, url: String){
+        val newUrl = ExerciseUrl(name, url)
+        var ret = if (allUrl.value != null) {
+            allUrl.value!!.toMutableList()
+        } else {
+            emptyList<ExerciseUrl>().toMutableList()
+        }
+        ret.add(newUrl)
+        allUrl.value = ret
+    }
+
+    fun fetchExUrl() {
+        database.child("exercises")
+            .get()
+            .addOnSuccessListener {
+                Log.i("firebase", "Got value ${it.value}")
+                for (i in it.children) {
+                    addExUrl(i.key!!, i.value!! as String)
+                }
+                var ret = emptyList<String>().toMutableList()
+                for (i in allUrl.value!!){
+                    ret.add(i.getName())
+                }
+                allEx.value = ret
+            }.addOnFailureListener{
+                Log.e("firebase", "Error getting data", it)
+            }
+    }
+
+    fun matchUrl(key: String): String {
+        val elem = allUrl.value!!.find { it.getName() == key }
+        return elem!!.getUrl()
+    }
+
+
+    fun getAllEx(): List<String>{
+        return allEx.value!!
     }
 
 
