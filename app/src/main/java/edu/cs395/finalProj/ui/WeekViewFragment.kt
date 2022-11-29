@@ -113,8 +113,6 @@ class WeekViewFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-
-        setDisplayHomeAsUpEnabled(false)
         _binding = null
         super.onDestroyView()
     }

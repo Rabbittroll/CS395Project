@@ -89,24 +89,26 @@
             tools:context=".MainActivity">
 
             <TextView
+                android:id="@+id/exerciseTV"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:id="@+id/difficultyTV"
-                android:padding="8dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="Difficulty:"
-                android:textSize="18sp"
-                app:layout_constraintTop_toTopOf="parent"
+                android:padding="8dp"
+                android:text="Exercise:"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@id/exerciseSP"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/difficultySP"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
+
             <Spinner
-                android:id="@+id/difficultySP"
+                android:id="@+id/exerciseSP"
                 android:layout_width="150dp"
-                android:layout_height="50dp"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/exerciseTV"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/difficultyTV"
-                />
+                app:layout_constraintBottom_toBottomOf="@id/exerciseTV"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -134,7 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_weight="2"
                 android:layout_height="wrap_content"
-                android:text="Exercise Name"
+                android:text="SetsXReps"
                 android:textSize="20sp"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"

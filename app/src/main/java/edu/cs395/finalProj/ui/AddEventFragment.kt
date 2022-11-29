@@ -53,12 +53,11 @@ class AddEventFragment : Fragment() {
         val aa = ArrayAdapter(this.requireContext(), android.R.layout.simple_spinner_item, exList)
         // Set layout to use when the list of choices appear
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.difficultySP.onItemSelectedListener = object :
+        binding.exerciseSP.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>,
                                         view: View, position: Int, id: Long) {
                 Log.d(null, "pos $position")
-
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -66,12 +65,18 @@ class AddEventFragment : Fragment() {
             }
         }
         // Set Adapter to Spinner
-        binding.difficultySP.adapter = aa
+        binding.exerciseSP.adapter = aa
         // Set initial value of spinner to medium
         val initialSpinner = 1
-        binding.difficultySP.setSelection(initialSpinner)
-        binding.calNameTV.text = viewModel.getCalName().capitalize()
-        binding.dateTV.text = viewModel.getSelDate().toString()
+        val calName = viewModel.getCalName().capitalize()
+        val date = viewModel.getSelDate().toString()
+        binding.exerciseSP.setSelection(initialSpinner)
+        binding.calNameTV.text = calName
+        binding.dateTV.text = date
+        binding.submitBut.setOnClickListener {
+            viewModel.pushEx(calName, date,binding.exerciseSP.selectedItem.toString(),binding.setRepsET.text.toString() )
+            requireActivity().supportFragmentManager.popBackStack()
+        }
         setDisplayHomeAsUpEnabled(true)
         return binding.root
     }
@@ -101,7 +106,6 @@ class AddEventFragment : Fragment() {
 
     override fun onDestroyView() {
 
-        setDisplayHomeAsUpEnabled(false)
         _binding = null
         super.onDestroyView()
     }

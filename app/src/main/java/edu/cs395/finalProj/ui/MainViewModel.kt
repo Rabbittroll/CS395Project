@@ -212,6 +212,10 @@ class MainViewModel : ViewModel() {
         return allEx.value!!
     }
 
+    fun pushEx(name: String, date: String, exercise: String, setReps: String) {
+        database.child("name").child(name).child(date).child(exercise).setValue(setReps)
+    }
+
 
 
     // Convenient place to put it as it is shared
