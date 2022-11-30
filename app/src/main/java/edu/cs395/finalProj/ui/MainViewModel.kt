@@ -62,7 +62,7 @@ class MainViewModel : ViewModel() {
         setSelDate(LocalDate.now())
         database = Firebase.database.reference
         fetchExUrl()
-        //getVideoList()
+        getVideoList("Workout")
     }
 
     // XXX Write netPosts/searchPosts
@@ -258,7 +258,10 @@ class MainViewModel : ViewModel() {
             .getService()
             .getVideo(
                 "snippet",
-                "date",
+                "video",
+                "true",
+                "5",
+                "relevance",
                 nextPageToken,
                 querySearch
             )

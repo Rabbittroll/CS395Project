@@ -8,6 +8,9 @@ interface ApiServices {
     @GET("search")
     fun getVideo(
         @Query("part") part: String,
+        @Query("type") type: String,
+        @Query("videoEmbeddable") videoEmbeddable: String,
+        @Query("maxResults") maxResults: String,
         @Query("order") order: String,
         @Query("pageToken") pageToken: String?,
         @Query("q") query: String?
