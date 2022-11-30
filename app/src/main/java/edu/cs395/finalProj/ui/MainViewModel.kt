@@ -5,9 +5,6 @@ import android.util.Log
 import androidx.lifecycle.*
 import edu.cs395.finalProj.FirestoreAuthLiveData
 import edu.cs395.finalProj.ViewModelDBHelper
-import edu.cs395.finalProj.model.Calendar
-import edu.cs395.finalProj.model.Event
-import edu.cs395.finalProj.model.Exercise
 import java.time.DayOfWeek
 import java.time.LocalDate
 import com.google.firebase.auth.FirebaseAuth
@@ -18,10 +15,10 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import edu.cs395.finalProj.api.ApiConfig
 import edu.cs395.finalProj.api.VideoYtModel
-import edu.cs395.finalProj.model.ExerciseUrl
 import java.time.format.DateTimeFormatter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import edu.cs395.finalProj.model.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,6 +38,7 @@ class MainViewModel : ViewModel() {
     private val editEvent: MutableLiveData<Event?> = MutableLiveData(null)
     private val _video = MutableLiveData<VideoYtModel?>()
     val video = _video
+    private var vidList = MutableLiveData<List<Video>>()
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading = _isLoading
     private val _isAllVideoLoaded = MutableLiveData<Boolean>()
@@ -277,6 +275,11 @@ class MainViewModel : ViewModel() {
                             _isAllVideoLoaded.value = true
                         }
                         if (data.items.isNotEmpty()){
+                            var list = emptyList<Video>().toMutableList()
+                            for (i in data.items) {
+                                list.add(Video(i.snippetYt.title, i.videoId.toString(), i.snippetYt.thumbnails.default.toString()))
+                            }
+                            vidList.value = list
                             _video.value = data
                             _message.value = "yes video"
                         }
@@ -296,6 +299,14 @@ class MainViewModel : ViewModel() {
                 _message.value = t.message
             }
         })
+    }
+
+    fun getVideos(position: Int): Video {
+        return vidList.value!![position]
+    }
+
+    fun observeVids() : MutableLiveData<List<Video>> {
+        return vidList
     }
 
 

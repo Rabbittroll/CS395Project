@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import edu.cs395.finalProj.MainActivity
 import edu.cs395.finalProj.R
 import edu.cs395.finalProj.adapters.EventAdapter
+import edu.cs395.finalProj.adapters.VideoAdapter
 import edu.cs395.finalProj.adapters.WeekViewAdapter
 import edu.cs395.finalProj.databinding.FragmentAddEventBinding
 import edu.cs395.finalProj.databinding.FragmentAddExerciseBinding
+import edu.cs395.finalProj.model.Video
 
 import java.time.LocalDate
 
@@ -27,7 +29,7 @@ class AddExFragment : Fragment() {
     private var _binding: FragmentAddExerciseBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
-    lateinit var adapter : ArrayAdapter<String>
+    lateinit var adapter : VideoAdapter
     //lateinit var eventAdapter : EventAdapter
 
     companion object {
@@ -51,6 +53,10 @@ class AddExFragment : Fragment() {
         _binding = FragmentAddExerciseBinding.inflate(inflater, container, false)
         Log.d(null, viewModel.getAllEx().toString())
         val exList = viewModel.getAllEx()
+        adapter = VideoAdapter(viewModel)
+        val exLayoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+        binding.videoListView.adapter = adapter
+        binding.videoListView.layoutManager = exLayoutManager
         binding.submitBut.setOnClickListener {
             //viewModel.pushEx(calName, date,binding.exerciseSP.selectedItem.toString(),binding.setRepsET.text.toString() )
             requireActivity().supportFragmentManager.popBackStack()
@@ -63,6 +69,13 @@ class AddExFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(javaClass.simpleName, "onViewCreated")
+
+        viewModel.observeVids().observe(viewLifecycleOwner){
+            adapter.submitList(it)
+        }
+        binding.searchBut.setOnClickListener {
+            viewModel.getVideoList(binding.exerciseET.text.toString())
+        }
 
         val menuHost: MenuHost = requireActivity()
 
