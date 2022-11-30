@@ -227,6 +227,10 @@ class MainViewModel : ViewModel() {
             }
     }
 
+    fun delEx(name: String) {
+        database.child("exercises").child(name).removeValue()
+    }
+
     fun matchUrl(key: String): String {
         val elem = allUrl.value!!.find { it.getName() == key }
         return elem!!.getUrl()

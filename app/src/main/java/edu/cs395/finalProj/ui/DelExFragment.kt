@@ -14,27 +14,25 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import edu.cs395.finalProj.MainActivity
 import edu.cs395.finalProj.R
 import edu.cs395.finalProj.adapters.EventAdapter
-import edu.cs395.finalProj.adapters.VideoAdapter
 import edu.cs395.finalProj.adapters.WeekViewAdapter
 import edu.cs395.finalProj.databinding.FragmentAddEventBinding
-import edu.cs395.finalProj.databinding.FragmentAddExerciseBinding
-import edu.cs395.finalProj.model.Video
+import edu.cs395.finalProj.databinding.FragmentDelExerciseBinding
 
 import java.time.LocalDate
 
 
-class AddExFragment : Fragment() {
+class DelExFragment : Fragment() {
     // XXX initialize viewModel
     private val viewModel: MainViewModel by activityViewModels()
-    private var _binding: FragmentAddExerciseBinding? = null
+    private var _binding: FragmentDelExerciseBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
-    lateinit var adapter : VideoAdapter
+    lateinit var adapter : ArrayAdapter<String>
     //lateinit var eventAdapter : EventAdapter
 
     companion object {
-        fun newInstance(): AddExFragment {
-            return AddExFragment()
+        fun newInstance(): DelExFragment {
+            return DelExFragment()
         }
     }
 
@@ -43,8 +41,6 @@ class AddExFragment : Fragment() {
         mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(value)
     }
 
-    private fun String.capitalizeWords(): String = split(" ").map { it.toLowerCase().capitalize() }.joinToString(" ")
-
 
 
     override fun onCreateView(
@@ -52,14 +48,34 @@ class AddExFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAddExerciseBinding.inflate(inflater, container, false)
+        _binding = FragmentDelExerciseBinding.inflate(inflater, container, false)
         Log.d(null, viewModel.getAllEx().toString())
         val exList = viewModel.getAllEx()
-        adapter = VideoAdapter(viewModel)
-        val exLayoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-        binding.videoListView.adapter = adapter
-        binding.videoListView.layoutManager = exLayoutManager
+        val aa = ArrayAdapter(this.requireContext(), android.R.layout.simple_spinner_item, exList)
+        // Set layout to use when the list of choices appear
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.exerciseSP.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>,
+                                        view: View, position: Int, id: Long) {
+                Log.d(null, "pos $position")
+            }
 
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                Log.d(null, "onNothingSelected")
+            }
+        }
+        // Set Adapter to Spinner
+        binding.exerciseSP.adapter = aa
+        // Set initial value of spinner to medium
+        val initialSpinner = 1
+        val calName = viewModel.getCalName().capitalize()
+        val date = viewModel.getSelDate().toString()
+        binding.exerciseSP.setSelection(initialSpinner)
+        binding.submitBut.setOnClickListener {
+            viewModel.delEx(binding.exerciseSP.selectedItem.toString())
+            requireActivity().supportFragmentManager.popBackStack()
+        }
         setDisplayHomeAsUpEnabled(true)
         return binding.root
     }
@@ -68,34 +84,6 @@ class AddExFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(javaClass.simpleName, "onViewCreated")
-
-        viewModel.observeVids().observe(viewLifecycleOwner){
-            adapter.submitList(it)
-        }
-        binding.submitBut.setOnClickListener {
-            val selVid = viewModel.getSelVid()
-            val name = binding.exerciseNameET.text.toString()
-            if (!name.isNullOrEmpty()) {
-                if (selVid != null) {
-                    viewModel.pushVid(name.capitalizeWords(), selVid!!.getId())
-                    viewModel.clearSelVid()
-                    viewModel.fetchExUrl()
-                }
-            }
-            requireActivity().supportFragmentManager.popBackStack()
-        }
-        binding.searchBut.setOnClickListener {
-            var searchTerm = binding.searchET.text.toString()
-            if(!searchTerm.isNullOrEmpty()) {
-                viewModel.getVideoList(searchTerm)
-            } else {
-                searchTerm = binding.exerciseNameET.text.toString()
-                if (!searchTerm.isNullOrEmpty()) {
-                    viewModel.getVideoList(searchTerm)
-                }
-            }
-
-        }
 
         val menuHost: MenuHost = requireActivity()
 

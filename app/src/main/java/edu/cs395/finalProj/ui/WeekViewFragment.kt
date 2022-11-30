@@ -81,6 +81,15 @@ class WeekViewFragment : Fragment() {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             }
         }
+
+        binding.delButton.setOnClickListener {
+            activity?.supportFragmentManager?.commit {
+                addToBackStack("weekViewFrag")
+                replace(R.id.main_frame, DelExFragment.newInstance(), "delExFrag")
+                // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            }
+        }
         binding.backButton.setOnClickListener {
             viewModel.changeWeek(-1)
         }
