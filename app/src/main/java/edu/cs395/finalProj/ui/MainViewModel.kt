@@ -39,6 +39,7 @@ class MainViewModel : ViewModel() {
     private val _video = MutableLiveData<VideoYtModel?>()
     val video = _video
     private var vidList = MutableLiveData<List<Video>>()
+    private var selVid = MutableLiveData<Video?>()
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading = _isLoading
     private val _isAllVideoLoaded = MutableLiveData<Boolean>()
@@ -233,6 +234,10 @@ class MainViewModel : ViewModel() {
         database.child("name").child(name).child(date).child(exercise).setValue(setReps)
     }
 
+    fun pushVid(name: String, url: String) {
+        database.child("exercises").child(name).setValue(url)
+    }
+
     fun removeEx(name: String, date: String, exercise: String) {
         database.child("name").child(name).child(date).child(exercise).removeValue()
     }
@@ -243,6 +248,10 @@ class MainViewModel : ViewModel() {
 
     fun clearEditEvent() {
         editEvent.value = null
+    }
+
+    fun clearSelVid() {
+        selVid.value = null
     }
 
     fun getEditEvent(): Event {
@@ -277,7 +286,7 @@ class MainViewModel : ViewModel() {
                         if (data.items.isNotEmpty()){
                             var list = emptyList<Video>().toMutableList()
                             for (i in data.items) {
-                                list.add(Video(i.snippetYt.title, i.videoId.toString(), i.snippetYt.thumbnails.default.toString()))
+                                list.add(Video(i.snippetYt.title, i.videoId.id.toString(), i.snippetYt.thumbnails.default.toString()))
                             }
                             vidList.value = list
                             _video.value = data
@@ -299,6 +308,14 @@ class MainViewModel : ViewModel() {
                 _message.value = t.message
             }
         })
+    }
+
+    fun setSelVid(vid: Video) {
+        selVid.value = vid
+    }
+
+    fun getSelVid(): Video? {
+        return selVid.value
     }
 
     fun getVideos(position: Int): Video {

@@ -58,7 +58,14 @@ class AddExFragment : Fragment() {
         binding.videoListView.adapter = adapter
         binding.videoListView.layoutManager = exLayoutManager
         binding.submitBut.setOnClickListener {
-            //viewModel.pushEx(calName, date,binding.exerciseSP.selectedItem.toString(),binding.setRepsET.text.toString() )
+            val selVid = viewModel.getSelVid()
+            val name = binding.exerciseET.text.toString()
+            if (!name.isNullOrEmpty()) {
+                if (selVid != null) {
+                    viewModel.pushVid(name, selVid!!.getId())
+                    viewModel.clearSelVid()
+                }
+            }
             requireActivity().supportFragmentManager.popBackStack()
         }
         setDisplayHomeAsUpEnabled(true)
