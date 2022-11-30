@@ -16,8 +16,15 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import edu.cs395.finalProj.api.ApiConfig
+import edu.cs395.finalProj.api.VideoYtModel
 import edu.cs395.finalProj.model.ExerciseUrl
 import java.time.format.DateTimeFormatter
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 // XXX Much to write
@@ -32,6 +39,16 @@ class MainViewModel : ViewModel() {
     private var allUrl = MutableLiveData<List<ExerciseUrl>>()
     private val dbHelp = ViewModelDBHelper()
     private val editEvent: MutableLiveData<Event?> = MutableLiveData(null)
+    private val _video = MutableLiveData<VideoYtModel?>()
+    val video = _video
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading = _isLoading
+    private val _isAllVideoLoaded = MutableLiveData<Boolean>()
+    val isAllVideoLoaded = _isAllVideoLoaded
+    private val _message = MutableLiveData<String>()
+    val message = _message
+    var nextPageToken: String? = null
+    var querySearch: String? = "workouts"
     var calName : MutableLiveData<String> = MutableLiveData("")
     var fetchDone : MutableLiveData<Boolean> = MutableLiveData(false)
     var isHome : MutableLiveData<Boolean> = MutableLiveData(false)
@@ -45,6 +62,7 @@ class MainViewModel : ViewModel() {
         setSelDate(LocalDate.now())
         database = Firebase.database.reference
         fetchExUrl()
+        //getVideoList()
     }
 
     // XXX Write netPosts/searchPosts
@@ -233,6 +251,49 @@ class MainViewModel : ViewModel() {
         return editEvent.value!!
     }
 
+    fun getVideoList(searchTerm: String){
+        _isLoading.value = true
+        querySearch = searchTerm
+        val client = ApiConfig
+            .getService()
+            .getVideo(
+                "snippet",
+                "date",
+                nextPageToken,
+                querySearch
+            )
+        client.enqueue(object : Callback<VideoYtModel>{
+            override fun onResponse(call: Call<VideoYtModel>, response: Response<VideoYtModel>) {
+                _isLoading.value = false
+                if (response.isSuccessful){
+                    val data = response.body()
+                    if (data != null){
+                        if (data.nextPageToken != null){
+                            nextPageToken = data.nextPageToken
+                        } else {
+                            _isAllVideoLoaded.value = true
+                        }
+                        if (data.items.isNotEmpty()){
+                            _video.value = data
+                            _message.value = "yes video"
+                        }
+                    } else {
+                        _message.value = "No video"
+                    }
+                } else {
+                    _message.value = response.message()
+                }
+                Log.d(null, "in api call")
+                Log.d(null, _message.value!!)
+            }
+
+            override fun onFailure(call: Call<VideoYtModel>, t: Throwable) {
+                _isLoading.value = false
+                Log.d(null, "Failed: ", t)
+                _message.value = t.message
+            }
+        })
+    }
 
 
     // Convenient place to put it as it is shared
