@@ -74,8 +74,15 @@ class AddEventFragment : Fragment() {
         binding.calNameTV.text = calName
         binding.dateTV.text = date
         binding.submitBut.setOnClickListener {
-            viewModel.pushEx(calName, date,binding.exerciseSP.selectedItem.toString(),binding.setRepsET.text.toString() )
-            requireActivity().supportFragmentManager.popBackStack()
+            if (!viewModel.checkEvents(binding.exerciseSP.selectedItem.toString())) {
+                viewModel.pushEx(
+                    calName,
+                    date,
+                    binding.exerciseSP.selectedItem.toString(),
+                    binding.setRepsET.text.toString()
+                )
+                requireActivity().supportFragmentManager.popBackStack()
+            }
         }
         setDisplayHomeAsUpEnabled(true)
         return binding.root

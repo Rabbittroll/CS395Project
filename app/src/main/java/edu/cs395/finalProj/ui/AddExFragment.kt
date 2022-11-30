@@ -77,12 +77,15 @@ class AddExFragment : Fragment() {
             val name = binding.exerciseNameET.text.toString()
             if (!name.isNullOrEmpty()) {
                 if (selVid != null) {
-                    viewModel.pushVid(name.capitalizeWords(), selVid!!.getId())
-                    viewModel.clearSelVid()
-                    viewModel.fetchExUrl()
+                    if (!viewModel.checkEx(name.capitalizeWords())) {
+                        viewModel.pushVid(name.capitalizeWords(), selVid!!.getId())
+                        viewModel.clearSelVid()
+                        viewModel.fetchExUrl()
+                        requireActivity().supportFragmentManager.popBackStack()
+                    }
                 }
             }
-            requireActivity().supportFragmentManager.popBackStack()
+
         }
         binding.searchBut.setOnClickListener {
             var searchTerm = binding.searchET.text.toString()

@@ -64,7 +64,17 @@ class MainViewModel : ViewModel() {
         getVideoList("Workout")
     }
 
-    // XXX Write netPosts/searchPosts
+    fun checkEvents(event: String) : Boolean {
+        var checkList = emptyList<String>().toMutableList()
+        for (i in events.value!!) {
+            checkList.add(i.getName())
+        }
+        return checkList.contains(event)
+    }
+
+    fun checkEx(exercise: String): Boolean {
+        return allEx.value!!.contains(exercise)
+    }
 
 
 
