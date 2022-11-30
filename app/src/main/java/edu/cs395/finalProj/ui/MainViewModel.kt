@@ -307,7 +307,7 @@ class MainViewModel : ViewModel() {
                         if (data.items.isNotEmpty()){
                             var list = emptyList<Video>().toMutableList()
                             for (i in data.items) {
-                                list.add(Video(i.snippetYt.title, i.videoId.id.toString(), i.snippetYt.thumbnails.default.toString()))
+                                list.add(Video(i.snippetYt.title, i.videoId.id.toString(), i.snippetYt.thumbnails.default.url))
                             }
                             vidList.value = list
                             _video.value = data
