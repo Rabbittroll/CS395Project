@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import edu.cs395.finalProj.MainActivity
 import edu.cs395.finalProj.databinding.FragmentHomeBinding
 import edu.cs395.finalProj.adapters.CalendarListAdapter
 import edu.cs395.finalProj.adapters.EventAdapter
@@ -35,6 +36,11 @@ class HomeFragment: Fragment() {
         val adapter = EventAdapter(viewModel)
         binding.calendarsRV.adapter = adapter
         return adapter
+    }
+
+    private fun setDisplayHomeAsUpEnabled(value : Boolean) {
+        val mainActivity = requireActivity() as MainActivity
+        mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(value)
     }
 
     /*private fun notifyWhenFragmentForegrounded(postRowAdapter: PostRowAdapter) {
@@ -93,6 +99,7 @@ class HomeFragment: Fragment() {
         }
         parentFragmentManager.addOnBackStackChangedListener {
             if (parentFragmentManager.backStackEntryCount == 0) {
+                setDisplayHomeAsUpEnabled(false)
                 //notifyWhenFragmentForegrounded(adapter)
             }
         }

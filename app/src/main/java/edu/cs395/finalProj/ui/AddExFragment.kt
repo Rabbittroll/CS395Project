@@ -10,6 +10,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import edu.cs395.finalProj.MainActivity
 import edu.cs395.finalProj.R
@@ -59,6 +60,12 @@ class AddExFragment : Fragment() {
         val exLayoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         binding.videoListView.adapter = adapter
         binding.videoListView.layoutManager = exLayoutManager
+        binding.videoListView.addItemDecoration(
+            DividerItemDecoration(
+                this.context,
+                exLayoutManager.orientation
+            )
+        )
 
         setDisplayHomeAsUpEnabled(true)
         return binding.root

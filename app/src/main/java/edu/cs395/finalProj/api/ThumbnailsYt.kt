@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 
 @Keep
 data class ThumbnailsYt(
-    @SerializedName("default")
-    val default: Default
+    @SerializedName("medium")
+    val medium: Medium
 ) {
-    data class Default(
+    data class Medium(
         @SerializedName("url")
         val url: String
     )

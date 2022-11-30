@@ -6,18 +6,20 @@
         android:focusable="true"
         android:clickable="true"
         android:layout_margin="8dp"
-        android:background="?android:attr/selectableItemBackground">
+        android:background="?android:attr/selectableItemBackground"
+        >
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".MainActivity">
+        tools:context=".MainActivity"
+        >
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginStart="20dp"
             android:id="@+id/videoNameTV"
@@ -30,8 +32,8 @@
 
         <ImageView
             android:id="@+id/tnIV"
-            android:layout_width="120dp"
-            android:layout_height="90dp"
+            android:layout_width="240dp"
+            android:layout_height="120dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
