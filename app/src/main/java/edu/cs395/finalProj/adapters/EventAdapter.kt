@@ -1,17 +1,25 @@
 package edu.cs395.finalProj.adapters
 
+import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.cs395.finalProj.ExcerciseVid
+import edu.cs395.finalProj.R
 import edu.cs395.finalProj.databinding.RowEventBinding
 import edu.cs395.finalProj.model.Event
+import edu.cs395.finalProj.ui.AddEventFragment
+import edu.cs395.finalProj.ui.EditEventFragment
 import edu.cs395.finalProj.ui.MainViewModel
+import edu.cs395.finalProj.ui.WeekViewFragment
 
 /**
  * Created by witchel on 8/25/2019
@@ -64,6 +72,15 @@ class EventAdapter(private val viewModel: MainViewModel)
             intent.putExtra("title", title)
             intent.putExtra("url", url)
             startActivity(binding.root.context, intent, null)
+        }
+        binding.editButton.setOnClickListener {
+            val activity  = it.context as? AppCompatActivity
+            activity?.supportFragmentManager?.commit {
+                addToBackStack("weekViewFrag")
+                replace(R.id.main_frame, EditEventFragment.newInstance(), "editEventFrag")
+                // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            }
         }
     }
 }
