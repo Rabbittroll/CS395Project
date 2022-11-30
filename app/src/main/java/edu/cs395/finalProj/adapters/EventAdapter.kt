@@ -63,6 +63,7 @@ class EventAdapter(private val viewModel: MainViewModel)
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val binding = holder.rowPostBinding
+        val event = viewModel.getEvent(position)
         val title = viewModel.getEvent(position).getName()
         val url = viewModel.getEvent(position).getUrl()
         binding.eventNameTV.text = viewModel.getEvent(position).getName() + " :"
@@ -74,6 +75,8 @@ class EventAdapter(private val viewModel: MainViewModel)
             startActivity(binding.root.context, intent, null)
         }
         binding.editButton.setOnClickListener {
+            viewModel.clearEditEvent()
+            viewModel.setEditEvent(event)
             val activity  = it.context as? AppCompatActivity
             activity?.supportFragmentManager?.commit {
                 addToBackStack("weekViewFrag")

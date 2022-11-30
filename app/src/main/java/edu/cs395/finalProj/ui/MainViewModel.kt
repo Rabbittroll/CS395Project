@@ -31,6 +31,7 @@ class MainViewModel : ViewModel() {
     private var allEx = MutableLiveData<List<String>>()
     private var allUrl = MutableLiveData<List<ExerciseUrl>>()
     private val dbHelp = ViewModelDBHelper()
+    private val editEvent: MutableLiveData<Event?> = MutableLiveData(null)
     var calName : MutableLiveData<String> = MutableLiveData("")
     var fetchDone : MutableLiveData<Boolean> = MutableLiveData(false)
     var isHome : MutableLiveData<Boolean> = MutableLiveData(false)
@@ -214,6 +215,22 @@ class MainViewModel : ViewModel() {
 
     fun pushEx(name: String, date: String, exercise: String, setReps: String) {
         database.child("name").child(name).child(date).child(exercise).setValue(setReps)
+    }
+
+    fun removeEx(name: String, date: String, exercise: String) {
+        database.child("name").child(name).child(date).child(exercise).removeValue()
+    }
+
+    fun setEditEvent(event: Event) {
+        editEvent.value = event
+    }
+
+    fun clearEditEvent() {
+        editEvent.value = null
+    }
+
+    fun getEditEvent(): Event {
+        return editEvent.value!!
     }
 
 

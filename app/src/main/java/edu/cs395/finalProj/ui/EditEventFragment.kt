@@ -17,6 +17,7 @@ import edu.cs395.finalProj.adapters.EventAdapter
 import edu.cs395.finalProj.adapters.WeekViewAdapter
 import edu.cs395.finalProj.databinding.FragmentAddEventBinding
 import edu.cs395.finalProj.databinding.FragmentEditEventBinding
+import edu.cs395.finalProj.model.Event
 
 import java.time.LocalDate
 
@@ -28,7 +29,9 @@ class EditEventFragment : Fragment() {
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
     lateinit var adapter : ArrayAdapter<String>
+    lateinit var event: Event
     //lateinit var eventAdapter : EventAdapter
+
 
     companion object {
         fun newInstance(): EditEventFragment {
@@ -68,14 +71,24 @@ class EditEventFragment : Fragment() {
         // Set Adapter to Spinner
         binding.exerciseSP.adapter = aa
         // Set initial value of spinner to medium
-        val initialSpinner = 1
+        event = viewModel.getEditEvent()
+        val allEx = viewModel.getAllEx()
+        val exName = event.getName()
+        val initialSpinner = allEx.indexOf(exName)
+
         val calName = viewModel.getCalName().capitalize()
-        val date = viewModel.getSelDate().toString()
+        val date = event.getDate().toString()
         binding.exerciseSP.setSelection(initialSpinner)
         binding.calNameTV.text = calName
         binding.dateTV.text = date
+        binding.setRepsET.setText(event.getSetRep())
         binding.submitBut.setOnClickListener {
+            viewModel.removeEx(calName, date,exName)
             viewModel.pushEx(calName, date,binding.exerciseSP.selectedItem.toString(),binding.setRepsET.text.toString() )
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+        binding.removeBut.setOnClickListener {
+            viewModel.removeEx(calName, date,exName)
             requireActivity().supportFragmentManager.popBackStack()
         }
         setDisplayHomeAsUpEnabled(true)
@@ -106,7 +119,6 @@ class EditEventFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-
         _binding = null
         super.onDestroyView()
     }
