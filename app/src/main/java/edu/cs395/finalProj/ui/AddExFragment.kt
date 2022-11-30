@@ -57,17 +57,7 @@ class AddExFragment : Fragment() {
         val exLayoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         binding.videoListView.adapter = adapter
         binding.videoListView.layoutManager = exLayoutManager
-        binding.submitBut.setOnClickListener {
-            val selVid = viewModel.getSelVid()
-            val name = binding.exerciseET.text.toString()
-            if (!name.isNullOrEmpty()) {
-                if (selVid != null) {
-                    viewModel.pushVid(name, selVid!!.getId())
-                    viewModel.clearSelVid()
-                }
-            }
-            requireActivity().supportFragmentManager.popBackStack()
-        }
+
         setDisplayHomeAsUpEnabled(true)
         return binding.root
     }
@@ -80,8 +70,29 @@ class AddExFragment : Fragment() {
         viewModel.observeVids().observe(viewLifecycleOwner){
             adapter.submitList(it)
         }
+        binding.submitBut.setOnClickListener {
+            val selVid = viewModel.getSelVid()
+            val name = binding.exerciseNameET.text.toString()
+            if (!name.isNullOrEmpty()) {
+                if (selVid != null) {
+                    viewModel.pushVid(name, selVid!!.getId())
+                    viewModel.clearSelVid()
+                    viewModel.fetchExUrl()
+                }
+            }
+            requireActivity().supportFragmentManager.popBackStack()
+        }
         binding.searchBut.setOnClickListener {
-            viewModel.getVideoList(binding.exerciseET.text.toString())
+            var searchTerm = binding.searchET.text.toString()
+            if(!searchTerm.isNullOrEmpty()) {
+                viewModel.getVideoList(searchTerm)
+            } else {
+                searchTerm = binding.exerciseNameET.text.toString()
+                if (!searchTerm.isNullOrEmpty()) {
+                    viewModel.getVideoList(searchTerm)
+                }
+            }
+
         }
 
         val menuHost: MenuHost = requireActivity()

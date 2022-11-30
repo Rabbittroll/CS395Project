@@ -191,6 +191,12 @@ class MainViewModel : ViewModel() {
         events.value = emptyList()
     }
 
+    fun clearExUrl(){
+        allUrl.value = emptyList()
+        allEx.value = emptyList()
+    }
+
+
     fun addExUrl(name: String, url: String){
         val newUrl = ExerciseUrl(name, url)
         var ret = if (allUrl.value != null) {
@@ -207,6 +213,7 @@ class MainViewModel : ViewModel() {
             .get()
             .addOnSuccessListener {
                 Log.i("firebase", "Got value ${it.value}")
+                clearExUrl()
                 for (i in it.children) {
                     addExUrl(i.key!!, i.value!! as String)
                 }

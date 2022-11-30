@@ -41,6 +41,29 @@
             android:layout_height="wrap_content"
             tools:context=".MainActivity">
 
+            <TextView
+                android:id="@+id/exerciseNameTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="8dp"
+                android:text="Exercise Name: "
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@id/exerciseNameET"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/exerciseNameET"
+                android:layout_width="150dp"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/exerciseNameTV"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/exerciseNameTV"/>
+
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -62,26 +85,26 @@
             tools:context=".MainActivity">
 
             <TextView
-                android:id="@+id/exerciseTV"
+                android:id="@+id/searchTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:padding="8dp"
-                android:text="Exercise Name:"
+                android:text="Search: "
                 android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@id/exerciseET"
+                app:layout_constraintEnd_toStartOf="@id/searchET"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/exerciseET"
+                android:id="@+id/searchET"
                 android:layout_width="150dp"
                 android:layout_height="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/exerciseTV"
+                app:layout_constraintStart_toEndOf="@id/searchTV"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/exerciseTV"/>
+                app:layout_constraintBottom_toBottomOf="@id/searchTV"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
