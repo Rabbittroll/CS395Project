@@ -12,8 +12,8 @@ class ViewModelDBHelper() {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val rootCollection = "allUsers"
 
-    fun fetchCalendar(usersList: MutableLiveData<List<Calendar>>) {
-        dbFetchCalendar(usersList)
+    fun fetchCalendar(email: String, usersList: MutableLiveData<List<Calendar>>) {
+        dbFetchCalendar(email, usersList)
     }
     fun fetchExercises(usersList: MutableLiveData<List<Exercise>>,
                         calName: String) {
@@ -59,10 +59,10 @@ class ViewModelDBHelper() {
     /////////////////////////////////////////////////////////////
     // Interact with Firestore db
     // https://firebase.google.com/docs/firestore/query-data/order-limit-data
-    private fun dbFetchCalendar(notesList: MutableLiveData<List<Calendar>>) {
+    private fun dbFetchCalendar(email: String, notesList: MutableLiveData<List<Calendar>>) {
         // XXX Write me and use limitAndGet
 
-        val query = db.collection(rootCollection)
+        val query = db.collection(email)
 
         Log.d(null,"in fetch calendar")
         //Log.d(null,query.toString())
@@ -84,6 +84,7 @@ class ViewModelDBHelper() {
     // https://firebase.google.com/docs/firestore/manage-data/add-data#add_a_document
     fun createCalendar(
         //orderField: OrderField,
+        email: String,
         calendar: Calendar,
         notesList: MutableLiveData<List<Calendar>>
     ) {
@@ -92,7 +93,7 @@ class ViewModelDBHelper() {
         // XXX Write me: add photoMeta
         Log.d(null,"In create photoMeta")
         db.collection(rootCollection).add(calendar)
-        dbFetchCalendar(notesList)
+        dbFetchCalendar(email, notesList)
     }
 
     // https://firebase.google.com/docs/firestore/manage-data/delete-data#delete_documents

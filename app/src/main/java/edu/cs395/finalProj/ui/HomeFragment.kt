@@ -10,6 +10,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import edu.cs395.finalProj.AuthInit
 import edu.cs395.finalProj.MainActivity
 import edu.cs395.finalProj.databinding.FragmentHomeBinding
 import edu.cs395.finalProj.adapters.CalendarListAdapter
@@ -30,6 +32,12 @@ class HomeFragment: Fragment() {
             return HomeFragment()
         }
     }
+
+    private val signInLauncher =
+        registerForActivityResult(FirebaseAuthUIActivityResultContract()) {
+            viewModel.updateUser()
+        }
+
 
     // Set up the adapter
     private fun initAdapter(binding: FragmentHomeBinding): EventAdapter {
@@ -87,6 +95,15 @@ class HomeFragment: Fragment() {
         val rv = binding.calendarsRV
         val itemDecor = DividerItemDecoration(rv.context, LinearLayoutManager.VERTICAL)
         rv.addItemDecoration(itemDecor)
+        binding.loginBut.setOnClickListener {
+            // XXX Write me.
+            AuthInit(viewModel, signInLauncher)
+            //viewModel.fetchCalendar()
+        }
+        binding.logoutBut.setOnClickListener {
+            // XXX Write me.
+            viewModel.signOut()
+        }
         rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(rv.context)
         // XXX Write me
@@ -94,6 +111,10 @@ class HomeFragment: Fragment() {
 
         //Log.d(null, "in home fragment")
         //adapter.submitList(viewModel.ge)
+        viewModel.observeEmail().observe(viewLifecycleOwner){
+            Log.d(null, "in observe email")
+            viewModel.fetchCalendar()
+        }
         viewModel.observeCals().observe(viewLifecycleOwner){
             adapter.submitList(it)
         }

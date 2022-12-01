@@ -25,9 +25,8 @@ class CalendarListAdapter(private val viewModel: MainViewModel)
 
         override fun areContentsTheSame(oldItem: Calendar, newItem: Calendar): Boolean {
             return oldItem.firestoreID == newItem.firestoreID
-                    && oldItem.Name == newItem.Name
-                    && oldItem.Role == newItem.Role
-                    && oldItem.Trainer == newItem.Trainer
+                    && oldItem.name == newItem.name
+                    && oldItem.role == newItem.role
                     && oldItem.timeStamp == newItem.timeStamp
         }
     }
@@ -38,11 +37,10 @@ class CalendarListAdapter(private val viewModel: MainViewModel)
         fun bind(holder: VH, position: Int) {
             val cal = viewModel.getCalendar(position)
             //viewModel.glideFetch(photoMeta.uuid, rowBinding.rowImageView)
-            holder.rowBinding.userName.text = cal.Name
-            holder.rowBinding.userRole.text = cal.Role
-            holder.rowBinding.userTrainer.text = cal.Trainer
+            holder.rowBinding.userName.text = cal.name
+            holder.rowBinding.userRole.text = cal.role
             itemView.setOnClickListener {
-                viewModel.setCalName(cal.Name.lowercase())
+                viewModel.setCalName(cal.name.lowercase())
                 val activity  = it.context as? AppCompatActivity
                 activity?.supportFragmentManager?.commit {
                     addToBackStack("homeFrag")

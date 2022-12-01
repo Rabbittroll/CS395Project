@@ -28,6 +28,7 @@ import retrofit2.Response
 class MainViewModel : ViewModel() {
     private var firebaseAuthLiveData = FirestoreAuthLiveData()
     private var calendars = MutableLiveData<List<Calendar>>()
+    private var user = MutableLiveData<String>()
     private var exercises = MutableLiveData<List<Exercise>>()
     private var weekDates = MutableLiveData<List<LocalDate>>()
     private var selDate = MutableLiveData<LocalDate>()
@@ -37,6 +38,10 @@ class MainViewModel : ViewModel() {
     private val dbHelp = ViewModelDBHelper()
     private val editEvent: MutableLiveData<Event?> = MutableLiveData(null)
     private val _video = MutableLiveData<VideoYtModel?>()
+    private var displayName = MutableLiveData("Uninitialized")
+    private var email = MutableLiveData("Uninitialized")
+    private var uid = MutableLiveData("Uninitialized")
+
     val video = _video
     private var vidList = MutableLiveData<List<Video>>()
     private var selVid = MutableLiveData<Video?>()
@@ -155,12 +160,13 @@ class MainViewModel : ViewModel() {
     }
 
 
-    fun updateUser() {
+    /*fun updateUser() {
         firebaseAuthLiveData.updateUser()
-    }
+    }*/
 
     fun fetchCalendar() {
-        dbHelp.fetchCalendar(calendars)
+        //dbHelp.fetchCalendar(email, calendars)
+        dbHelp.fetchCalendar(user.value!!, calendars)
     }
 
     fun getCalendar(position: Int) : Calendar {
@@ -345,6 +351,35 @@ class MainViewModel : ViewModel() {
 
     fun observeVids() : MutableLiveData<List<Video>> {
         return vidList
+    }
+
+    private fun userLogout() {
+        displayName.postValue("No user")
+        email.postValue("No email, no active user")
+        uid.postValue("No uid, no active user")
+    }
+
+    fun updateUser() {
+        // XXX Write me. Update user data in view model
+        Log.d(null,"inside updateUser")
+        val curUser = FirebaseAuth.getInstance().currentUser
+        //displayName.postValue(user!!.displayName)
+        user.postValue(curUser!!.email)
+        //uid.postValue(user!!.uid)
+    }
+
+    fun observeDisplayName() : LiveData<String> {
+        return displayName
+    }
+    fun observeEmail() : LiveData<String> {
+        return user
+    }
+    fun observeUid() : LiveData<String> {
+        return uid
+    }
+    fun signOut() {
+        FirebaseAuth.getInstance().signOut()
+        userLogout()
     }
 
 

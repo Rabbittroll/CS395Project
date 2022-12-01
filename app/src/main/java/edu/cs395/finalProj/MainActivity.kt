@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
             initActionBar(it)
         }
         addCalList()
-        viewModel.fetchCalendar()
+        //viewModel.fetchCalendar()
 
         // Add menu items without overriding methods in the Activity
         // https://developer.android.com/jetpack/androidx/releases/activity#1.4.0-alpha01

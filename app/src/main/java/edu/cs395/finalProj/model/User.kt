@@ -5,10 +5,10 @@ import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ServerTimestamp
 
 // Firebase insists we have a no argument constructor
-data class Calendar(
+data class User(
     // Auth information
-    var name: String = "",
-    var role: String = "",
+    var calendar: String = "",
+    var user: String = "",
     //var Trainer : String = "",
     // Written on the server
     @ServerTimestamp val timeStamp: Timestamp? = null,
