@@ -95,6 +95,7 @@ class HomeFragment: Fragment() {
         val rv = binding.calendarsRV
         val itemDecor = DividerItemDecoration(rv.context, LinearLayoutManager.VERTICAL)
         rv.addItemDecoration(itemDecor)
+        binding.userNameTV.text = viewModel.findName()
         binding.loginBut.setOnClickListener {
             // XXX Write me.
             AuthInit(viewModel, signInLauncher)
@@ -117,6 +118,7 @@ class HomeFragment: Fragment() {
         }
         viewModel.observeCals().observe(viewLifecycleOwner){
             adapter.submitList(it)
+            binding.userNameTV.text = viewModel.findName()
         }
         parentFragmentManager.addOnBackStackChangedListener {
             if (parentFragmentManager.backStackEntryCount == 0) {
@@ -124,6 +126,7 @@ class HomeFragment: Fragment() {
                 //notifyWhenFragmentForegrounded(adapter)
             }
         }
+        AuthInit(viewModel, signInLauncher)
 
     }
 }

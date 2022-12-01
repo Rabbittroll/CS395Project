@@ -380,6 +380,23 @@ class MainViewModel : ViewModel() {
     fun signOut() {
         FirebaseAuth.getInstance().signOut()
         userLogout()
+        clearCals()
+    }
+
+    fun clearCals() {
+        calendars.value = emptyList()
+    }
+
+    fun findName(): String {
+        var ret: String = "Admin"
+        if (!calendars.value.isNullOrEmpty()) {
+            for (i in calendars.value!!) {
+                if (i.role == "Self") {
+                    ret = i.name
+                }
+            }
+        }
+        return ret
     }
 
 

@@ -38,7 +38,7 @@ class CalendarListAdapter(private val viewModel: MainViewModel)
             val cal = viewModel.getCalendar(position)
             //viewModel.glideFetch(photoMeta.uuid, rowBinding.rowImageView)
             holder.rowBinding.userName.text = cal.name
-            holder.rowBinding.userRole.text = cal.role
+            //holder.rowBinding.userRole.text = cal.role
             itemView.setOnClickListener {
                 viewModel.setCalName(cal.name.lowercase())
                 val activity  = it.context as? AppCompatActivity
