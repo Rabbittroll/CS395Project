@@ -17,18 +17,6 @@ import edu.cs395.finalProj.classes.Event
 import edu.cs395.finalProj.ui.EditEventFragment
 import edu.cs395.finalProj.ui.MainViewModel
 
-/**
- * Created by witchel on 8/25/2019
- */
-
-// https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter
-// Slick adapter that provides submitList, so you don't worry about how to update
-// the list, you just submit a new one when you want to change the list and the
-// Diff class computes the smallest set of changes that need to happen.
-// NB: Both the old and new lists must both be in memory at the same time.
-// So you can copy the old list, change it into a new list, then submit the new list.
-//
-// You can call adapterPosition to get the index of the selected item
 class EventAdapter(private val viewModel: MainViewModel)
     : ListAdapter<Event, EventAdapter.VH>(ListDiff()) {
 
@@ -47,8 +35,6 @@ class EventAdapter(private val viewModel: MainViewModel)
     inner class VH(val rowPostBinding: RowEventBinding)
         : RecyclerView.ViewHolder(rowPostBinding.root){
         init {
-            rowPostBinding.root.setOnClickListener {
-            }
         }
     }
 
@@ -78,7 +64,6 @@ class EventAdapter(private val viewModel: MainViewModel)
             activity?.supportFragmentManager?.commit {
                 addToBackStack("weekViewFrag")
                 replace(R.id.main_frame, EditEventFragment.newInstance(), "editEventFrag")
-                // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             }
         }

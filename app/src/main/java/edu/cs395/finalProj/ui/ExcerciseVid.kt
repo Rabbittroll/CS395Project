@@ -33,7 +33,6 @@ class ExcerciseVid: AppCompatActivity() {
         title = intent.getStringExtra("title").toString()
         urlString = "https://www.youtube.com/embed/" + intent.getStringExtra("url").toString()
         binding.exTitle.text = title
-
         ytPlayer = binding.webviewPlayerView
         ytPlayer.webViewClient = WebViewClient()
         ytPlayer.webChromeClient = WebChromeClient()
@@ -96,13 +95,9 @@ class ExcerciseVid: AppCompatActivity() {
     }
 
     private fun finishAct() {
-
-
         val returnIntent = Intent().apply {
         }
-
         setResult(RESULT_OK, returnIntent)
         finish()
-        // XXX Write me
     }
 }

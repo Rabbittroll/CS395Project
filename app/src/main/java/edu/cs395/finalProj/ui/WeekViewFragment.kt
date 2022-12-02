@@ -22,10 +22,8 @@ import java.time.LocalDate
 
 
 class WeekViewFragment : Fragment() {
-    // XXX initialize viewModel
     private val viewModel: MainViewModel by activityViewModels()
     private var _binding: FragmentWeekViewBinding? = null
-    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
     lateinit var weekAdapter : WeekViewAdapter
     lateinit var eventAdapter : EventAdapter
@@ -67,14 +65,12 @@ class WeekViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.PBW.isVisible = false
-        //viewModel.setWeekLoad(true)
         Log.d(javaClass.simpleName, "onViewCreated")
         binding.calNameTV.text = viewModel.getCalName().capitalize()
         binding.addButton.setOnClickListener {
             activity?.supportFragmentManager?.commit {
                 addToBackStack("weekViewFrag")
                 replace(R.id.main_frame, AddEventFragment.newInstance(), "addEventFrag")
-                // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             }
         }
@@ -82,7 +78,6 @@ class WeekViewFragment : Fragment() {
             activity?.supportFragmentManager?.commit {
                 addToBackStack("weekViewFrag")
                 replace(R.id.main_frame, AddExFragment.newInstance(), "addExFrag")
-                // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             }
         }
@@ -91,7 +86,6 @@ class WeekViewFragment : Fragment() {
             activity?.supportFragmentManager?.commit {
                 addToBackStack("weekViewFrag")
                 replace(R.id.main_frame, DelExFragment.newInstance(), "delExFrag")
-                // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             }
         }
@@ -113,7 +107,6 @@ class WeekViewFragment : Fragment() {
         }
         viewModel.observeEvents().observe(viewLifecycleOwner){
             eventAdapter.submitList(it)
-            //viewModel.setWeekLoad(true)
         }
         viewModel.observeWeekLoad().observe(viewLifecycleOwner){
             isLoading(it)
@@ -127,10 +120,7 @@ class WeekViewFragment : Fragment() {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 // Menu is already inflated by main activity
             }
-            // XXX Write me, onMenuItemSelected
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                Log.d(null,menuItem.itemId.toString())
-                Log.d(null, android.R.id.home.toString())
                 if(menuItem.itemId == android.R.id.home){
                     activity!!.supportFragmentManager.popBackStack()
                 }

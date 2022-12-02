@@ -17,7 +17,7 @@ import edu.cs395.finalProj.ui.WeekViewFragment
 
 class CalendarListAdapter(private val viewModel: MainViewModel)
     : ListAdapter<Calendar, CalendarListAdapter.VH>(Diff()) {
-    // This class allows the adapter to compute what has changed
+
     class Diff : DiffUtil.ItemCallback<Calendar>() {
         override fun areItemsTheSame(oldItem: Calendar, newItem: Calendar): Boolean {
             return oldItem.firestoreID == newItem.firestoreID
@@ -36,16 +36,13 @@ class CalendarListAdapter(private val viewModel: MainViewModel)
 
         fun bind(holder: VH, position: Int) {
             val cal = viewModel.getCalendar(position)
-            //viewModel.glideFetch(photoMeta.uuid, rowBinding.rowImageView)
             holder.rowBinding.userName.text = cal.name
-            //holder.rowBinding.userRole.text = cal.role
             itemView.setOnClickListener {
                 viewModel.setCalName(cal.name.lowercase())
                 val activity  = it.context as? AppCompatActivity
                 activity?.supportFragmentManager?.commit {
                     addToBackStack("homeFrag")
                     replace(R.id.main_frame, WeekViewFragment.newInstance(), "weekViewFrag")
-                    // TRANSIT_FRAGMENT_FADE calls for the Fragment to fade away
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 }
             }
@@ -62,7 +59,6 @@ class CalendarListAdapter(private val viewModel: MainViewModel)
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.bind(holder, position)
-
     }
 
 }

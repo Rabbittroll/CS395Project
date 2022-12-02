@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import edu.cs395.finalProj.api.VideoYtModel
 import edu.cs395.finalProj.databinding.RowVideoBinding
-//import edu.cs395.finalProj.glide.Glide
 import edu.cs395.finalProj.classes.Video
 import edu.cs395.finalProj.ui.MainViewModel
 
@@ -28,12 +27,12 @@ class VideoAdapter(private val viewModel: MainViewModel)
 
         }
     }
+
     private var oldItems = ArrayList<VideoYtModel.VideoItem>()
 
     inner class VH(val rowExerciseBinding: RowVideoBinding)
         : RecyclerView.ViewHolder(rowExerciseBinding.root){
         init {
-
         }
     }
 
@@ -63,9 +62,6 @@ class VideoAdapter(private val viewModel: MainViewModel)
             .load(video.getThumbnail())
             .into(binding.tnIV)
 
-
-        //Glide.glideFetch(url, url, binding.tnIV)
-        Log.d(null, url)
     }
 
 

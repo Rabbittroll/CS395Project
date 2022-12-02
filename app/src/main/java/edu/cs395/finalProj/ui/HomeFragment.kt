@@ -19,13 +19,9 @@ import edu.cs395.finalProj.databinding.FragmentHomeBinding
 import edu.cs395.finalProj.adapters.CalendarListAdapter
 import edu.cs395.finalProj.adapters.EventAdapter
 
-
-// XXX Write most of this file
 class HomeFragment: Fragment() {
-    // XXX initialize viewModel
     private val viewModel: MainViewModel by activityViewModels()
     private var _binding: FragmentHomeBinding? = null
-    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
     lateinit var adapter : EventAdapter
 
@@ -41,7 +37,6 @@ class HomeFragment: Fragment() {
         }
 
 
-    // Set up the adapter
     private fun initAdapter(binding: FragmentHomeBinding): EventAdapter {
         val adapter = EventAdapter(viewModel)
         binding.calendarsRV.adapter = adapter
@@ -63,17 +58,10 @@ class HomeFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        //Log.d(null, "on create view")
-        //viewModel.setHomeFrag(true)
         adapter = initAdapter(binding)
         val layoutManager = StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
         binding.calendarsRV.layoutManager = layoutManager
         binding.calendarsRV.adapter = adapter
-        //initSwipeLayout(binding.swipeRefreshLayout)
-        viewModel.fetchDone.observe(viewLifecycleOwner) {
-            //binding.swipeRefreshLayout.isRefreshing = false
-        }
-
         return binding.root
 
     }
@@ -89,21 +77,13 @@ class HomeFragment: Fragment() {
         rv.addItemDecoration(itemDecor)
         binding.userNameTV.text = ""
         binding.loginBut.setOnClickListener {
-            // XXX Write me.
             AuthInit(viewModel, signInLauncher)
-            //viewModel.fetchCalendar()
         }
         binding.logoutBut.setOnClickListener {
-            // XXX Write me.
             viewModel.signOut()
         }
         rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(rv.context)
-        // XXX Write me
-        //val adapter = initAdapter(binding)
-
-        //Log.d(null, "in home fragment")
-        //adapter.submitList(viewModel.ge)
         viewModel.observeEmail().observe(viewLifecycleOwner){
             Log.d(null, "in observe email")
             viewModel.fetchCalendar()
@@ -122,7 +102,6 @@ class HomeFragment: Fragment() {
         parentFragmentManager.addOnBackStackChangedListener {
             if (parentFragmentManager.backStackEntryCount == 0) {
                 setDisplayHomeAsUpEnabled(false)
-                //notifyWhenFragmentForegrounded(adapter)
             }
         }
         AuthInit(viewModel, signInLauncher)

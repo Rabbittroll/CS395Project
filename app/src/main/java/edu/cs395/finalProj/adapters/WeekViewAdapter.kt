@@ -11,9 +11,6 @@ import edu.cs395.finalProj.databinding.RowDayBinding
 import edu.cs395.finalProj.ui.MainViewModel
 import java.time.LocalDate
 
-// NB: Could probably unify with PostRowAdapter if we had two
-// different VH and override getItemViewType
-// https://medium.com/@droidbyme/android-recyclerview-with-multiple-view-type-multiple-view-holder-af798458763b
 class WeekViewAdapter(private val viewModel: MainViewModel)
     : ListAdapter<LocalDate, WeekViewAdapter.VH>(WeekDiff()) {
 
@@ -62,11 +59,7 @@ class WeekViewAdapter(private val viewModel: MainViewModel)
         }
 
     }
-
-    // XXX Write me.
-        // NB: This one-liner will exit the current fragment
-        // fragmentActivity.supportFragmentManager.popBackStack()
-    }
+}
 
     //EEE // XXX Write me
 

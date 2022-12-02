@@ -2,16 +2,6 @@ package edu.cs395.finalProj.classes
 
 class Video(name: String, videoID: String, thumbnail: String) {
     var eventsList: ArrayList<Video> = ArrayList()
-
-    /*fun eventsForDate(date: LocalDate?): ArrayList<Event>? {
-        val events: ArrayList<Event> = ArrayList()
-        for (event in eventsList) {
-            if (event.getDate()!!.equals(date)) events.add(event)
-        }
-        return events
-    }*/
-
-
     private var name: String = name
     private var id: String = videoID
     private var thumbnail: String = thumbnail

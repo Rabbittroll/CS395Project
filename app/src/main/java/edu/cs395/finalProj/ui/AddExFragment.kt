@@ -18,13 +18,10 @@ import edu.cs395.finalProj.databinding.FragmentAddExerciseBinding
 
 
 class AddExFragment : Fragment() {
-    // XXX initialize viewModel
     private val viewModel: MainViewModel by activityViewModels()
     private var _binding: FragmentAddExerciseBinding? = null
-    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
     lateinit var adapter : VideoAdapter
-    //lateinit var eventAdapter : EventAdapter
 
     companion object {
         fun newInstance(): AddExFragment {
@@ -125,10 +122,7 @@ class AddExFragment : Fragment() {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 // Menu is already inflated by main activity
             }
-            // XXX Write me, onMenuItemSelected
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                Log.d(null,menuItem.itemId.toString())
-                Log.d(null, android.R.id.home.toString())
                 if(menuItem.itemId == android.R.id.home){
                     activity!!.supportFragmentManager.popBackStack()
                 }
@@ -138,7 +132,6 @@ class AddExFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-
         _binding = null
         super.onDestroyView()
     }

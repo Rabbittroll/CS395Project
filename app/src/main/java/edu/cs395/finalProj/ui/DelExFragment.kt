@@ -22,13 +22,10 @@ import java.time.LocalDate
 
 
 class DelExFragment : Fragment() {
-    // XXX initialize viewModel
     private val viewModel: MainViewModel by activityViewModels()
     private var _binding: FragmentDelExerciseBinding? = null
-    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
     lateinit var adapter : ArrayAdapter<String>
-    //lateinit var eventAdapter : EventAdapter
 
     companion object {
         fun newInstance(): DelExFragment {
@@ -41,8 +38,6 @@ class DelExFragment : Fragment() {
         mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(value)
     }
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,7 +47,6 @@ class DelExFragment : Fragment() {
         Log.d(null, viewModel.getAllEx().toString())
         val exList = viewModel.getAllEx()
         val aa = ArrayAdapter(this.requireContext(), android.R.layout.simple_spinner_item, exList)
-        // Set layout to use when the list of choices appear
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.exerciseSP.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
@@ -80,7 +74,6 @@ class DelExFragment : Fragment() {
         return binding.root
     }
 
-    // XXX Write me, onViewCreated
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(javaClass.simpleName, "onViewCreated")
@@ -91,10 +84,7 @@ class DelExFragment : Fragment() {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 // Menu is already inflated by main activity
             }
-            // XXX Write me, onMenuItemSelected
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                Log.d(null,menuItem.itemId.toString())
-                Log.d(null, android.R.id.home.toString())
                 if(menuItem.itemId == android.R.id.home){
                     activity!!.supportFragmentManager.popBackStack()
                 }
@@ -104,7 +94,6 @@ class DelExFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-
         _binding = null
         super.onDestroyView()
     }

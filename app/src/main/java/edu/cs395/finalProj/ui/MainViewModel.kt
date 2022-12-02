@@ -60,10 +60,8 @@ class MainViewModel : ViewModel() {
     private var isWeekLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     private var isVideoLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     private lateinit var database: DatabaseReference
-    //private val searchText = MutableLiveData<String>()
     init {
         setDaysInWeek(LocalDate.now())
-        //Log.d(null, weekDates.value.toString())
         setSelDate(LocalDate.now())
         database = Firebase.database.reference
         fetchExUrl()
@@ -106,8 +104,6 @@ class MainViewModel : ViewModel() {
         return allEx.value!!.contains(exercise)
     }
 
-
-
     fun observeCals() : MutableLiveData<List<Calendar>> {
         return calendars
     }
@@ -126,7 +122,6 @@ class MainViewModel : ViewModel() {
         Log.d(null, "in obs Sel")
         return selDate
     }
-
 
     private fun sundayForDate(current: LocalDate): LocalDate {
         var current = current
@@ -184,19 +179,12 @@ class MainViewModel : ViewModel() {
         return events.value!![position]
     }
 
-
-    /*fun updateUser() {
-        firebaseAuthLiveData.updateUser()
-    }*/
-
     fun fetchCalendar() {
-        //dbHelp.fetchCalendar(email, calendars)
         dbHelp.fetchCalendar(user.value!!, calendars)
     }
 
     fun getCalendar(position: Int) : Calendar {
         val note = calendars.value?.get(position)
-        //Log.d(null, "in get photo meta")
         return note!!
     }
 
@@ -438,10 +426,4 @@ class MainViewModel : ViewModel() {
         return ret
     }
 
-
-    // Convenient place to put it as it is shared
-    /*companion object {
-        fun doOnePost(context: Context, redditPost: RedditPost) {
-        }
-    }*/
 }
