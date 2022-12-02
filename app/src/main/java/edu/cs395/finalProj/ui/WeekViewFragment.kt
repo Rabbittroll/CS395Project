@@ -42,8 +42,6 @@ class WeekViewFragment : Fragment() {
     }
 
     private fun isLoading(boolean: Boolean){
-        Log.d(null, "in is loading")
-        Log.d(null, boolean.toString())
         binding.PBW.isVisible = boolean
     }
 

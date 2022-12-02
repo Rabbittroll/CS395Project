@@ -6,6 +6,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -29,6 +30,10 @@ class AddExFragment : Fragment() {
         fun newInstance(): AddExFragment {
             return AddExFragment()
         }
+    }
+
+    private fun isLoading(boolean: Boolean){
+        binding.PBV.isVisible = boolean
     }
 
     private fun setDisplayHomeAsUpEnabled(value : Boolean) {
@@ -70,10 +75,12 @@ class AddExFragment : Fragment() {
 
         viewModel.observeVids().observe(viewLifecycleOwner){
             adapter.submitList(it)
+            viewModel.setVideoLoad(false)
         }
         binding.submitBut.setOnClickListener {
             val selVid = viewModel.getSelVid()
             val name = binding.exerciseNameET.text.toString()
+            viewModel.setVideoLoad(true)
             if (!name.isNullOrEmpty()) {
                 if (selVid != null) {
                     if (!viewModel.checkEx(name.capitalizeWords())) {
@@ -96,14 +103,20 @@ class AddExFragment : Fragment() {
         binding.searchBut.setOnClickListener {
             var searchTerm = binding.searchET.text.toString()
             if(!searchTerm.isNullOrEmpty()) {
+                viewModel.setVideoLoad(true)
                 viewModel.getVideoList(searchTerm)
             } else {
                 searchTerm = binding.exerciseNameET.text.toString()
                 if (!searchTerm.isNullOrEmpty()) {
+                    viewModel.setVideoLoad(true)
                     viewModel.getVideoList(searchTerm)
                 }
             }
 
+        }
+
+        viewModel.observeVideoLoad().observe(viewLifecycleOwner){
+            isLoading(it)
         }
 
         val menuHost: MenuHost = requireActivity()

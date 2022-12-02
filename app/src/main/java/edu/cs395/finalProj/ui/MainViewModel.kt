@@ -57,7 +57,8 @@ class MainViewModel : ViewModel() {
     var searchStarted : MutableLiveData<Boolean> = MutableLiveData(false)
     var searchEmpty : MutableLiveData<Boolean> = MutableLiveData(false)
     var isHomeLoading: MutableLiveData<Boolean> = MutableLiveData(false)
-    var isWeekLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    private var isWeekLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    private var isVideoLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     private lateinit var database: DatabaseReference
     //private val searchText = MutableLiveData<String>()
     init {
@@ -83,6 +84,14 @@ class MainViewModel : ViewModel() {
 
     fun setWeekLoad(boolean: Boolean) {
         isWeekLoading.value = boolean
+    }
+
+    fun observeVideoLoad(): LiveData<Boolean>{
+        return isVideoLoading
+    }
+
+    fun setVideoLoad(boolean: Boolean) {
+        isVideoLoading.value = boolean
     }
 
     fun checkEvents(event: String) : Boolean {
