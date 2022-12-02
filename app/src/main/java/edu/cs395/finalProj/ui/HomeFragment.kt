@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -95,7 +96,7 @@ class HomeFragment: Fragment() {
         val rv = binding.calendarsRV
         val itemDecor = DividerItemDecoration(rv.context, LinearLayoutManager.VERTICAL)
         rv.addItemDecoration(itemDecor)
-        binding.userNameTV.text = viewModel.findName()
+        binding.userNameTV.text = ""
         binding.loginBut.setOnClickListener {
             // XXX Write me.
             AuthInit(viewModel, signInLauncher)
@@ -115,6 +116,9 @@ class HomeFragment: Fragment() {
         viewModel.observeEmail().observe(viewLifecycleOwner){
             Log.d(null, "in observe email")
             viewModel.fetchCalendar()
+            Toast.makeText(this.context,"Welcome to your CalendR ${viewModel.getUser()}",
+                Toast.LENGTH_LONG).show()
+
         }
         viewModel.observeCals().observe(viewLifecycleOwner){
             adapter.submitList(it)

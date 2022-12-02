@@ -3,6 +3,7 @@ package edu.cs395.finalProj.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -80,8 +81,15 @@ class AddExFragment : Fragment() {
                         viewModel.clearSelVid()
                         viewModel.fetchExUrl()
                         requireActivity().supportFragmentManager.popBackStack()
+                    }else {
+                        Toast.makeText(this.context,"Please Enter a New Exercise",
+                            Toast.LENGTH_LONG).show()
                     }
+                } else {
+                    Toast.makeText(this.context,"Please Select a Video",Toast.LENGTH_LONG).show()
                 }
+            } else {
+                Toast.makeText(this.context,"Please Name your Exercise",Toast.LENGTH_LONG).show()
             }
 
         }

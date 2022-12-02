@@ -41,7 +41,7 @@ class AuthInit(viewModel: MainViewModel, signInLauncher: ActivityResultLauncher<
             Log.d(TAG, "XXX user null")
             // Choose authentication providers
             val providers = arrayListOf(
-                AuthUI.IdpConfig.EmailBuilder().build())
+                AuthUI.IdpConfig.EmailBuilder().setAllowNewAccounts(false).build())
 
             // Create and launch sign-in intent
             // XXX Write me. Set authentication providers and start sign-in for user

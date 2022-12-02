@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -82,6 +83,8 @@ class AddEventFragment : Fragment() {
                     binding.setRepsET.text.toString()
                 )
                 requireActivity().supportFragmentManager.popBackStack()
+            } else {
+                Toast.makeText(this.context,"Please Enter a Unique Workout, or Edit the Existing one",Toast.LENGTH_LONG).show()
             }
         }
         setDisplayHomeAsUpEnabled(true)

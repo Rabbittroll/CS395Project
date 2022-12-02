@@ -56,6 +56,7 @@ class MainViewModel : ViewModel() {
     var isHome : MutableLiveData<Boolean> = MutableLiveData(false)
     var searchStarted : MutableLiveData<Boolean> = MutableLiveData(false)
     var searchEmpty : MutableLiveData<Boolean> = MutableLiveData(false)
+    private var loggedOut: Boolean = true
     private lateinit var database: DatabaseReference
     //private val searchText = MutableLiveData<String>()
     init {
@@ -372,6 +373,9 @@ class MainViewModel : ViewModel() {
     fun observeEmail() : LiveData<String> {
         return user
     }
+    fun getUser() : String {
+        return user.value!!
+    }
     fun observeUid() : LiveData<String> {
         return uid
     }
@@ -379,6 +383,7 @@ class MainViewModel : ViewModel() {
         FirebaseAuth.getInstance().signOut()
         userLogout()
         clearCals()
+        loggedOut = true
     }
 
     fun clearCals() {
@@ -386,11 +391,21 @@ class MainViewModel : ViewModel() {
     }
 
     fun findName(): String {
-        var ret: String = "Admin"
-        if (!calendars.value.isNullOrEmpty()) {
-            for (i in calendars.value!!) {
-                if (i.role == "Self") {
-                    ret = i.name
+        var ret: String = ""
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null){
+            ret = "Logged Out"
+        } else {
+            if (!calendars.value.isNullOrEmpty()) {
+                var idx = 0
+                for (i in calendars.value!!) {
+                    if (i.role == "Self") {
+                        idx += 1
+                        ret = i.name
+                    }
+                }
+                if (idx == 0) {
+                    ret = "Admin"
                 }
             }
         }
