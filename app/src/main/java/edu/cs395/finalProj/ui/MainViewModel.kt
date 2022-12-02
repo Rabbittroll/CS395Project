@@ -57,6 +57,7 @@ class MainViewModel : ViewModel() {
     var searchStarted : MutableLiveData<Boolean> = MutableLiveData(false)
     var searchEmpty : MutableLiveData<Boolean> = MutableLiveData(false)
     var isHomeLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    var isWeekLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     private lateinit var database: DatabaseReference
     //private val searchText = MutableLiveData<String>()
     init {
@@ -74,6 +75,14 @@ class MainViewModel : ViewModel() {
 
     fun setHomeLoad(boolean: Boolean) {
         isHomeLoading.value = boolean
+    }
+
+    fun observeWeekLoad(): LiveData<Boolean>{
+        return isWeekLoading
+    }
+
+    fun setWeekLoad(boolean: Boolean) {
+        isWeekLoading.value = boolean
     }
 
     fun checkEvents(event: String) : Boolean {
@@ -205,6 +214,7 @@ class MainViewModel : ViewModel() {
                     val url: String = matchUrl(i.key!!)
                     addEvent(i.key!!, selDate.value!!, url, i.value!! as String)
                 }
+                setWeekLoad(false)
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)
         }

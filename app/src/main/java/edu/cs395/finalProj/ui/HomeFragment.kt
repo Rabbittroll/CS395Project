@@ -114,7 +114,7 @@ class HomeFragment: Fragment() {
         viewModel.observeCals().observe(viewLifecycleOwner){
             adapter.submitList(it)
             binding.userNameTV.text = viewModel.findName()
-            isLoading(false)
+            viewModel.setHomeLoad(false)
         }
         viewModel.observeHomeLoad().observe(viewLifecycleOwner){
             isLoading(it)

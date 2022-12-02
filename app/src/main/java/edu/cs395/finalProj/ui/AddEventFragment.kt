@@ -82,6 +82,7 @@ class AddEventFragment : Fragment() {
                     binding.exerciseSP.selectedItem.toString(),
                     binding.setRepsET.text.toString()
                 )
+                viewModel.setWeekLoad(true)
                 requireActivity().supportFragmentManager.popBackStack()
             } else {
                 Toast.makeText(this.context,"Please Enter a Unique Workout, or Edit the Existing one",Toast.LENGTH_LONG).show()

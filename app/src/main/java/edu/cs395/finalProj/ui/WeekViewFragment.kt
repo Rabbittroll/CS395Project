@@ -42,7 +42,9 @@ class WeekViewFragment : Fragment() {
     }
 
     private fun isLoading(boolean: Boolean){
-        binding.PB.isVisible = boolean
+        Log.d(null, "in is loading")
+        Log.d(null, boolean.toString())
+        binding.PBW.isVisible = boolean
     }
 
     override fun onCreateView(
@@ -66,7 +68,8 @@ class WeekViewFragment : Fragment() {
     // XXX Write me, onViewCreated
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.PB.isVisible = false
+        binding.PBW.isVisible = false
+        //viewModel.setWeekLoad(true)
         Log.d(javaClass.simpleName, "onViewCreated")
         binding.calNameTV.text = viewModel.getCalName().capitalize()
         binding.addButton.setOnClickListener {
@@ -105,14 +108,17 @@ class WeekViewFragment : Fragment() {
             binding.monthYearTV.text = it[0].month.toString().take(3) + " " + it[0].year.toString()
         }
         viewModel.observeSelDate().observe(viewLifecycleOwner){
-            isLoading(true)
             weekAdapter.notifyDataSetChanged()
             viewModel.clearEx()
+            viewModel.setWeekLoad(true)
             viewModel.setDailyEx()
         }
         viewModel.observeEvents().observe(viewLifecycleOwner){
             eventAdapter.submitList(it)
-            isLoading(false)
+            //viewModel.setWeekLoad(true)
+        }
+        viewModel.observeWeekLoad().observe(viewLifecycleOwner){
+            isLoading(it)
         }
 
         viewModel.setDaysInWeek(LocalDate.now())

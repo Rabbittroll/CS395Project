@@ -78,6 +78,7 @@ class EditEventFragment : Fragment() {
         binding.submitBut.setOnClickListener {
             viewModel.removeEx(calName, date,exName)
             viewModel.pushEx(calName, date,binding.exerciseSP.selectedItem.toString(),binding.setRepsET.text.toString() )
+            viewModel.setWeekLoad(true)
             requireActivity().supportFragmentManager.popBackStack()
         }
         binding.removeBut.setOnClickListener {

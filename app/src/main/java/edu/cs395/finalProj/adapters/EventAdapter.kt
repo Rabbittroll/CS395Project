@@ -62,6 +62,7 @@ class EventAdapter(private val viewModel: MainViewModel)
         val event = viewModel.getEvent(position)
         val title = viewModel.getEvent(position).getName()
         val url = viewModel.getEvent(position).getUrl()
+        viewModel.setWeekLoad(false)
         binding.eventNameTV.text = viewModel.getEvent(position).getName() + " :"
         binding.eventSetRepTV.text = viewModel.getEvent(position).getSetRep()
         binding.root.setOnClickListener {
