@@ -278,12 +278,16 @@ class MainViewModel : ViewModel() {
     }
 
     fun matchUrl(key: String): String? {
-        val elem = allUrl.value!!.find { it.getName() == key }
-        //Log.d(null, key)
-        if (elem != null) {
-            return elem!!.getUrl()
-        } else {
+        if (allUrl.value.isNullOrEmpty()){
             return null
+        } else {
+            val elem = allUrl.value!!.find { it.getName() == key }
+            //Log.d(null, key)
+            if (elem != null) {
+                return elem!!.getUrl()
+            } else {
+                return null
+            }
         }
     }
 

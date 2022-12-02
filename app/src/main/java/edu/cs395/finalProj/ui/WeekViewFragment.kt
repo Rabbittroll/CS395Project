@@ -112,7 +112,7 @@ class WeekViewFragment : Fragment() {
             isLoading(it)
         }
 
-        viewModel.setDaysInWeek(LocalDate.now())
+        viewModel.setDaysInWeek(viewModel.getSelDate())
 
         val menuHost: MenuHost = requireActivity()
 
@@ -128,11 +128,6 @@ class WeekViewFragment : Fragment() {
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        /*parentFragmentManager.addOnBackStackChangedListener {
-            if (parentFragmentManager.backStackEntryCount == 1) {
-                viewModel.setSelDate(viewModel.getSelDate())
-            }
-        }*/
     }
 
     override fun onDestroyView() {
