@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
@@ -40,7 +41,9 @@ class WeekViewFragment : Fragment() {
         mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(value)
     }
 
-
+    private fun isLoading(boolean: Boolean){
+        binding.PB.isVisible = boolean
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,6 +66,7 @@ class WeekViewFragment : Fragment() {
     // XXX Write me, onViewCreated
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.PB.isVisible = false
         Log.d(javaClass.simpleName, "onViewCreated")
         binding.calNameTV.text = viewModel.getCalName().capitalize()
         binding.addButton.setOnClickListener {
@@ -101,12 +105,14 @@ class WeekViewFragment : Fragment() {
             binding.monthYearTV.text = it[0].month.toString().take(3) + " " + it[0].year.toString()
         }
         viewModel.observeSelDate().observe(viewLifecycleOwner){
+            isLoading(true)
             weekAdapter.notifyDataSetChanged()
             viewModel.clearEx()
             viewModel.setDailyEx()
         }
         viewModel.observeEvents().observe(viewLifecycleOwner){
             eventAdapter.submitList(it)
+            isLoading(false)
         }
 
         viewModel.setDaysInWeek(LocalDate.now())

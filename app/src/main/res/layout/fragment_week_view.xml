@@ -46,8 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/backButton"
                 android:layout_weight="1"
-                android:text="Home"
+                android:text="Last"
                 android:textStyle="bold"
                 android:onClick="previousWeekAction"
                 android:textSize="20sp"
@@ -204,6 +204,7 @@
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:layout_marginTop="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/newButton"
             app:layout_constraintStart_toEndOf="@+id/delButton"
@@ -227,9 +228,18 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <ProgressBar
+                android:id="@+id/PB"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:layout_marginTop="10dp"
+                />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/eventListView"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"/>
