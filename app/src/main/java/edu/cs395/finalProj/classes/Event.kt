@@ -1,7 +1,9 @@
-package edu.cs395.finalProj.model
+package edu.cs395.finalProj.classes
 
-class ExerciseUrl(name: String, url: String) {
-    //var eventsList: ArrayList<ExerciseBase> = ArrayList()
+import java.time.LocalDate
+
+class Event(name: String, date: LocalDate, url: String, setRep: String) {
+    var eventsList: ArrayList<Event> = ArrayList()
 
     /*fun eventsForDate(date: LocalDate?): ArrayList<Event>? {
         val events: ArrayList<Event> = ArrayList()
@@ -13,7 +15,9 @@ class ExerciseUrl(name: String, url: String) {
 
 
     private var name: String = name
+    private var date: LocalDate = date
     private var url: String = url
+    private var setRep: String = setRep
 
     fun getName(): String {
         return name
@@ -23,11 +27,27 @@ class ExerciseUrl(name: String, url: String) {
         this.name = name
     }
 
+    fun getDate(): LocalDate {
+        return date
+    }
+
+    fun setDate(date: LocalDate) {
+        this.date = date
+    }
+
     fun getUrl(): String {
         return url
     }
 
     fun setDate(url: String) {
         this.url = url
+    }
+
+    fun getSetRep(): String {
+        return setRep
+    }
+
+    fun setSetRep(setRep: String) {
+        this.setRep = setRep
     }
 }

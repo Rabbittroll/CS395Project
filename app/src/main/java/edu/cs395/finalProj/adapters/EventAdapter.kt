@@ -1,11 +1,9 @@
 package edu.cs395.finalProj.adapters
 
-import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
@@ -15,11 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.cs395.finalProj.ExcerciseVid
 import edu.cs395.finalProj.R
 import edu.cs395.finalProj.databinding.RowEventBinding
-import edu.cs395.finalProj.model.Event
-import edu.cs395.finalProj.ui.AddEventFragment
+import edu.cs395.finalProj.classes.Event
 import edu.cs395.finalProj.ui.EditEventFragment
 import edu.cs395.finalProj.ui.MainViewModel
-import edu.cs395.finalProj.ui.WeekViewFragment
 
 /**
  * Created by witchel on 8/25/2019

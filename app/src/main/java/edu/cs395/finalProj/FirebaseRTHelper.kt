@@ -4,9 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import edu.cs395.finalProj.model.Calendar
-import edu.cs395.finalProj.model.Exercise
-import java.util.*
+import edu.cs395.finalProj.classes.Calendar
+import edu.cs395.finalProj.classes.Exercise
 
 class FirebaseRTHelper() {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()

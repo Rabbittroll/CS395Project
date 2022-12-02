@@ -1,7 +1,4 @@
-package edu.cs395.finalProj.model
-
-import edu.cs395.finalProj.api.ThumbnailsYt
-import java.time.LocalDate
+package edu.cs395.finalProj.classes
 
 class Video(name: String, videoID: String, thumbnail: String) {
     var eventsList: ArrayList<Video> = ArrayList()

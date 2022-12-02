@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.cs395.finalProj.ui.MainViewModel
 import edu.cs395.finalProj.databinding.RowBinding
-import edu.cs395.finalProj.model.Calendar
+import edu.cs395.finalProj.classes.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import edu.cs395.finalProj.R

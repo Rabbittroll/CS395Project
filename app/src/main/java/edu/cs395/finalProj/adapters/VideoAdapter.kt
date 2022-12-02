@@ -1,28 +1,17 @@
 package edu.cs395.finalProj.adapters
 
-import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.commit
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import edu.cs395.finalProj.ExcerciseVid
-import edu.cs395.finalProj.R
 import edu.cs395.finalProj.api.VideoYtModel
-import edu.cs395.finalProj.databinding.FragmentAddExerciseBinding
-import edu.cs395.finalProj.databinding.RowEventBinding
 import edu.cs395.finalProj.databinding.RowVideoBinding
 //import edu.cs395.finalProj.glide.Glide
-import edu.cs395.finalProj.model.Event
-import edu.cs395.finalProj.model.Video
-import edu.cs395.finalProj.ui.EditEventFragment
+import edu.cs395.finalProj.classes.Video
 import edu.cs395.finalProj.ui.MainViewModel
 
 class VideoAdapter(private val viewModel: MainViewModel)

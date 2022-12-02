@@ -3,8 +3,6 @@ package edu.cs395.finalProj.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -13,15 +11,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import edu.cs395.finalProj.MainActivity
-import edu.cs395.finalProj.R
-import edu.cs395.finalProj.adapters.EventAdapter
 import edu.cs395.finalProj.adapters.VideoAdapter
-import edu.cs395.finalProj.adapters.WeekViewAdapter
-import edu.cs395.finalProj.databinding.FragmentAddEventBinding
 import edu.cs395.finalProj.databinding.FragmentAddExerciseBinding
-import edu.cs395.finalProj.model.Video
-
-import java.time.LocalDate
 
 
 class AddExFragment : Fragment() {

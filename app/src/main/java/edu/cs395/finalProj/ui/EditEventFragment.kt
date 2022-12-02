@@ -10,16 +10,9 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import edu.cs395.finalProj.MainActivity
-import edu.cs395.finalProj.R
-import edu.cs395.finalProj.adapters.EventAdapter
-import edu.cs395.finalProj.adapters.WeekViewAdapter
-import edu.cs395.finalProj.databinding.FragmentAddEventBinding
 import edu.cs395.finalProj.databinding.FragmentEditEventBinding
-import edu.cs395.finalProj.model.Event
-
-import java.time.LocalDate
+import edu.cs395.finalProj.classes.Event
 
 
 class EditEventFragment : Fragment() {

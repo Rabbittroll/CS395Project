@@ -1,4 +1,4 @@
-package edu.cs395.finalProj.model
+package edu.cs395.finalProj.classes
 
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentId
