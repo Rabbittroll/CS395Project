@@ -127,6 +127,12 @@ class WeekViewFragment : Fragment() {
                 return true
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+        /*parentFragmentManager.addOnBackStackChangedListener {
+            if (parentFragmentManager.backStackEntryCount == 1) {
+                viewModel.setSelDate(viewModel.getSelDate())
+            }
+        }*/
     }
 
     override fun onDestroyView() {

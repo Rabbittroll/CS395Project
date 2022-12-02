@@ -208,8 +208,10 @@ class MainViewModel : ViewModel() {
             .addOnSuccessListener {
                 Log.i("firebase", "Got value ${it.value}")
                 for (i in it.children) {
-                    val url: String = matchUrl(i.key!!)
-                    addEvent(i.key!!, selDate.value!!, url, i.value!! as String)
+                    val url: String? = matchUrl(i.key!!)
+                    if (!url.isNullOrEmpty()) {
+                        addEvent(i.key!!, selDate.value!!, url, i.value!! as String)
+                    }
                 }
                 setWeekLoad(false)
         }.addOnFailureListener{
@@ -259,11 +261,30 @@ class MainViewModel : ViewModel() {
 
     fun delEx(name: String) {
         database.child("exercises").child(name).removeValue()
+        database.child("name")
+            .get()
+            .addOnSuccessListener {
+                for (i in it.children) {
+                    for (j in i.children) {
+                        removeEx(i.key!!, j.key!!, name)
+                    }
+                }
+            }
+        //clearExUrl()
+        fetchExUrl()
+        //clearEx()
+        //setDailyEx()
+
     }
 
-    fun matchUrl(key: String): String {
+    fun matchUrl(key: String): String? {
         val elem = allUrl.value!!.find { it.getName() == key }
-        return elem!!.getUrl()
+        //Log.d(null, key)
+        if (elem != null) {
+            return elem!!.getUrl()
+        } else {
+            return null
+        }
     }
 
 

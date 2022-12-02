@@ -68,6 +68,7 @@ class DelExFragment : Fragment() {
         binding.exerciseSP.setSelection(initialSpinner)
         binding.submitBut.setOnClickListener {
             viewModel.delEx(binding.exerciseSP.selectedItem.toString())
+            //viewModel.setSelDate(viewModel.getSelDate())
             requireActivity().supportFragmentManager.popBackStack()
         }
         setDisplayHomeAsUpEnabled(true)
