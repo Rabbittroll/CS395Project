@@ -36,6 +36,7 @@ class AuthInit(viewModel: MainViewModel, signInLauncher: ActivityResultLauncher<
     }
 
     init {
+        viewModel.setHomeLoad(true)
         val user = FirebaseAuth.getInstance().currentUser
         if(user == null) {
             Log.d(TAG, "XXX user null")

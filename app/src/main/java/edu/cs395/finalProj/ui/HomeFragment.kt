@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -52,20 +53,9 @@ class HomeFragment: Fragment() {
         mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(value)
     }
 
-    /*private fun notifyWhenFragmentForegrounded(postRowAdapter: PostRowAdapter) {
-        // When we return to our fragment, notifyDataSetChanged
-        // to pick up modifications to the favorites list.  Maybe do more.
-        viewModel.setHomeFrag(true)
-        initSwipeLayout(binding.swipeRefreshLayout)
-        viewModel.setTitleToSubreddit()
-        postRowAdapter.notifyDataSetChanged()
+    private fun isLoading(boolean: Boolean){
+        binding.PB.isVisible = boolean
     }
-
-    private fun initSwipeLayout(swipe : SwipeRefreshLayout) {
-        swipe.setOnRefreshListener {
-            viewModel.netPosts()
-        }
-    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,6 +80,7 @@ class HomeFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.PB.isVisible = false
         Log.d(javaClass.simpleName, "onViewCreated")
         _binding = FragmentHomeBinding.bind(view)
         val adapter = CalendarListAdapter(viewModel)
@@ -123,6 +114,10 @@ class HomeFragment: Fragment() {
         viewModel.observeCals().observe(viewLifecycleOwner){
             adapter.submitList(it)
             binding.userNameTV.text = viewModel.findName()
+            isLoading(false)
+        }
+        viewModel.observeHomeLoad().observe(viewLifecycleOwner){
+            isLoading(it)
         }
         parentFragmentManager.addOnBackStackChangedListener {
             if (parentFragmentManager.backStackEntryCount == 0) {

@@ -51,8 +51,8 @@ class WeekViewAdapter(private val viewModel: MainViewModel)
         val selDate = viewModel.getSelDate()
         binding.dayTitle.text = day.dayOfMonth.toString()
         if (day == selDate){
-            binding.root.setBackgroundColor(Color.BLACK)
-            binding.dayTitle.setTextColor(Color.WHITE)
+            binding.root.setBackgroundColor(Color.DKGRAY)
+            binding.dayTitle.setTextColor(Color.BLACK)
         } else {
             binding.root.setBackgroundColor(Color.TRANSPARENT)
             binding.dayTitle.setTextColor(Color.BLACK)

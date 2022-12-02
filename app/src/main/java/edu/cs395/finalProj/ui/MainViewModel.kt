@@ -56,7 +56,7 @@ class MainViewModel : ViewModel() {
     var isHome : MutableLiveData<Boolean> = MutableLiveData(false)
     var searchStarted : MutableLiveData<Boolean> = MutableLiveData(false)
     var searchEmpty : MutableLiveData<Boolean> = MutableLiveData(false)
-    private var loggedOut: Boolean = true
+    var isHomeLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     private lateinit var database: DatabaseReference
     //private val searchText = MutableLiveData<String>()
     init {
@@ -66,6 +66,14 @@ class MainViewModel : ViewModel() {
         database = Firebase.database.reference
         fetchExUrl()
         getVideoList("Workout")
+    }
+
+    fun observeHomeLoad(): LiveData<Boolean>{
+        return isHomeLoading
+    }
+
+    fun setHomeLoad(boolean: Boolean) {
+        isHomeLoading.value = boolean
     }
 
     fun checkEvents(event: String) : Boolean {
@@ -383,7 +391,6 @@ class MainViewModel : ViewModel() {
         FirebaseAuth.getInstance().signOut()
         userLogout()
         clearCals()
-        loggedOut = true
     }
 
     fun clearCals() {

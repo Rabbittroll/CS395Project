@@ -86,6 +86,32 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".MainActivity">
+
+    <ProgressBar
+        android:id="@+id/PB"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:indeterminate="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
     <!-- These are headers for the row layout -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarsRV"
